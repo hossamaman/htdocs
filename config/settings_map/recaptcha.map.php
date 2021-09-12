@@ -1,0 +1,110 @@
+<?php
+
+/*
+   // SURFOW CONFIG MAP
+*/
+
+return array(
+
+		"section_name" => Settings::lng([
+			'en' => 'Security settings',
+		    'ar' => 'إعدادات الأمان',
+		    'de' => 'Sicherheitseinstellungen',
+		    'es' => 'La configuración de seguridad',
+		    'fa' => 'تنظیمات امنیتی',
+		    'fr' => 'Les paramètres de sécurité',
+		    'hi' => 'सुरक्षा सेटिंग',
+		    'it' => 'Impostazioni di protezione',
+		    'ja' => 'セキュリティの設定',
+		    'ko' => '보안 설정',
+		    'nl' => 'Security-instellingen',
+		    'ru' => 'Параметры безопасности ',
+		    'sr' => 'Параметри безбедности ',
+		    'sv' => 'Säkerhetsinställningar',
+		    'tr' => 'Güvenlik ayarları',
+		    'zh' => '安全设置',
+		]),
+		"show_section" => true,
+		"section_description" => Settings::lng([
+			'en' => 'it\'s actually a reCAPTCHA settings, a free service from Google that helps protect websites',
+		    'ar' => ' انها في الواقع إعدادات reCAPTCHA خدمة مجانية من جوجل تساعد على حماية المواقع ',
+		    'de' => 'es ist eigentlich ein reCAPTCHA-Einstellungen, ein kostenloser service von Google, die hilft, websites schützen',
+		    'es' => 'en realidad es una reCAPTCHA, un servicio gratuito de Google que ayuda a proteger los sitios web',
+		    'fa' => 'این در واقع یک reCAPTCHA تنظیمات یک سرویس رایگان از گوگل است که کمک می کند تا محافظت از وب سایت',
+		    'fr' => 'c\'est en fait une récapitulation des paramètres, un service gratuit de Google qui permet de protéger les sites web',
+		    'hi' => 'यह वास्तव में एक reCAPTCHA सेटिंग्स, एक मुफ्त सेवा है कि गूगल से बचाने में मदद करता है वेबसाइटों',
+		    'it' => 'in realtà è un reCAPTCHA impostazioni, un servizio gratuito offerto da Google che consente di proteggere i siti web',
+		    'ja' => 'これは実際、reCAPTCHA設定を無料サービスから身を守るためのwebサイト',
+		    'ko' => '실제로 reCAPTCHA 설정에서 무료로 서비스를 Google 보호하는 데 도움이 되는 웹사이트',
+		    'nl' => 'het is eigenlijk een reCAPTCHA instellingen, een gratis dienst van Google die helpt bij het beveiligen van websites',
+		    'ru' => 'это на самом деле настройки рекапчи, бесплатный сервис от Google, который помогает защитить веб-сайтов',
+		    'sr' => 'то је заправо подешавања рецаптцха, бесплатан сервис Гоогле, који вам помаже да заштитите веб-сајтова',
+		    'sv' => 'det är faktiskt en reCAPTCHA inställningar, en kostnadsfri tjänst från Google som hjälper till att skydda webbplatser',
+		    'tr' => 'aslında Google\'dan bir tuttum ayarları, ücretsiz bir hizmet olan web sitelerinin korunmasına yardımcı olur ',
+		    'zh' => '它实际上是一个验证码设置了一个免费的服务自谷歌，有助于保护的网站',
+		]),
+		"section_icon" => "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNjZDNkI5OyIgZD0iTTMzMi4yNjcsMTc0LjkzM2MtNS4zMzMsMC04LjUzMy00LjI2Ny04LjUzMy04LjUzM2MwLTgyLjEzMy02Ni4xMzMtMTQ4LjI2Ny0xNDguMjY3LTE0OC4yNjcgICBTMjYuMTMzLDg0LjI2NywyNi4xMzMsMTY2LjRjMCw1LjMzMy00LjI2Nyw4LjUzMy04LjUzMyw4LjUzM3MtOC41MzMtNC4yNjctOC41MzMtOC41MzNDOS4wNjcsNzQuNjY3LDgzLjczMywwLDE3NS40NjcsMCAgIFMzNDAuOCw3NC42NjcsMzQwLjgsMTY2LjRDMzQwLjgsMTcxLjczMywzMzcuNiwxNzQuOTMzLDMzMi4yNjcsMTc0LjkzM3oiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM2NkM2Qjk7IiBkPSJNMzQxLjg2NywyNzJjLTU0LjQsMC05NC45MzMtNTUuNDY3LTk0LjkzMy0xMDQuNTMzYzAtMjEuMzMzLTkuNi00MC41MzMtMjUuNi01NC40ICAgUzE4NCw5Mi44LDE2Mi42NjcsOTZjLTM1LjIsNS4zMzMtNjEuODY3LDM3LjMzMy02MS44NjcsNzUuNzMzYzAsNTAuMTMzLTQwLjUzMyw5MC42NjctOTAuNjY3LDkwLjY2NyAgIGMtNS4zMzMsMC04LjUzMy00LjI2Ny04LjUzMy04LjUzM2MwLTUuMzMzLDQuMjY3LTguNTMzLDguNTMzLTguNTMzYzQwLjUzMywwLDcyLjUzMy0zMy4wNjcsNzIuNTMzLTcyLjUzMyAgIGMwLTQ2LjkzMywzMy4wNjctODcuNDY3LDc2LjgtOTMuODY3YzI2LjY2Ny00LjI2Nyw1Mi4yNjcsMy4yLDcyLjUzMywyMS4zMzNjMjAuMjY3LDE3LjA2NywzMC45MzMsNDIuNjY3LDMwLjkzMyw2OC4yNjcgICBjMCw0MC41MzMsMzMuMDY3LDg2LjQsNzYuOCw4Ni40YzUuMzMzLDAsOC41MzMsNC4yNjcsOC41MzMsOC41MzNDMzUxLjQ2NywyNjcuNzMzLDM0Ny4yLDI3MiwzNDEuODY3LDI3MnoiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM2NkM2Qjk7IiBkPSJNMzQ2LjEzMywyMjYuMTMzYy0zMy4wNjcsMC01OS43MzMtMjYuNjY3LTU5LjczMy01OS43MzNjMC0zMi0xMy44NjctNjIuOTMzLTM4LjQtODQuMjY3ICAgYy0yNC41MzMtMjEuMzMzLTU2LjUzMy0zMC45MzMtODguNTMzLTI1LjZjLTU0LjQsNy40NjctOTQuOTMzLDU2LjUzMy05NC45MzMsMTE0LjEzM2MwLDMwLjkzMy0yNC41MzMsNTUuNDY3LTU1LjQ2Nyw1NS40NjcgICBjLTUuMzMzLDAtOC41MzMtNC4yNjctOC41MzMtOC41MzNjMC01LjMzMyw0LjI2Ny04LjUzMyw4LjUzMy04LjUzM2MyMS4zMzMsMCwzOC40LTE3LjA2NywzOC40LTM4LjQgICBjMC02Ni4xMzMsNDYuOTMzLTEyMi42NjcsMTA5Ljg2Ny0xMzEuMkMxOTQuNjY3LDM0LjEzMywyMzIsNDQuOCwyNjAuOCw2OS4zMzNjMjguOCwyNC41MzMsNDQuOCw1OS43MzMsNDQuOCw5Ny4wNjcgICBjMCwyMy40NjcsMTkuMiw0Mi42NjcsNDIuNjY3LDQyLjY2N2M1LjMzMywwLDguNTMzLDQuMjY3LDguNTMzLDguNTMzQzM1NC42NjcsMjIxLjg2NywzNTAuNCwyMjYuMTMzLDM0Ni4xMzMsMjI2LjEzM3oiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM2NkM2Qjk7IiBkPSJNNDEuMDY3LDM3My4zMzNjLTQuMjY3LDAtOC41MzMtMy4yLTguNTMzLTcuNDY3Yy0xLjA2Ny00LjI2NywyLjEzMy05LjYsNy40NjctOS42ICAgYzE3NC45MzMtMjguOCwxNzEuNzMzLTE3OS4yLDE3MS43MzMtMTg1LjZjMC0xMC42NjctNC4yNjctMjEuMzMzLTEyLjgtMjcuNzMzYy04LjUzMy03LjQ2Ny0xOS4yLTkuNi0yOS44NjctOC41MzMgICBjLTE4LjEzMywyLjEzMy0zMC45MzMsMjAuMjY3LTMwLjkzMyw0MC41MzNjMCw2Ny4yLTU2LjUzMywxMjMuNzMzLTEyNS44NjcsMTIzLjczM2MtNS4zMzMsMC04LjUzMy00LjI2Ny04LjUzMy04LjUzMyAgIGMwLTUuMzMzLDQuMjY3LTguNTMzLDguNTMzLTguNTMzQzcyLDI4MS42LDEyMCwyMzMuNiwxMjAsMTc0LjkzM2MwLTI4LjgsMjAuMjY3LTUzLjMzMyw0Ni45MzMtNTcuNmMxNi0yLjEzMywzMiwyLjEzMyw0My43MzMsMTIuOCAgIGMxMS43MzMsMTAuNjY3LDE5LjIsMjUuNiwxOS4yLDQwLjUzM2MwLDEuMDY3LDMuMiwxNzEuNzMzLTE4Ny43MzMsMjAyLjY2N0g0MS4wNjd6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNjZDNkI5OyIgZD0iTTI1LjA2NywzMzZjLTQuMjY3LDAtOC41MzMtMy4yLTguNTMzLTcuNDY3Yy0xLjA2Ny01LjMzMywyLjEzMy05LjYsNy40NjctMTAuNjY3ICAgYzE1MS40NjctMjUuNiwxNDIuOTMzLTE0OC4yNjcsMTQyLjkzMy0xNTMuNmMwLTUuMzMzLDMuMi05LjYsOC41MzMtOS42YzQuMjY3LDAsOS42LDMuMiw5LjYsOC41MzNjMCwxLjA2NywxMC42NjcsMTQ0LTE1Ni44LDE3Mi44ICAgQzI2LjEzMywzMzYsMjYuMTMzLDMzNiwyNS4wNjcsMzM2eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzY2QzZCOTsiIGQ9Ik01Niw0MDkuNmMtNC4yNjcsMC04LjUzMy0zLjItOC41MzMtNy40NjdjLTEuMDY3LTUuMzMzLDIuMTMzLTkuNiw3LjQ2Ny0xMC42NjcgICBjMTM4LjY2Ny0yMS4zMzMsMTg1LjYtMTQwLjgsMTg1LjYtMTQxLjg2N2MxLjA2Ny0zLjIsNC4yNjctNS4zMzMsNy40NjctNS4zMzNjNC4yNjcsMCw2LjQsMi4xMzMsOC41MzMsNC4yNjcgICBjNi40LDExLjczMywyNi42NjcsNDEuNiw3Ni44LDQ2LjkzM2M1LjMzMywwLDguNTMzLDUuMzMzLDcuNDY3LDkuNmMwLDUuMzMzLTUuMzMzLDguNTMzLTkuNiw3LjQ2NyAgIGMtNDMuNzMzLTQuMjY3LTY4LjI2Ny0yNS42LTgxLjA2Ny00MS42QzIzMiwzMDYuMTMzLDE3Ni41MzMsMzkwLjQsNTcuMDY3LDQwOS42QzU3LjA2Nyw0MDkuNiw1Niw0MDkuNiw1Niw0MDkuNnoiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM2NkM2Qjk7IiBkPSJNNzYuMjY3LDQ1Mi4yNjdjLTQuMjY3LDAtNy40NjctMy4yLTguNTMzLTYuNGMtMS4wNjctNC4yNjcsMi4xMzMtOS42LDYuNC0xMC42NjcgICBjMTI2LjkzMy0zMiwxNzcuMDY3LTExOC40LDE3OC4xMzMtMTE5LjQ2N2MxLjA2Ny0yLjEzMyw0LjI2Ny00LjI2Nyw2LjQtNC4yNjdjMy4yLDAsNS4zMzMsMS4wNjcsNy40NjcsMi4xMzMgICBjMCwwLDI1LjYsMjUuNiw2Mi45MzMsMjguOGM1LjMzMywwLDguNTMzLDUuMzMzLDcuNDY3LDkuNmMwLDUuMzMzLTUuMzMzLDguNTMzLTkuNiw3LjQ2N2MtMzAuOTMzLTMuMi01NC40LTE4LjEzMy02NS4wNjctMjYuNjY3ICAgQzI0NC44LDM1Ny4zMzMsMTkwLjQsNDIyLjQsNzguNCw0NTEuMkM3Ny4zMzMsNDUyLjI2Nyw3Ny4zMzMsNDUyLjI2Nyw3Ni4yNjcsNDUyLjI2N3oiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM2NkM2Qjk7IiBkPSJNMzEyLDQwNy40NjdjLTEuMDY3LDAtMS4wNjcsMC0yLjEzMywwYy0zOC40LTEwLjY2Ny01Ny42LTI4LjgtNTguNjY3LTI5Ljg2NyAgIGMtMy4yLTMuMi0zLjItOC41MzMsMC0xMi44YzMuMi0zLjIsOC41MzMtMy4yLDEyLjgsMGMwLDAsMTcuMDY3LDE2LDUxLjIsMjUuNmM0LjI2NywxLjA2Nyw3LjQ2Nyw2LjQsNi40LDEwLjY2NyAgIEMzMTkuNDY3LDQwNS4zMzMsMzE2LjI2Nyw0MDcuNDY3LDMxMiw0MDcuNDY3eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzY2QzZCOTsiIGQ9Ik0xMTEuNDY3LDQ5MC42NjdjLTQuMjY3LDAtNy40NjctMi4xMzMtOC41MzMtNi40Yy0xLjA2Ny00LjI2NywxLjA2Ny05LjYsNi40LTEwLjY2NyAgIGM3My42LTIwLjI2NywxMjgtNzAuNCwxMjkuMDY3LTcxLjQ2N2MzLjItMy4yLDkuNi0zLjIsMTIuOCwwYzMuMiwzLjIsMy4yLDkuNiwwLDEyLjhjLTIuMTMzLDIuMTMzLTU4LjY2Nyw1NC40LTEzNi41MzMsNzUuNzMzICAgQzExMi41MzMsNDkwLjY2NywxMTIuNTMzLDQ5MC42NjcsMTExLjQ2Nyw0OTAuNjY3eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzY2QzZCOTsiIGQ9Ik0xNzUuNDY3LDUxMmMtMy4yLDAtNi40LTIuMTMzLTguNTMzLTUuMzMzYy0yLjEzMy00LjI2NywwLTkuNiw0LjI2Ny0xMS43MzMgICBjMS4wNjcsMCw2Mi45MzMtMjYuNjY3LDEwNC41MzMtNjguMjY3YzMuMi0zLjIsOS42LTMuMiwxMi44LDBjMy4yLDMuMiwzLjIsOS42LDAsMTIuOGMtNDQuOCw0My43MzMtMTA3LjczMyw3MC40LTEwOS44NjcsNzEuNDY3ICAgQzE3Ny42LDUxMiwxNzYuNTMzLDUxMiwxNzUuNDY3LDUxMnoiLz4KPC9nPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNGRkZGRkY7IiBjeD0iMzY3LjQ2NyIgY3k9IjM2OCIgcj0iMTI4Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiM0MTVBNkI7IiBkPSJNMzY3LjQ2Nyw1MTJjLTgwLDAtMTQ0LTY1LjA2Ny0xNDQtMTQ0czY0LTE0NS4wNjcsMTQ0LTE0NS4wNjdzMTQ0LDY1LjA2NywxNDQsMTQ1LjA2NyAgUzQ0Ni40LDUxMiwzNjcuNDY3LDUxMnogTTM2Ny40NjcsMjU0LjkzM2MtNjEuODY3LDAtMTEyLDUwLjEzMy0xMTIsMTEyczUwLjEzMywxMTIsMTEyLDExMmM2MS44NjcsMS4wNjcsMTEyLTQ5LjA2NywxMTItMTEwLjkzMyAgQzQ3OS40NjcsMzA1LjA2Nyw0MjkuMzMzLDI1NC45MzMsMzY3LjQ2NywyNTQuOTMzeiIvPgo8cGF0aCBzdHlsZT0iZmlsbDojRjM3MDVBOyIgZD0iTTQzNi44LDMxNi44Yy01LjMzMy02LjQtMTQuOTMzLTcuNDY3LTIxLjMzMy0yLjEzM2MtMzUuMiwyOC44LTU5LjczMyw1NC40LTc2LjgsODBsLTI4LjgtMjguOCAgYy01LjMzMy01LjMzMy0xNC45MzMtNS4zMzMtMjEuMzMzLDBjLTUuMzMzLDUuMzMzLTUuMzMzLDE0LjkzMywwLDIxLjMzM2w0Mi42NjcsNDIuNjY3YzAsMCw0LjI2Nyw1LjMzMywxMi44LDQuMjY3ICBjNC4yNjctMS4wNjcsOC41MzMtMy4yLDEwLjY2Ny03LjQ2N2MxMy44NjctMjYuNjY3LDM5LjQ2Ny01NC40LDc4LjkzMy04Ny40NjdDNDQxLjA2NywzMzEuNzMzLDQ0Mi4xMzMsMzIzLjIsNDM2LjgsMzE2Ljh6Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=",
+		"params" => array(
+			"recaptcha/publickey" => array(
+				"key" => "recaptcha/publickey",
+				"showable" => 1,
+				"editable" => 1,
+				"type" => "text",
+				"choices" => "",
+				"label" => Settings::lng([
+					'en' => 'public key',
+				    'ar' => 'المفتاح العام',
+				    'de' => 'public-key',
+				    'es' => 'clave pública',
+				    'fa' => 'کلید عمومی',
+				    'fr' => 'la clé publique',
+				    'hi' => 'सार्वजनिक कुंजी',
+				    'it' => 'chiave pubblica',
+				    'ja' => '公開鍵',
+				    'ko' => 'public key',
+				    'nl' => 'publieke sleutel',
+				    'ru' => 'открытый ключ',
+				    'sr' => 'јавни кључ',
+				    'sv' => 'publika nyckeln',
+				    'tr' => 'ortak anahtar',
+				    'zh' => '公共密钥',
+				]),
+				"placeholder" => "reCaptcha public key",
+				"required" => false,
+				"icon" => "",
+				"description" => ""
+			),
+			"recaptcha/privatekey" => array(
+				"key" => "recaptcha/privatekey",
+				"showable" => 1,
+				"editable" => 1,
+				"type" => "text",
+				"choices" => "",
+				"label" => Settings::lng([
+					'en' => 'private key',
+				    'ar' => 'المفتاح الخاص',
+				    'de' => 'privaten Schlüssel',
+				    'es' => 'clave privada',
+				    'fa' => 'کلید خصوصی',
+				    'fr' => 'la clé privée',
+				    'hi' => 'निजी कुंजी',
+				    'it' => 'chiave privata',
+				    'ja' => '鍵',
+				    'ko' => 'private key',
+				    'nl' => 'eigen sleutel',
+				    'ru' => 'закрытый ключ',
+				    'sr' => 'приватни кључ',
+				    'sv' => 'privat nyckel',
+				    'tr' => 'özel anahtar',
+				    'zh' => '私人钥匙',
+				]),
+				"placeholder" => "reCaptcha private key",
+				"required" => false,
+				"icon" => "",
+				"description" => ""
+			),
+		),
+		"section_key" => "recaptcha"
+);
+
+?>

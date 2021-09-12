@@ -1,0 +1,1 @@
+<?php return "validcode12"; ?>

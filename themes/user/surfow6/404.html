@@ -1,0 +1,14 @@
+{% spaceless %}{{ include("header.html") }}
+        <div class="page">
+          <div class="page-content">
+            <div class="container text-center">
+              <div class="display-1 text-indigo mb-5"><i class="fe fe-alert-octagon"></i> 404</div>
+              <h1 class="h2 mb-3">{{ l("error404_message") }}</h1>
+              <p class="h4 text-indigo font-weight-normal mb-7">{{ s("generale/name") | upper }} &copy; </p>
+              <a class="btn btn-indigo btn-pill btn-lg" href="javascript:history.back()">
+                <i class="fe fe-arrow-left mr-2"></i> {{ l("go_back")}}
+              </a>
+            </div>
+          </div>
+        </div>
+{{ include("footer.html") }}{% endspaceless %}

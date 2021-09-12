@@ -1,0 +1,52 @@
+{% spaceless %}
+<div class="card card-body">
+    <div class="form-group">
+        <label class="form-label">{{ l("card_number") }}</label>
+        <div class="input-icon">
+            <span class="input-icon-addon">
+                <i class="fe fe-credit-card"></i>
+            </span>
+            <input name="number" class="form-control" data-mask="9999 9999 9999 9999" data-mask-clearifnotmatch="true" placeholder="0000 0000 0000 0000" autocomplete="off" maxlength="19" type="text">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7 col-md-6 form-group">
+            <label class="form-label">{{ l("exp_date") }}</label>
+            <div class="input-icon">
+                <span class="input-icon-addon">
+                    <i class="fe fe-calendar"></i>
+                </span>
+                <input name="exp_date" class="form-control" data-mask="99/9999" data-mask-clearifnotmatch="true" placeholder="MM/YYYY" autocomplete="off" maxlength="7" type="text">
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6 form-group">
+            <label class="form-label">{{ l("cvc") }}</label>
+            <div class="row gutters-sm">
+                <div class="col">
+                    <div class="input-icon">
+                        <span class="input-icon-addon">
+                            <i class="fe fe-lock"></i>
+                        </span>
+                        <input class="form-control" placeholder="{{ l("cvc") }}" name="cvc" value="" type="text">
+                    </div>
+                </div>
+                <span class="col-auto align-self-center">
+                  <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("cvc_note") }}</p>" data-original-title="" title="">?</span>
+              </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">{{ l("cardholder_name") }}</label>
+        <div class="input-icon">
+            <span class="input-icon-addon">
+                <i class="fe fe-user"></i>
+            </span>
+            <input name="fullname" class="form-control" placeholder="{{ l("cardholder_name") }}" type="text">
+        </div>
+    </div>
+</div>
+<script>require(['input-mask']);</script>
+{% endspaceless %}

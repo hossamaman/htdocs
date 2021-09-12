@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ current_language() }}" dir="{{ direction() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ do_action("template", "meta_header") }}
+    <!-- surfow V6.0.0 ADMIN PANEL -->
+    {% spaceless %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+    <script src="{{ turl() }}/assets/js/require.min.js"></script>
+    <script>requirejs.config({baseUrl:'{{ turl() }}'});</script>
+    <link  href="{{ turl() }}/assets/css/dashboard.{{ direction() }}.css" rel="stylesheet" />
+    <script src="{{ turl() }}/assets/js/dashboard.js"></script>
+    <link  href="{{ turl() }}/assets/plugins/charts-c3/plugin.{{ direction() }}.css" rel="stylesheet" />
+    <script src="{{ turl() }}/assets/plugins/charts-c3/plugin.js"></script>
+    <script src="{{ turl() }}/assets/plugins/input-mask/plugin.js"></script>
+    <link  href="{{ turl() }}/assets/css/style.css" rel="stylesheet">
+    <link  href="{{ turl() }}/assets/css/slider.css" rel="stylesheet">
+    <link  href="{{ turl() }}/assets/css/slider.html5.css" rel="stylesheet">
+    <link  href="{{ turl() }}/assets/css/trumbowyg.min.css" rel="stylesheet">
+    {% endspaceless %}
+</head>
+<body>

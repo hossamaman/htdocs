@@ -1,0 +1,35 @@
+{% spaceless %}
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-3 ml-auto">
+                  <li class="nav-item">
+                    <a href="{{ router("browsing") }}" style="border-color: #6574cd;" class="btn btn-pill {% if not is_routed("browsing") %}btn-outline-indigo{% else %}btn-indigo text-white{% endif %} btn-block"><i class="{% if not is_routed("browsing") %}text-indigo{% else %}text-white{% endif %} fe fe-zap"></i> {{ l("traffic_exchange") }}</a>
+                  </li>
+              </div>
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <a href="{{ router("dashboard") }}" class="nav-link {% if is_routed("dashboard") %}active{% endif %}"><i class="text-indigo fe fe-pie-chart"></i> {{ l("dashboard") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("websites") }}" class="nav-link {% if is_routed("websites") or is_routed("add_website") or is_routed("edit_website") or is_routed("copy_website") %}active{% endif %}"><i class="text-indigo fe fe-server"></i> {{ l("websites") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("payments") }}" class="nav-link {% if is_routed("payments") or is_routed("order_type") or is_routed("thank_you") or is_routed("checkout") %}active{% endif %}"><i class="text-indigo fe fe-package"></i> {{ l("buy") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("wallet") }}" class="nav-link {% if is_routed("wallet") or is_routed("deposit") or is_routed("process_deposit") or is_routed("prepare_payment") or is_routed("done_payment") or is_routed("withdrawal") %}active{% endif %}"><i class="text-indigo fe fe-briefcase"></i> {{ l("wallet") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("referrals") }}" class="nav-link {% if is_routed("referrals") %}active{% endif %}"><i class="text-indigo fe fe-users"></i> {{ l("referrals") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("settings") }}" class="nav-link {% if is_routed("settings") or is_routed("affiliate") or is_routed("billing") or is_routed("add_address") or is_routed("edit_address") or is_routed("cards") or is_routed("add_card") %}active{% endif %}"><i class="text-indigo fe fe-sliders"></i> {{ l("settings") }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endspaceless %}

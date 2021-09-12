@@ -1,0 +1,47 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-single">
+        <div class="container">
+          <div class="row">
+            <div class="col col-login mx-auto">
+              <div class="text-center mb-6">
+                <a href="{{ router("admin") }}" >
+                    <img src="{{ storage("data/surfow.png") }}" class="h-8" alt="">
+                </a>
+              </div>
+              <form class="card surfow_ajaxform"
+              data-redirect="false"
+              data-method="post"
+              data-action="restore"
+              data-type="guest" >
+                <div class="card-body p-6">
+                  <div class="surfow_alert" ></div>
+                  <div class="card-title">{{ l("rest") }}</div>
+                  <div class="form-group">
+                    <label class="form-label">{{ l("email") }}</label>
+                    <div class="input-icon">
+                      <span class="input-icon-addon">
+                          <i class="fe fe-mail"></i>
+                      </span>
+                      <input type="email" name="email" class="form-control" placeholder="{{ l("email") }}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    {{ put_recaptcha() }}
+                  </div>
+
+                  <div class="form-footer">
+                    <button type="submit" class="surfow_submit btn btn-indigo btn-pill btn-block"><i class="fe fe-shield mr-2"></i> {{ l("send") }}</button>
+                  </div>
+                </div>
+              </form>
+              <div class="text-center text-muted">
+                {{ l("remember_hint") }} <a href="{{ router("admin_login") }}">{{ l("login") }}</a>
+                <br><br>{{ do_action("template", "language_tags") }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

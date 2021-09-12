@@ -1,0 +1,284 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        {{ include("settings_menu.html") }}
+                    </div>
+                    <div class="col-lg-3 col-md-5">
+                        <div class="d-lg-block d-sm-none d-md-block" >
+                          <div class="list-group list-group-transparent mb-0">
+                            {% set info = get("info") %}
+                            {% set items = get("items") %}
+                            {% if items %}
+                                {% for item in items %}
+                                    {% if item.show_section %}
+                                    {% if item.section_key == info.section_key %}
+                                    <a href="#" title="{{ item.section_name }}" class="list-group-item list-group-item-action d-flex align-items-center active">
+                                      <span class="icon mr-3"><i><img class="setting_icon" src="{{ item.section_icon }}"></img></i></span> {{ item.section_name }}
+                                    </a>
+                                    {% else %}
+                                    <a href="{{ router("admin_edit_setting", {"key": item.section_key}) }}" title="{{ item.section_name }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                        <span class="icon mr-3"><i><img class="setting_icon" src="{{ item.section_icon }}"></img></i></span> {{ item.section_name }}
+                                    </a>
+                                    {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-7">
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title">{{ info.section_name }}</h3>
+                            <div class="card-options">
+                              <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                            </div>
+                          </div>
+                          {% if info.section_description %}
+                          <div class="card-alert alert alert-secondary mb-0">
+                              {{ info.section_description }}
+                          </div>
+                          {% endif %}
+
+                          <div class="card-body">
+                              <form class="surfow_ajaxform"
+                              data-redirect=""
+                              data-method="post"
+                              data-action="edit-setting"
+                              data-type="user" >
+                                {{ put_session_key() }}
+                                <input type="hidden" name="setting" value="{{ info.section_key }}" />
+
+                                {% if info.params %}
+                                {% for param in info.params %}
+                                    {% if param.showable %}
+                                    <div class="form-group">
+                                      <label class="form-label">{{ param.label|e }}
+                                        {% if param.description %} <span class="text-muted">&mdash;</span> <span class="form-help" data-toggle="popover" data-placement="top" data-content="{{ param.description|e }}" data-original-title="" title="">?</span>{% endif %}
+                                      </label>
+
+                                      {% if param.type == "text" %}
+                                        <input class="form-control" name="param[{{ param.key }}]" value="{% if s(param.key)|e %}{{ s(param.key)|e }}{% elseif not param.editable %}{{ param.default }}{% endif %}" placeholder="{{ param.placeholder|e }}" type="text" {% if not param.editable %}readonly=""{% endif %}{% if param.required %}required=""{% endif %}>
+                                      {% endif %}
+
+                                      {% if param.type == "password" %}
+                                        <input class="form-control" name="param[{{ param.key }}]" value="{{ s(param.key)|e }}"  placeholder="{{ param.placeholder|e }}" type="password" {% if not param.editable %}readonly=""{% endif %}{% if param.required %}required=""{% endif %}>
+                                      {% endif %}
+
+                                      {% if param.type == "number" %}
+                                        <input class="form-control" name="param[{{ param.key }}]" value="{{ s(param.key)|e }}"  placeholder="{{ param.placeholder|e }}" type="number" {% if not param.editable %}readonly=""{% endif %}{% if param.required %}required=""{% endif %}>
+                                      {% endif %}
+
+                                      {% if param.type == "textarea" %}
+                                        <textarea class="form-control" name="param[{{ param.key }}]" placeholder="{{ param.placeholder|e }}" type="text" {% if not param.editable %}readonly=""{% endif %}{% if param.required %}required=""{% endif %}>{% if s(param.key)|e %}{{ s(param.key)|e }}{% elseif not param.editable %}{{ param.default }}{% endif %}</textarea>
+                                      {% endif %}
+
+                                      {% if param.type == "editor" %}
+                                        <textarea class="form-control html_editor" style="height:300px;" name="param[{{ param.key }}]" placeholder="{{ param.placeholder|e }}" type="text" {% if not param.editable %}readonly=""{% endif %}{% if param.required %}required=""{% endif %}>{{ s(param.key)|e }}</textarea>
+                                      {% endif %}
+
+
+                                      {% if param.type == "radio" %}
+                                      <div class="custom-controls-stacked">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="custom-control custom-radio">
+                                            <input class="custom-control-input" name="param[{{ param.key }}]" value="{{ choice.value|e }}" type="radio" {% if s(param.key) == choice.value %}checked=""{% endif %}>
+                                            <div class="custom-control-label">{{ choice.label|e }}</div>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "radio_switch" %}
+                                      <div class="custom-switches-stacked">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="custom-switch">
+                                            <input class="custom-switch-input" name="param[{{ param.key }}]" value="{{ choice.value|e }}" type="radio" {% if s(param.key) == choice.value %}checked=""{% endif %} >
+                                            <span class="custom-switch-indicator"></span>
+                                            <span class="custom-switch-description">{{ choice.label|e }}</span>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "radio_modern" %}
+                                      <div class="selectgroup selectgroup-pills">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="selectgroup-item">
+                                            <input name="param[{{ param.key }}]" value="{{ choice.value|e }}" class="selectgroup-input" type="radio" {% if s(param.key) == choice.value %}checked=""{% endif %} >
+                                            <span class="selectgroup-button">{{ choice.label|e }}</span>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "checkbox" %}
+                                      <div class="custom-controls-stacked">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" name="{% if choice.key %}param[{{ param.key }}/{{ choice.key }}]{% else %}param[{{ param.key }}][]{% endif %}" value="{{ choice.value|e }}" type="checkbox" {% if s(param.key~"/"~choice.key) == choice.value %}checked=""{% endif %} {% if s(param.key) == choice.value %}checked=""{% endif %}>
+                                            <div class="custom-control-label">{{ choice.label|e }}</div>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "checkbox_switch" %}
+                                      <div class="custom-switches-stacked">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="custom-switch">
+                                            <input class="custom-switch-input" name="{% if choice.key %}param[{{ param.key }}/{{ choice.key }}]{% else %}param[{{ param.key }}][]{% endif %}" value="{{ choice.value|e }}" type="checkbox" {% if s(param.key~"/"~choice.key) == choice.value %}checked=""{% endif %} {% if s(param.key) == choice.value %}checked=""{% endif %}>
+                                            <span class="custom-switch-indicator"></span>
+                                            <span class="custom-switch-description">{{ choice.label|e }}</span>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "checkbox_modern" %}
+                                      <div class="selectgroup selectgroup-pills">
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="selectgroup-item">
+                                            <input name="{% if choice.key %}param[{{ param.key }}/{{ choice.key }}]{% else %}param[{{ param.key }}][]{% endif %}" value="{{ choice.value|e }}" class="selectgroup-input" type="checkbox" {% if s(param.key~"/"~choice.key) == choice.value %}checked=""{% endif %} {% if s(param.key) == choice.value %}checked=""{% endif %}>
+                                            <span class="selectgroup-button">{{ choice.label|e }}</span>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "checkbox_modern_advanced" %}
+                                      {% set cma_key = surfow_encrypt(param.key) %}
+                                      <div class="row gutters-xs">
+                                        <div class="col">
+                                          <input class="form-control" placeholder="{{ l("add") }}..." type="text">
+                                        </div>
+                                        <span class="col-auto">
+                                          <a data-target="{{ cma_key }}" data-key="{{ param.key }}" class="checkbox_modern_advanced btn btn-indigo text-white" type="button">{{ l("add") }}  <i class="fe fe-plus"></i></a>
+                                        </span>
+                                      </div>
+                                      <br>
+                                      <div class="selectgroup selectgroup-pills" id="{{ cma_key }}" >
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <label class="selectgroup-item">
+                                            <input name="param[{{ param.key }}][]" value="{{ choice.value|e }}" class="selectgroup-input" type="checkbox" checked="">
+                                            <span class="selectgroup-button">{{ choice.label|e }}</span>
+                                          </label>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </div>
+                                      {% endif %}
+
+                                      {% if param.type == "select" %}
+                                      <select name="param[{{ param.key }}]" class="form-control" >
+                                          {% if param.choices %}
+                                          {% for choice in param.choices %}
+                                          <option {% if s(param.key) == choice.value %}selected=""{% endif %} value="{{ choice.value|e }}" >{{ choice.label|e }}</option>
+                                          {% endfor %}
+                                          {% endif %}
+                                      </select>
+                                      {% endif %}
+
+                                    </div>
+                                    {% else %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% endif %}
+
+
+
+
+                              {% if info.params %}
+                              <hr>
+                              <div class="row mt-4">
+                                  <div class="col-6 text-left">
+                                      <div class="btn-list">
+                                        <a href="{{ router("admin_settings") }}" class="btn btn-pill btn-secondary btn-space">{{ l("cancel") }}</a>
+                                        <button type="submit" class="surfow_submit btn btn-pill btn-indigo btn-space">{{ l("save_settings") }}</button>
+                                      </div>
+                                  </div>
+                                  <div class="col-6 text-right pt-2">
+                                      <span class="tag">{% if s(info.section_key~"/updated_at") %}{{ l("last_update") }} {{ time_ago(s(info.section_key~"/updated_at")) }}{% endif %}</span>
+                                  </div>
+                              </div>
+                              {% endif %}
+                              <div class="surfow_alert mb-0 mt-4" ></div>
+                            </form>
+
+                            <script>
+                            require(['jquery', 'editor'], function(jQuery) {
+                                jQuery.getScript( "{{ turl() }}/assets/js/vendors/langs/{{ current_language() }}.min.js", function( data, textStatus, jqxhr ) {
+                                    jQuery.trumbowyg.svgPath = '{{ turl() }}/assets/images/icons.svg';
+                                    jQuery(document).ready(function(){
+                                        jQuery(".html_editor").trumbowyg({
+                                            lang: '{{ current_language() }}'
+                                        });
+                                    });
+                                }).fail(function(){
+                                    jQuery.trumbowyg.svgPath = '{{ turl() }}/assets/images/icons.svg';
+                                    jQuery(document).ready(function(){
+                                        jQuery(".html_editor").trumbowyg();
+                                    });
+                                });
+                            });
+                            </script>
+                            <script>
+                            require(['jquery'], function($) {
+                                $(document).ready(function(){
+                                    $('.checkbox_modern_advanced').click(function(){
+                                        var data = $(this).parent().parent().find("input").val();
+                                        var target = $(this).data("target");
+                                        var key = $(this).data("key");
+                                        data = data.replace("http://", "");
+                                        data = data.replace("https://", "");
+                                        data = data.split("/")[0];
+                                        if(data.length > 3 && target.length > 10)
+                                        {
+                                            if ($('#'+target.toString()+' label span:contains("'+data.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {return '&#'+i.charCodeAt(0)+';';})+'")').length == 0)
+                                            {
+                                                var res = '<label class="selectgroup-item">'+
+                                                          '<input name="param['+key+'][]" value="'+data.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {return '&#'+i.charCodeAt(0)+';';})+'" class="selectgroup-input" type="checkbox" checked="">'+
+                                                          '<span class="selectgroup-button">'+data.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {return '&#'+i.charCodeAt(0)+';';})+'</span>'+
+                                                          '</label>';
+                                                $('#'+target.toString()).append(res);
+                                                $(this).parent().parent().find("input").val("");
+                                            }
+                                        }
+                                  });
+                                });
+                            });
+                            </script>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

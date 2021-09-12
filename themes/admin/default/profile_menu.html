@@ -1,0 +1,96 @@
+{% set user = get("user") %}
+
+<div class="card">
+    <div class="card-status card-status-left bg-indigo"></div>
+    <div class="card-body">
+      <div class="media">
+        <span class="avatar avatar mr-2" style="background-image: url('{{ gravatar(user.email) }}')"></span>
+        <div class="media-body">
+          <h4 class="m-0">@{{ user.username|e }}</h4>
+          <p class="text-muted mb-0">{{ user.email|e }}</p>
+        </div>
+      </div>
+    </div>
+</div>
+<div>
+  <div class="list-group list-group-transparent mb-0">
+
+      <a href="{{ router("admin_edit_user", {"uid": user.id}) }}" class="{% if is_routed("admin_edit_user") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_account.svg") }}"></img></i>
+        </span>
+        {{ l("account") }}
+      </a>
+
+      <a href="{{ router("admin_user_profile", {"uid": user.id}) }}" class="{% if is_routed("admin_user_profile") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/overview.svg") }}"></img></i>
+        </span>
+        {{ l("overview") }}
+      </a>
+
+      <a href="{{ router("admin_user_websites", {"uid": user.id}) }}" class="{% if is_routed("admin_user_websites") or is_routed("admin_add_website") or is_routed("admin_edit_website") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_websites.svg") }}"></img></i>
+        </span>
+        {{ l("websites") }}
+      </a>
+
+      <a href="{{ router("admin_user_sessions", {"uid": user.id}) }}" class="{% if is_routed("admin_user_sessions") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_sessions.svg") }}"></img></i>
+        </span>
+        {{ l("sessions") }}
+      </a>
+
+      <a href="{{ router("admin_user_payments", {"uid": user.id}) }}" class="{% if is_routed("admin_user_payments") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_payments.svg") }}"></img></i>
+        </span>
+        {{ l("payments") }}
+      </a>
+
+      <a href="{{ router("admin_user_purchases", {"uid": user.id}) }}" class="{% if is_routed("admin_user_purchases") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_purchases.svg") }}"></img></i>
+        </span>
+        {{ l("purchases") }}
+      </a>
+
+      <a href="{{ router("admin_user_wallet", {"uid": user.id}) }}" class="{% if is_routed("admin_user_wallet") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_wallet.svg") }}"></img></i>
+        </span>
+        {{ l("wallet") }}
+      </a>
+
+      <a href="{{ router("admin_user_withdrawals", {"uid": user.id}) }}" class="{% if is_routed("admin_user_withdrawals") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_withdrawals.svg") }}"></img></i>
+        </span>
+        {{ l("withdrawals") }}
+      </a>
+
+      <a href="{{ router("admin_user_referrals", {"uid": user.id}) }}" class="{% if is_routed("admin_user_referrals") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_referrals.svg") }}"></img></i>
+        </span>
+        {{ l("referrals") }}
+      </a>
+
+      <a href="{{ router("admin_user_billing_addresses", {"uid": user.id}) }}" class="{% if is_routed("admin_user_billing_addresses") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_billing_addresses.svg") }}"></img></i>
+        </span>
+        {{ l("billing_addresses") }}
+      </a>
+
+      <a href="{{ router("admin_user_saved_cards", {"uid": user.id}) }}" class="{% if is_routed("admin_user_saved_cards") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/user_saved_cards.svg") }}"></img></i>
+        </span>
+        {{ l("saved_cards") }}
+      </a>
+
+  </div><br>
+</div>

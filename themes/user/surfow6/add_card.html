@@ -1,0 +1,52 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("add_new_card")}}
+                      </h1>
+                    </div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect="{{ router("cards") }}"
+                    data-method="post"
+                    data-action="add-card"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card p-3">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+
+                              <div class="text-indigo"><i class="fe fe-shield" ></i> {{ l("credit_card_info") }}</div>
+
+                              <div class="row mt-2" >
+                                  <div class="col-lg-8">
+                                      {{ include("credit_card_form.html") }}
+                                  </div>
+                                  <div class="col-lg-4">
+                                      <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                          <input type="checkbox" name="agree" checked="" class="custom-control-input" />
+                                          <span class="custom-control-label">{{ l("i_agree") }} <a href="{{ router("page", '{"name":"tos"}') }}">{{ l("tos") }}</a></span>
+                                        </label>
+                                      </div>
+                                      <div class="mt-2 mb-2 btn-list">
+                                          <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-2">{{ l("add") }} <i class="fe fe-plus"></i></button>
+                                          <a href="{{ router("cards") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("go_back") }} <i class="fe fe-delete"></i> </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

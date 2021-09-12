@@ -1,0 +1,12 @@
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="row">
+            {% if not s("ads/show_sidebar_ads") %}
+            <div class="col-lg-2 col-md-12"></div>
+            <div class="col-lg-8 col-md-12">
+            {% else %}
+            <div class="col-lg-9 col-md-12">
+            {% endif %}
+            {% if s("ads/show_line_ads") %}
+                {{ _s("ads/top") }}
+            {% endif %}

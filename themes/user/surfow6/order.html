@@ -1,0 +1,127 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+
+            <div class="page-header">
+              <h1 class="page-title">
+                 {{l("order")}}
+              </h1>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card-body mt-6 text-center">
+                              <h1 style="font-weight:300;" >{{ l("buy_traffic")|upper }}</h1>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card-body text-center">
+                                <div class="display-3 my-4"><i class="fe fe-zap text-indigo" ></i></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card-body text-center">
+                                <div class="text-center mt-6">
+                                    <a href="{{ router("order_type", '{"type":"traffic"}') }}" class="btn btn-pill btn-icon btn-indigo btn-block"><i class="fe fe-zap" ></i> {{ l("explore_plans") }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-status bg-azure"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("upgrade_now") }}</div>
+                    <div class="display-3 my-4"><i class="fe fe-package text-azure" ></i></div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("order_type", '{"type":"upgrade"}') }}" class="btn btn-pill btn-icon btn-azure btn-block"><i class="fe fe-package" ></i> {{ l("explore_plans") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-status bg-orange"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("session_slots") }}</div>
+                    <div class="display-3 my-4"><i class="fe fe-server text-orange" ></i></div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("order_type", '{"type":"sessions"}') }}" class="btn btn-pill btn-icon btn-orange btn-block"><i class="fe fe-server" ></i> {{ l("explore_plans") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-status bg-cyan"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("website_slots") }}</div>
+                    <div class="display-3 my-4"><i class="fe fe-globe text-cyan" ></i></div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("order_type", '{"type":"websites"}') }}" class="btn btn-pill btn-icon btn-cyan btn-block"><i class="fe fe-globe" ></i> {{ l("explore_plans") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <h1 class="page-title mb-2">
+               {{l("purchases")}}
+            </h1>
+
+            <div class="card">
+              <div class="card-status card-status-left bg-indigo"></div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table card-table table-vcenter text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>{{ l("name") }}</th>
+                            <th>{{ l("status") }}</th>
+                            <th>{{ l("amount") }}</th>
+                            <th>{{ l("date") }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% set items = get("items") %}
+                            {% if items %}
+                                {% for item in items %}
+                                <tr>
+                                  <td><span class="text-muted">{{ get_plan_name(item.plan_id) }}</span></td>
+                                  <td><span class="status-icon bg-success"></span> {{ l("done") }}</td>
+                                  <td>
+                                      <div>${{ item.amount }}</div><div class="small text-muted">{{ item.currency|upper }}</div>
+                                  </td>
+                                  <td>{{ time_ago(item.created_at) }}</td>
+                                </tr>
+                                {% endfor %}
+                                {{ _get("pagination") }}
+                            {% else %}
+                                <p>{{ l("error_empty_items") }}</p>
+                            {% endif %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>
+
+            {{ include("refund_policy.html") }}
+
+            {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

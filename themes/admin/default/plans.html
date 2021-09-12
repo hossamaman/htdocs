@@ -1,0 +1,111 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    {% set items = get("items") %}
+                    <div class="col-12">
+                        {{ include("plans_menu.html") }}
+                        {% if items %}
+                        <div class="card">
+                          <div class="table-responsive">
+                            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                              <thead>
+                                <tr>
+                                  <th class="text-center w-1"><i class="icon-people"></i></th>
+                                  <th>{{ l("name") }}</th>
+                                  <th>{{ l("price") }}</th>
+                                  <th class="text-center">{{ l("plan_type") }}</th>
+                                  <th>{{ l("featured") }}</th>
+                                  <th class="text-center"><i class="icon-settings"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for item in items %}
+                                {% set uniqueid = surfow_encrypt(item.id) %}
+                                {% set this_table = 'plans' %}
+                                <tr id="item_{{ uniqueid }}" >
+                                  <td class="text-center">
+                                    <span class="avatar">{{ item.id }}
+                                        {% if item.status %}
+                                        <span class="avatar-status bg-indigo"></span>
+                                        {% else %}
+                                        <span class="avatar-status bg-danger"></span>
+                                        {% endif %}
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <div>{% if item.name %} {{ item.name|e|upper }} {% else %}N/A{% endif %}</div>
+                                    <div class="small text-muted">
+                                      {% if item.created_at %} {{ l("added") }} {{ time_ago(item.created_at) }} {% else %}N/A{% endif %}
+                                    </div>
+                                  </td>
+                                  <td class="text-left">
+                                      <div><i class="fe fe-dollar-sign text-orange" ></i> {{ item.price|e }}</div>
+                                  </td>
+                                  <td class="text-center">
+                                      {% if item.type == 'upgrade' %}
+                                        <div><img class="user-type" src="{{ storage("data/upgrade_plan.svg") }}" /></div>
+                                        <div><small>{{ l("upgrade_plan") }}</small></div>
+                                      {% endif %}
+                                      {% if item.type == 'traffic' %}
+                                        <div><img class="user-type" src="{{ storage("data/points_plan.svg") }}" /></div>
+                                        <div><small>{{ l("traffic_plan") }}</small></div>
+                                      {% endif %}
+                                      {% if item.type == 'websites' %}
+                                        <div><img class="user-type" src="{{ storage("data/websites_plan.svg") }}" /></div>
+                                        <div><small>{{ l("websites_plan") }}</small></div>
+                                      {% endif %}
+                                      {% if item.type == 'sessions' %}
+                                        <div><img class="user-type" src="{{ storage("data/sessions_plan.svg") }}" /></div>
+                                        <div><small>{{ l("sessions_plan") }}</small></div>
+                                      {% endif %}
+                                  </td>
+                                  <td>
+                                      {% if item.featured %}
+                                      <span class="text-green"><i class="fe fe-star"></i>  {{ l("featured")|upper }}</span>
+                                      {% else %}
+                                      <span class="text-muted"><i class="fe fe-star"></i>  {{ l("not_featured")|upper }}</span>
+                                      {% endif %}
+                                  </td>
+                                  <td class="text-center">
+                                    <div class="item-action dropdown">
+                                      <a href="javascript:void(0)" data-toggle="dropdown" class="icon" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                                      <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                                        <a href="{{ router("admin_edit_plan", {"id":item.id}) }}" class="dropdown-item" ><i class="dropdown-icon fe fe-edit-2"></i> {{ l("edit") }}</a>
+                                        <a id="enable_{{ uniqueid }}" data-action="enable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-play"></i> {{ l("enable") }}</a>
+                                        <a id="disable_{{ uniqueid }}" data-action="disable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if not item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-pause"></i> {{ l("disable") }}</a>
+                                        <a id="delete_{{ uniqueid }}" data-action="delete" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item"><i class="dropdown-icon fe fe-trash"></i> {{ l("delete") }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-x"></i> {{ l("cancel") }}</a>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        {{ _get("pagination") }}
+                    </div>
+                    {% else %}
+                    <p class="p-3 text-muted" ><i class="fe fe-activity" ></i> {{ l("nothing_found") }}</p>
+                    {% endif %}
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

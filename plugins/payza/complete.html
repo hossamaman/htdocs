@@ -1,0 +1,19 @@
+{% set data = get("data") %}
+{% set secret_key = get("secret_key") %}
+<form method="post" id="post_payza" action="https://secure.payza.eu/checkout">
+    <input type="hidden" name="ap_merchant" value="{{ s("payza/email") }}"/>
+    <input type="hidden" name="ap_purchasetype" value="item"/>
+    <input type="hidden" name="ap_itemname" value="{{ data.credit }} Credit"/>
+    <input type="hidden" name="ap_amount" value="{{ data.credit }}"/>
+    <input type="hidden" name="ap_currency" value="USD"/>
+    <input type="hidden" name="ap_description" value="{{ data.credit }} Credit will be added to the wallet"/>
+    <input type="hidden" name="ap_quantity" value="1"/>
+    <input type="hidden" name="ap_returnurl" value="{{ router("success_payza") }}"/>
+    <input type="hidden" name="ap_cancelurl" value="{{ router("error_payza") }}"/>
+    <input type="hidden" name="apc_1" value="{{ secret_key }}"/>
+    <input type="hidden" name="ap_alerturl" value="{{ router("notify_payza") }}"/>
+    <input type="hidden" name="ap_ipnversion" value="2"/>
+    <div id="loading" class="pt-9 pb-9 text-center">
+        <button stype="submit" style="background-color: #13a24a !important;border-color: #13a24a !important; color: #ffffff;" class="text-white btn btn-pill btn-secondary btn-lg"><img style="height:40px;width:auto;" src="{{ constant('payza_payment_url') }}/white-logo.png" /> <span class="pl-2 pt-1 pr-2">{{ l("payza_continue") }}</span></button>
+    </div>
+</form>

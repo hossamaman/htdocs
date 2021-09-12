@@ -1,0 +1,85 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {{ include("users_menu.html") }}
+
+                        <form class="card surfow_ajaxform"
+                        data-redirect="{{ router("admin_users") }}"
+                        data-method="post"
+                        data-action="add-user"
+                        data-type="user" >
+                        {{ put_session_key() }}
+                          <div class="card-body p-6">
+                            <div class="surfow_alert" ></div>
+
+                            <div class="row">
+                            <div class="col-lg-6 col-12">
+
+                            <div class="form-group">
+                              <label class="form-label">{{ l("username") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-user"></i>
+                                </span>
+                                <input type="text" name="username" class="form-control" placeholder="{{ l("username") }}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">{{ l("email") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-mail"></i>
+                                </span>
+                                <input type="email" name="email" class="form-control" placeholder="{{ l("email") }}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">{{ l("password") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-lock"></i>
+                                </span>
+                                <input type="password" name="password" class="form-control" placeholder="{{ l("password") }}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">{{ l("password2") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-lock"></i>
+                                </span>
+                                <input type="password" name="password2" class="form-control" placeholder="{{ l("password") }}">
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="display-4 my-6 text-muted text-center" ><img style="width:70px;height:auto;" class="d-none d-lg-inline pt-9 pb-9" src="{{ storage("data/add_user.svg") }}" /></div>
+                            </div>
+                            </div>
+
+                            <div class="form-footer mt-0">
+                              <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-user-plus mr-2"></i> {{ l("add_user") }}</button>
+                            </div>
+                          </div>
+                        </form>
+
+
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

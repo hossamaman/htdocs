@@ -1,0 +1,417 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("add_website")}}
+                      </h1>
+                    </div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect="{{ router("websites") }}"
+                    data-method="post"
+                    data-action="add-website"
+                    data-type="user" >
+                        {{ put_session_key() }}
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("web_address") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-globe"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("web_example_url") }}" name="url" type="text">
+                                  </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("visit_duration") }}</label>
+                                  <input type="text" style="display:none;" id="visite_duration_range" name="duration" value="" />
+                                  <span><i class="fe fe-activity"></i> {{ l("estimated_visits") }} <b id='calculate_visits' >...</b></span>
+                                  <script>
+                                  require(['slider', 'jquery'], function(ionRangeSlider, $) {
+                                      $(document).ready(function(){
+                                          $("#visite_duration_range").ionRangeSlider({
+                        					type: "single",
+                        					min: {{ s("exchange/minduration") }},
+                        					max: {{ s("exchange/maxduration") }},
+                        					from: 30,
+                        					keyboard: true,
+                        					onStart: function (data) {
+                        						estimated_visits(data["from"], "#calculate_visits", {{ s("nochange/point") }});
+                        					},
+                        					onChange: function (data) {
+                        						estimated_visits(data["from"], "#calculate_visits", {{ s("nochange/point") }});
+                        					},
+                        					onFinish: function (data) {
+                        						estimated_visits(data["from"], "#calculate_visits", {{ s("nochange/point") }});
+                        					},
+                        					onUpdate: function (data) {
+                        						estimated_visits(data["from"], "#calculate_visits", {{ s("nochange/point") }});
+                        					}
+                        				});
+                          			  });
+                                  });
+                                  </script>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("max_per_hour") }}</label>
+                                  <input type="text" style="display:none;" id="max_per_hour" name="max_hour_hits" value="" />
+                                  <script>
+                                  require(['slider', 'jquery'], function(ionRangeSlider, $) {
+                                      $(document).ready(function(){
+                                          $("#max_per_hour").ionRangeSlider({
+                            				  type: "single",
+                            				  min: 100,
+                            				  max: 5000,
+                            				  from: 2000,
+                            				  keyboard: true
+                            			  });
+                          			  });
+                                  });
+                                  </script>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                <div class="form-label">{{ l("limit_total_hits") }}</div>
+                                <div class="custom-switches-stacked">
+                                  <label class="custom-switch">
+                                    <input name="apply_limit" value="off" class="custom-switch-input" checked="" type="radio">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">{{ l("unlimited") }}</span>
+                                  </label>
+                                  <label class="custom-switch">
+                                    <input name="apply_limit" value="on" class="custom-switch-input" type="radio">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">{{ l("limited") }}</span>
+                                  </label>
+                                </div>
+                                <div id="total_limit" style="display:none;" class="row gutters-sm">
+                                    <div class="col">
+                                        <div class="input-icon">
+                                            <span class="input-icon-addon">
+                                                <i class="fe fe-bar-chart"></i>
+                                            </span>
+                                            <input class="form-control" placeholder="10000" name="max_hits" value="10000" type="text">
+                                        </div>
+                                    </div>
+                                    <span class="col-auto align-self-center">
+                                      <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("limited_hits_note") }}</p>" data-original-title="" title="">?</span>
+                                  </span>
+                                </div>
+                                <script>
+                                require(['jquery'], function($) {
+                                    $(document).ready(function(){
+                                        $('input:radio[name="apply_limit"]').change(function(){
+                        					if ($(this).is(':checked') && $(this).val() == 'on') {
+                        						$("#total_limit").slideDown(300);
+                        					} else {
+                        						$("#total_limit").slideUp(300);
+                        					}
+                        				});
+                                    });
+                                });
+                                </script>
+                              </div>
+                          </div>
+                        </div>
+
+                        {% if get("show_useragent_feature") %}
+                            {% set useragent_disabled = '' %}
+                            {% set useragent_bg       = '' %}
+                            {% set useragent_body     = '' %}
+                            {% set useragent_alert    = false %}
+                        {% else %}
+                            {% set useragent_disabled = 'disabled="disabled"' %}
+                            {% set useragent_bg       = 'bg-gray' %}
+                            {% set useragent_body     = 'bg-gray-lightest' %}
+                            {% set useragent_alert    = true %}
+                        {% endif %}
+                        <div class="card">
+
+                          {% if useragent_alert %}
+                          <div class="card-alert alert alert-primary mb-0">
+                            <i class="fe fe-lock" ></i> {{ l("upgrade_feature_note") }} <a href="{{ router("payments") }}" >{{ l("upgrade") }}</a>
+                          </div>
+                          {% else %}
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          {% endif %}
+                          <div class="card-body {{ useragent_body }}">
+                              <div class="form-group">
+                                <div class="form-label">{{ l("user_agent") }}</div>
+                                <div class="custom-switches-stacked">
+                                  <label class="custom-switch">
+                                    <input name="apply_useragent" {{ useragent_disabled }} value="off" class="custom-switch-input" checked="" type="radio">
+                                    <span class="custom-switch-indicator {{ useragent_bg }}"></span>
+                                    <span class="custom-switch-description">{{ l("random_devices") }}</span>
+                                  </label>
+                                  <label class="custom-switch">
+                                    <input name="apply_useragent" {{ useragent_disabled }} value="on" class="custom-switch-input" type="radio">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">{{ l("specified_device") }}</span>
+                                  </label>
+                                </div>
+                                {% if not useragent_alert %}
+                                <div id="show_devices" style="display:none;" class="input-icon">
+                                    <div class="selectgroup w-100">
+                                          <label class="selectgroup-item">
+                                            <input name="useragent" value="smartphone" class="selectgroup-input" type="radio">
+                                            <span class="selectgroup-button selectgroup-button-icon"><i class="fe fe-smartphone"></i> {{ l("smartphone")|upper }}</span>
+                                            <i class="mt-2" ></i>
+                                          </label>
+                                          <label class="selectgroup-item">
+                                            <input name="useragent" value="tablet" class="selectgroup-input" type="radio">
+                                            <span class="selectgroup-button selectgroup-button-icon"><i class="fe fe-tablet"></i> {{ l("tablet")|upper }}</span>
+                                          </label>
+                                          <label class="selectgroup-item">
+                                            <input name="useragent" value="desktop" checked="" class="selectgroup-input" type="radio">
+                                            <span class="selectgroup-button selectgroup-button-icon"><i class="fe fe-monitor"></i> {{ l("desktop")|upper }}</span>
+                                          </label>
+                                    </div>
+                                </div>
+                                <script>
+                                require(['jquery'], function($) {
+                                    $(document).ready(function(){
+                                        $('input:radio[name="apply_useragent"]').change(function(){
+                        					if ($(this).is(':checked') && $(this).val() == 'on') {
+                        						$("#show_devices").slideDown(300);
+                        					} else {
+                        						$("#show_devices").slideUp(300);
+                        					}
+                        				});
+                                    });
+                                });
+                                </script>
+                                {% else %}
+                                <input type="hidden" name="apply_useragent" value="off" />
+                                {% endif %}
+                              </div>
+                          </div>
+                        </div>
+
+                        {% if get("show_source_feature") %}
+                            {% set source_disabled = '' %}
+                            {% set source_bg       = '' %}
+                            {% set source_body     = '' %}
+                            {% set source_alert    = false %}
+                        {% else %}
+                            {% set source_disabled = 'disabled="disabled"' %}
+                            {% set source_bg       = 'bg-gray' %}
+                            {% set source_body     = 'bg-gray-lightest' %}
+                            {% set source_alert    = true %}
+                        {% endif %}
+                        <div class="card">
+                            {% if source_alert %}
+                            <div class="card-alert alert alert-primary mb-0">
+                              <i class="fe fe-lock" ></i> {{ l("upgrade_feature_note") }} <a href="{{ router("payments") }}" >{{ l("upgrade") }}</a>
+                            </div>
+                            {% else %}
+                            <div class="card-status card-status-left bg-indigo"></div>
+                            {% endif %}
+                          <div class="card-body {{ source_body }}">
+                              <div class="form-group">
+                                <div class="form-label">{{ l("traffic_source") }}</div>
+                                <div class="custom-switches-stacked">
+                                  <label class="custom-switch">
+                                    <input name="apply_source" {{ source_disabled }} value="off" class="custom-switch-input" checked="" type="radio">
+                                    <span class="custom-switch-indicator {{ source_bg }}"></span>
+                                    <span class="custom-switch-description">{{ l("no_referer") }}</span>
+                                  </label>
+                                  <label class="custom-switch">
+                                    <input name="apply_source" {{ source_disabled }} value="on" class="custom-switch-input" type="radio">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">{{ l("custom_referer") }}</span>
+                                  </label>
+                                </div>
+                                {% if not source_alert %}
+                                <div id="show_referrer" style="display:none;" class="row gutters-sm">
+                                    <div class="col">
+                                        <div class="input-icon">
+                                            <span class="input-icon-addon">
+                                                <i class="fe fe-git-branch"></i>
+                                            </span>
+                                            <input class="form-control" name="source" placeholder="{{ l("web_example_url") }}" type="text">
+                                        </div>
+                                    </div>
+                                    <span class="col-auto align-self-center">
+                                      <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("custom_source_note") }}</p>" data-original-title="" title="">?</span>
+                                  </span>
+                                </div>
+
+                                <script>
+                                require(['jquery'], function($) {
+                                    $(document).ready(function(){
+                                        $('input:radio[name="apply_source"]').change(function(){
+                        					if ($(this).is(':checked') && $(this).val() == 'on') {
+                        						$("#show_referrer").slideDown(300);
+                        					} else {
+                        						$("#show_referrer").slideUp(300);
+                        					}
+                        				});
+                                    });
+                                });
+                                </script>
+                                {% else %}
+                                <input type="hidden" name="apply_source" value="off" />
+                                {% endif %}
+                              </div>
+                          </div>
+                        </div>
+
+                        {% if get("show_geotargeting_feature") %}
+                            {% set geo_disabled = '' %}
+                            {% set geo_bg       = '' %}
+                            {% set geo_body     = '' %}
+                            {% set geo_alert    = false %}
+                        {% else %}
+                            {% set geo_disabled = 'disabled="disabled"' %}
+                            {% set geo_bg       = 'bg-gray' %}
+                            {% set geo_body     = 'bg-gray-lightest' %}
+                            {% set geo_alert    = true %}
+                        {% endif %}
+                        <div class="card">
+                            {% if geo_alert %}
+                            <div class="card-alert alert alert-primary mb-0">
+                              <i class="fe fe-lock" ></i> {{ l("upgrade_feature_note") }} <a href="{{ router("payments") }}" >{{ l("upgrade") }}</a>
+                            </div>
+                            {% else %}
+                            <div class="card-status card-status-left bg-indigo"></div>
+                            {% endif %}
+                          <div class="card-body {{ geo_body }}">
+                              <div class="form-group">
+                                <div class="form-label">{{ l("get_target") }}</div>
+                                <div class="custom-switches-stacked">
+                                  <label class="custom-switch">
+                                    <input name="apply_geolocation" {{ geo_disabled }} value="off" class="custom-switch-input" checked="" type="radio">
+                                    <span class="custom-switch-indicator {{ geo_bg }}"></span>
+                                    <span class="custom-switch-description">{{ l("all_countries") }}</span>
+                                  </label>
+                                  <label class="custom-switch">
+                                    <input name="apply_geolocation" {{ geo_disabled }} value="on" class="custom-switch-input" type="radio">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">{{ l("specific_countries") }}</span>
+                                  </label>
+                                </div>
+                                {% if not geo_alert %}
+                                {% spaceless %}
+                                <div id="geo_targeting" style="padding: 10px auto;border-radius:7px;border: 1px solid rgba(0, 40, 100, 0.12);height:250px;overflow:auto;display:none;" >
+                                    <div style="padding: 10px;" class="selectgroup selectgroup-pills">
+                                        {% set targets = s("geotarget/list") %}
+                                        {% if targets %}
+                                        {% for key, target in targets %}
+                                          <label class="select_location selectgroup-item">
+                                            <input name="geolocation[]" value="{{ key }}" class="selectgroup-input" type="checkbox">
+                                            <span class="selectgroup-button">
+                                                <span style="background-image:url('{{ turl() }}/assets/images/flags/{{ key|lower }}.svg');" class="country_flag">{{ target }}</span>
+                                            </span>
+                                          </label>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div style="display:none;" class="mt-2" id="geo_targeting_selected" >
+                                    <div class="avatar-list"></div>
+                                </div>
+                                {% endspaceless %}
+                                <script>
+                                require(['jquery'], function($) {
+                                    $(document).ready(function(){
+                                        var countries_length = 0;
+                                        $('input:checkbox[name="geolocation[]"]').change(function(){
+                                            var ele_selected = $("#geo_targeting_selected");
+                                            var selected_code = 'selected_country_'+$(this).val();
+                                            if ($(this).is(':checked')) {
+                                                countries_length++;
+                                                ele_selected.find(".avatar-list").prepend('<span class="'+selected_code+' avatar normal_avatar" ></span>').find(":first").css({
+                                                    "background-image": $(this).parent().find(".selectgroup-button span").css("background-image"),
+                                                    "display" : "none"
+                                                }).slideDown(300);
+                                                if(ele_selected.find(".avatar-list .normal_avatar").length > 14)
+                                                {
+                                                    ele_selected.find(".avatar-list .normal_avatar:visible:last").hide();
+                                                    var count_countries = Math.floor(countries_length - 14);
+                                                    if(ele_selected.find(".avatar-list .avatar:last").hasClass("country_counter"))
+                                                    {
+                                                        ele_selected.find(".avatar-list .avatar.country_counter").hide().html("+"+count_countries).fadeIn(200);
+                                                    } else {
+                                                        ele_selected.find(".avatar-list").append('<span style="display:none;" class="country_counter avatar">+'+count_countries+'</span>').find(".country_counter").fadeIn(200);
+                                                    }
+                                                }
+                        					} else {
+                                                countries_length--;
+                                                var count_countries = Math.floor(countries_length - 14);
+                        						$("."+selected_code).slideUp(200); setTimeout(function(){ $("."+selected_code).remove(); }, 250);
+                                                if(ele_selected.find(".avatar-list .avatar:last").hasClass("country_counter"))
+                                                {
+                                                    ele_selected.find(".avatar-list .avatar.country_counter").html("+"+count_countries);
+                                                    if(ele_selected.find(".avatar-list .normal_avatar:visible").length < 15)
+                                                    {
+                                                        ele_selected.find(".avatar-list .normal_avatar:hidden:first").slideDown(300).addClass("hidden_avatar");
+                                                    }
+                                                }
+                        					}
+                                            if(countries_length < 15)
+                                            {
+                                                ele_selected.find(".avatar-list .avatar.country_counter").remove();
+                                            }
+                        				});
+                                        $('input:radio[name="apply_geolocation"]').change(function(){
+                        					if ($(this).is(':checked') && $(this).val() == 'on') {
+                                                setTimeout(function(){
+                                                    $("#geo_targeting").slideDown(300);
+                                                    $("#geo_targeting_selected").fadeIn(300);
+                                                }, 500);
+                        					} else {
+                        						$("#geo_targeting").slideUp(300);
+                                                $("#geo_targeting_selected").fadeOut(300);
+                        					}
+                        				});
+                                    });
+                                });
+                                </script>
+                                {% else %}
+                                <input type="hidden" name="apply_geolocation" value="off" />
+                                {% endif %}
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 mb-2 btn-list">
+                            <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("add") }} <i class="fe fe-check-circle"></i></button>
+                            <a href="{{ router("websites") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("cancel") }} <i class="fe fe-x-circle"></i> </a>
+                        </div>
+
+                    </form>
+
+
+
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

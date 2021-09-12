@@ -1,0 +1,55 @@
+    <div class="page-main">
+          <div class="header py-4">
+            <div class="container">
+              <div class="d-flex">
+                <a class="header-brand" href="{{ router("dashboard") }}">
+                  <img src="{{ s('generale/logo') }}" class="header-brand-img" alt="{{ s('generale/name') }}">
+                </a>
+                <div class="d-flex order-lg-2 ml-auto">
+                  <div class="nav-item">
+                      {% set wallet = get("wallet") %}
+                      <a style="text-decoration:none;" class="text-green" href="{{ router("wallet") }}"> {{ wallet["confirmed"]|number_format(1, '.', ',') }} <i class="fe fe-dollar-sign" ></i></a>
+                  </div>
+                  <div class="nav-item">
+                      <a style="text-decoration:none;"  class="text-indigo" href="{{ router("dashboard") }}"> {{ do_action("template", "user_points") }} <i class="fe fe-database" ></i></a>
+                  </div>
+                  <div class="dropdown">
+                    <a href="{{ router("settings") }}" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                      <span class="avatar avatar-indigo">{{ u("username")|upper[:2] }}
+                          <span class="avatar-status bg-green"></span>
+                      </span>
+                      <span class="ml-2 d-none d-lg-block">
+                        <span class="text-default">{{ u("username")|upper[:25] }}</span>
+                        <small class="text-muted d-block mt-1">{{ u("email")[:25] }}</small>
+                      </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ router("settings") }}">
+                        <i class="dropdown-icon text-indigo fe fe-settings"></i> {{ l("edit_settings") }}
+                      </a>
+                      <a class="dropdown-item" href="{{ router("billing") }}">
+                        <i class="dropdown-icon text-indigo fe fe-map"></i> {{ l("billing_addresses") }}
+                      </a>
+                      {% if s("defaults/withdrawal_status")|lower == 'yes' %}
+                      <a class="dropdown-item" href="{{ router("affiliate") }}">
+                        <i class="dropdown-icon text-indigo fe fe-user-check"></i> {{ l("affiliate_settings") }}
+                      </a>
+                      {% endif %}
+                      <a class="dropdown-item" href="{{ router("cards") }}">
+                        <i class="dropdown-icon text-indigo fe fe-credit-card"></i> {{ l("saved_cards") }}
+                      </a>
+                      <a class="dropdown-item" href="{{ router("contact") }}">
+                        <i class="dropdown-icon text-indigo fe fe-help-circle"></i> {{ l("contact") }}
+                      </a>
+                      <a class="dropdown-item" href="{{ router("logout") }}">
+                        <i class="dropdown-icon text-indigo fe fe-log-out"></i> {{ l("logout") }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                  <span class="header-toggler-icon"></span>
+                </a>
+              </div>
+            </div>
+          </div>

@@ -1,0 +1,181 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("profile_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="card">
+
+                          <div class="card-body">
+                              <div class="row">
+
+                                <div class="col-sm-6 col-lg-3">
+                                  <div class="card p-3">
+                                    <div class="d-flex align-items-center">
+                                      <span class="stamp stamp-md bg-indigo mr-3">
+                                        <i class="fe fe-shield"></i>
+                                      </span>
+                                      <div>
+                                          <h4 class="m-0"><a class="text-uppercase" >
+                                              {% if user.type == 'pro' %}
+                                                <small>{{ l("paid_account") }}</small>
+                                              {% else %}
+                                                <small>{{ l("free_account") }}</small>
+                                              {% endif %}
+                                          </a>
+                                          </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                  <div class="col-sm-6 col-lg-3">
+                                    <div class="card p-3">
+                                      <div class="d-flex align-items-center">
+                                        <span class="stamp stamp-md bg-indigo mr-3">
+                                          <i class="fe fe-globe"></i>
+                                        </span>
+                                        <div>
+                                          <h4 class="m-0"><a class="text-uppercase" >
+                                              {{ user.website_slots }}
+                                              <small>{{l("website_slots")}}</small></a>
+                                          </h4>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-sm-6 col-lg-3">
+                                    <div class="card p-3">
+                                      <div class="d-flex align-items-center">
+                                        <span class="stamp stamp-md bg-indigo mr-3">
+                                          <i class="fe fe-server"></i>
+                                        </span>
+                                        <div>
+                                            <h4 class="m-0"><a class="text-uppercase" >
+                                                {{ user.session_slots }}
+                                                <small>{{l("session_slots")}}</small></a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-sm-6 col-lg-3">
+                                    <div class="card p-3">
+                                      <div class="d-flex align-items-center">
+                                        <span class="stamp stamp-md bg-indigo mr-3">
+                                          <i class="fe fe-percent"></i>
+                                        </span>
+                                        <div>
+                                          <h4 class="m-0"><a class="text-uppercase" >
+                                              {{ user.traffic_ratio }}%
+                                              <small>{{l("traffic_ratio")}}</small></a>
+                                          </h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-green">
+                                          <i class="fe fe-database"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{ user.points|number_format(0, '.', ',') }}</div>
+                                        <div class="text-muted mb-4">{{l("points")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-orange">
+                                          <i class="fe fe-database"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{do_action("template", "monthly_earning")}}</div>
+                                        <div class="text-muted mb-4">{{l("monthly_earning")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-blue">
+                                          <i class="fe fe-database"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{do_action("template", "weekly_earning")}}</div>
+                                        <div class="text-muted mb-4">{{l("weekly_earning")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-green">
+                                          <i class="fe fe-bar-chart-2"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{do_action("template", "hits_in_6_months")}}</div>
+                                        <div class="text-muted mb-4">{{l("6_months_hits")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-orange">
+                                          <i class="fe fe-bar-chart-2"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{do_action("template", "monthly_hits")}}</div>
+                                        <div class="text-muted mb-4">{{l("monthly_hits")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-lg-4">
+                                    <div class="card">
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-blue">
+                                          <i class="fe fe-bar-chart-2"></i>
+                                        </div>
+                                        <div class="h1 m-0">{{do_action("template", "weekly_hits")}}</div>
+                                        <div class="text-muted mb-4">{{l("weekly_hits")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12">
+                                    <h3><i class="fe fe-bar-chart-2 text-orange" ></i> {{ l("stats_today") }}</h3>
+                                    <div id="stats_in_24" style="height: 12rem"></div>
+                                    {{ do_action("template", "stats_in_24") }}
+                                  </div>
+
+                                  <div class="col-lg-12">
+                                    <h3><i class="fe fe-bar-chart-2 text-orange" ></i> {{ l("stats_6months") }}</h3>
+                                    <div id="stats_in_6months" style="height: 12rem"></div>
+                                    {{ do_action("template", "stats_in_6months") }}
+                                  </div>
+                              </div>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

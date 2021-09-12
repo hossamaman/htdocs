@@ -1,0 +1,21 @@
+{% set data = get("data") %}
+{% set secret_key = get("secret_key") %}
+<center>
+<form action="https://www.coinpayments.net/index.php" method="post">
+	<input type="hidden" name="cmd" value="_pay">
+	<input type="hidden" name="reset" value="1">
+	<input type="hidden" name="merchant" value="{{ s("coinpayments/merchant_id") }}">
+	<input type="hidden" name="item_name" value="{{ data.credit }} Credit">
+	<input type="hidden" name="currency" value="USD">
+	<input type="hidden" name="amountf" value="{{ data.credit }}">
+	<input type="hidden" name="quantity" value="1">
+	<input type="hidden" name="custom" value="{{ secret_key }}">
+	<input type="hidden" name="allow_quantity" value="0">
+	<input type="hidden" name="want_shipping" value="0">
+	<input type="hidden" name="success_url" value="{{ router("success_coinpayments") }}">
+	<input type="hidden" name="cancel_url" value="{{ router("error_coinpayments") }}">
+	<input type="hidden" name="ipn_url" value="{{ router("notify_coinpayments") }}">
+	<input type="hidden" name="allow_extra" value="0">
+	<input type="image" src="{{ constant('coinpayments_payment_url') }}/logo.png" alt="Buy Now with CoinPayments.net">
+</form>
+</center>

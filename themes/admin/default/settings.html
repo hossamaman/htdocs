@@ -1,0 +1,39 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row row-cards">
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        {{ include("settings_menu.html") }}
+                    </div>
+                    {% set items = get("items") %}
+                    {% if items %}
+                        {% for item in items %}
+                            {% if item.show_section %}
+                            <div class="col-12 col-sm-6 col-lg-4">
+                                <div class="card" >
+                                  <div class="card-body">
+                                      <div class="h3 mb-0"><img class="settings_icon" src="{{ item.section_icon }}"></img> {{ item.section_name }}</div>
+                                      <p class="text-muted mt-0">{{ item.section_description }}</p>
+                                      <div class="mb-1"><a href="{{ router("admin_edit_setting", {"key": item.section_key}) }}" class="btn btn-indigo btn-pill" ><i class="fe fe-edit"></i> {{ l("edit") }}</a></div>
+                                  </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

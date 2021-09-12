@@ -1,0 +1,157 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+
+          <div class="my-3 my-md-5">
+          <div class="container">
+            <div class="page-header">
+              <h1 class="page-title">
+                {{ get("title2") }}
+              </h1>
+            </div>
+            <div id="surfow_alert"></div>
+            <div class="row row-cards">
+
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-body pb-0 pt-0 mb-4" >
+                        <div class="card-status card-status-left bg-indigo"></div>
+                        <ul class="nav nav-tabs border-0 mt-0 mb-0">
+                            <li class="nav-item">
+                                <a href="{{ router("admin_latest_payments") }}" class="nav-link"><i class="fe fe-dollar-sign text-red"></i> {{ get("all_money_pending")|number_format(2, '.', ',')  }} {{ l("pending_status") }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ router("admin_latest_payments") }}" class="nav-link"><i class="fe fe-dollar-sign text-green"></i> {{ get("all_money_confirmed")|number_format(2, '.', ',')  }} {{ l("confirmed") }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ router("admin_latest_payments") }}" class="nav-link"><i class="fe fe-dollar-sign text-orange"></i> {{ get("all_money_withdrawal")|number_format(2, '.', ',')  }} {{ l("waiting_for_withdrawal") }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="text-right text-indigo">
+                      <i class="fe fe-users"></i>
+                    </div>
+                    <div class="h1 m-0">{{ get("users_count")|number_format(0, '.', ',') }}</div>
+                    <div class="text-muted mb-4">{{ l("users") }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="text-right text-indigo">
+                      <i class="fe fe-globe"></i>
+                    </div>
+                    <div class="h1 m-0">{{ get("websites_count")|number_format(0, '.', ',') }}</div>
+                    <div class="text-muted mb-4">{{ l("websites") }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="text-right text-indigo">
+                      <i class="fe fe-shopping-cart"></i>
+                    </div>
+                    <div class="h1 m-0">{{ get("purchases_count")|number_format(0, '.', ',') }}</div>
+                    <div class="text-muted mb-4">{{ l("purchases") }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6 col-sm-4 col-lg-2">
+                <div class="card">
+                  <div class="card-body p-3 text-center">
+                    <div class="text-right text-indigo">
+                      <i class="fe fe-dollar-sign"></i>
+                    </div>
+                    <div class="h1 m-0">{{ get("payments_count")|number_format(0, '.', ',') }}</div>
+                    <div class="text-muted mb-4">{{ l("payments") }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-8 col-lg-4">
+                <span class="text-indigo"><i class="fe fe-database text-indigo"></i> {{ l("earned_by_system") }}</span>
+                <div class="card bg-indigo">
+                  <div class="card-body p-1 text-center">
+                    <div class="display-4 font-weight-bold mt-2 mb-5 text-white">{{ short_points(get("points_earned_count")) }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="map">
+                        <div class="map-content" id="online-map"></div>
+                      </div>
+                      {{ do_action("template", "online_map") }}
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3">
+                  <span><i class="fe fe-activity text-green"></i> {{ l("in_6months") }}</span>
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <div class="card">
+                          <div class="card-body p-3 text-center">
+                            <div class="text-right text-indigo">
+                              <i class="fe fe-database"></i>
+                            </div>
+                            <div class="h5">{{ l("points") }}</div>
+                            <div class="display-4 font-weight-bold mb-5">{{ short_points(get("points_count")) }}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12">
+                        <div class="card">
+                          <div class="card-body p-3 text-center">
+                            <div class="text-right text-indigo">
+                              <i class="fe fe-pie-chart"></i>
+                            </div>
+                            <div class="h5">{{ l("hits") }}</div>
+                            <div class="display-4 font-weight-bold mb-4">{{ get("hits_count")|number_format(0, '.', ',') }}</div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-3">
+                <span><i class="fe fe-map-pin text-green"></i> {{ l("top_countries") }}</span>
+                <div class="p-3">
+                  <div class="mt-4">
+                    <div id="top_countries" style="height: 15rem"></div>
+                  </div>
+                </div>
+                {{ do_action("template", "top_countries") }}
+              </div>
+
+              <div class="col-lg-12">
+                <span><i class="fe fe-activity text-green"></i> {{ l("6months_statistics") }}</span>
+                <div class="card">
+                 <div id="all_hits" style="height: 15rem"></div>
+                </div>
+                {{ do_action("template", "all_hits") }}
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

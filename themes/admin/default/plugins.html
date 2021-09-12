@@ -1,0 +1,92 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row row-cards">
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        <div id="surfow_alert"></div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        {{ include("settings_menu.html") }}
+                    </div>
+                    {% set items = get("items") %}
+                    {% if items %}
+                        {% for item in items %}
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                            <div class="card dimmer">
+                                <div class="loader"></div>
+                                <div class="dimmer-content">
+                                  <div class="card-header">
+                                    <h3 class="card-title text-indigo">
+                                        {{ item.name|e }}
+                                    </h3>
+                                    <div class="card-options">
+                                        {% if item.plugin_url %}
+                                        <a target="_blank" href="{{ item.plugin_url|e }}"  >
+                                            <i class="fe fe-info text-indigo"></i>
+                                        </a>
+                                        {% endif %}
+                                        {% if item.settings_key and item.is_installed %}
+                                        <a title="{{ l("edit_settings") }}" href="{{ router("admin_edit_setting", {"key": item.settings_key}) }}"  >
+                                            <i class="fe fe-settings text-indigo"></i>
+                                        </a>
+                                        {% endif %}
+                                        {% if item.is_installed %}
+                                        <div>
+                                            <a href="javascript:void(0)" title="{{ l("uninstall_plugin") }}" data-redirect="{{ router("admin_plugins") }}" data-key="{{ item.path }}" data-action="uninstall" class="plugin_action" >
+                                                <i class="fe fe-cloud-off text-indigo"></i>
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                  </div>
+                                  <div class="card-body d-flex flex-column">
+                                    <div class="text-muted">{{ item.description|e }}</div>
+                                    <div class="d-flex align-items-center pt-5 mt-auto">
+                                      <div class="avatar avatar-md mr-3 plugin-avatar" style="background-image: url('{{ item.icon|e }}')"></div>
+                                      <div>
+                                        <span class="text-default text-muted">{% if item.version %}<span class="text-muted" >&mdash; {{ item.version|e }}</span>{% endif %}</span>
+                                        <a href="{% if item.author_url %}{{ item.author_url }}{% else %}#{% endif %}" ><small class="d-block text-muted">{{ item.author|e }}</small></a>
+                                      </div>
+                                      <div class="ml-auto text-red">
+                                          {% if item.is_new %}
+                                          <a data-redirect="{{ router("admin_plugins") }}" data-key="{{ item.path }}" data-action="upgrade" class="plugin_action icon ml-3"><i class="fe fe-chevrons-up mr-1 text-orange"></i> {{ l("upgrade_plugin") }}</a>
+                                          {% endif %}
+
+                                          {% if not item.is_installed %}
+                                          <a data-redirect="{{ router("admin_plugins") }}" data-key="{{ item.path }}" data-action="install" class="plugin_action icon ml-3"><i class="fe fe-package mr-1 text-cyan"></i> {{ l("install_plugin") }}</a>
+                                          {% endif %}
+
+                                          {% if item.is_installed and item.is_active %}
+                                          <a data-redirect="{{ router("admin_plugins") }}" data-key="{{ item.path }}" data-action="disable" class="plugin_action icon ml-3"><i class="fe fe-power mr-1 text-red"></i> {{ l("disable_plugin") }}</a>
+                                          {% endif %}
+
+                                          {% if item.is_installed and not item.is_active %}
+                                          <a data-redirect="{{ router("admin_plugins") }}" data-key="{{ item.path }}" data-action="enable" class="plugin_action icon ml-3"><i class="fe fe-activity mr-1 text-lime"></i> {{ l("enable_plugin") }}</a>
+                                          {% endif %}
+
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                            </div>
+
+
+                        {% endfor %}
+                    {% endif %}
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

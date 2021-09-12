@@ -1,0 +1,37 @@
+<form action="{{ router("admin_search") }}" method="GET" class="input-icon my-3 my-lg-0">
+    <input type="hidden" id="search_type" name="type" value="{% if get("search_type") %}{{ _get("search_type") }}{% else %}customers{% endif %}" />
+    <div class="input-group">
+        <input placeholder="{{ l("search_for") }}" id="search_query" name="q" value="{{ _get("search_query") }}" class="form-control" type="text">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-indigo"><i class="fe fe-search" ></i></button>
+            <button data-toggle="dropdown" type="button" class="btn btn-indigo dropdown-toggle" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                  <a class="dropdown-item search_switch" data-key="customers" data-title="{{ l("users") }}" href="javascript:void(0)">
+                    <i class="fe fe-users text-indigo"></i> {{ l("users") }}
+                  </a>
+                  <a class="dropdown-item search_switch" data-key="websites" data-title="{{ l("websites") }}" href="javascript:void(0)">
+                    <i class="fe fe-globe text-indigo"></i> {{ l("websites") }}
+                  </a>
+                  <a class="dropdown-item search_switch" data-key="payments" data-title="{{ l("payments") }}" href="javascript:void(0)">
+                    <i class="fe fe-briefcase text-indigo"></i> {{ l("payments") }}
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0)">
+                    <i class="fe fe-x text-indigo"></i> {{ l("cancel") }}
+                  </a>
+              </div>
+        </div>
+    </div>
+</form>
+<script>
+require(['jquery'], function($){
+    $(document).ready(function(){
+        $('.search_switch').click(function(){
+            var type_title = $(this).data("title");
+            var key = $(this).data("key");
+            $('#search_type').val(key);
+            $('#search_query').attr({"placeholder":type_title.toString()});
+        });
+    });
+});
+</script>

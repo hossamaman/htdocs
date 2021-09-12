@@ -1,0 +1,129 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div id="surfow_alert" ></div>
+                <div class="row">
+
+                    {% set items = get("items") %}
+                    <div class="col-12">
+                        {% if get("search_query") %}
+                        <div class="card p-0">
+                            <div class="card-status card-status-left bg-indigo" ></div>
+                          <div class="card-body tags p-2">
+                              {% if get("table") == 'users' %}
+                              <span class="tag tag-indigo">{{ l("users") }}<span class="tag-addon"><i class="fe fe-tag"></i></span></span>
+                              <span class="tag tag-indigo">{{ _get("search_query") }}</span>
+                              {% endif %}
+                              {% if get("table") == 'websites' %}
+                              <span class="tag tag-indigo">{{ l("websites") }}<span class="tag-addon"><i class="fe fe-tag"></i></span></span>
+                              <span class="tag tag-indigo">{{ _get("search_query") }}</span>
+                              {% endif %}
+                              {% if get("table") == 'payments' %}
+                              <span class="tag tag-indigo">{{ l("payments") }}<span class="tag-addon"><i class="fe fe-tag"></i></span></span>
+                              <span class="tag tag-indigo">{{ _get("search_query") }}</span>
+                              {% endif %}
+                          </div>
+                        </div>
+                        {% endif %}
+
+                        {% if items %}
+                        <div class="card">
+                          <div class="table-responsive">
+                            <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                              <thead>
+                                <tr>
+                                  <th class="text-center w-1"><i class="icon-people"></i></th>
+                                  <th>{{ l("item") }}</th>
+                                  <th>{{ l("date") }}</th>
+                                  <th>{{ l("edit") }}</th>
+                                  <th class="text-center"><i class="icon-settings"></i></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for item in items %}
+                                {% set uniqueid = surfow_encrypt(item.id) %}
+                                {% set this_table = get("table") %}
+                                <tr id="item_{{ uniqueid }}" >
+                                  <td class="text-center">
+                                      <span class="avatar">{{ item.id }}
+                                          {% if item.status %}
+                                          <span class="avatar-status bg-indigo"></span>
+                                          {% else %}
+                                          <span class="avatar-status bg-danger"></span>
+                                          {% endif %}
+                                      </span>
+                                  </td>
+                                  <td>
+                                      {% if this_table == 'users' %}
+                                      <div class="text-muted">@{{ item.username }}</div>
+                                      {% endif %}
+                                      {% if this_table == 'websites' %}
+                                      <div class="text-muted" ><i class="fe fe-activity"></i> {{item.url|lower|replace({'http://': "", 'https://': "", 'ftp://': ""})[:14]}}</div>
+                                      {% endif %}
+                                      {% if this_table == 'payments' %}
+                                      <div class="text-gray"><i class="fe fe-info"></i> {{ item.payment_id }}</div>
+                                      <div class="text-gray"><i class="fe fe-monitor"></i> {% if item.ip %}{{ item.ip|e }}{% endif %}</div>
+                                      <div class="text-gray"><i class="fe fe-box"></i> {% if item.payment_service %}{{ item.payment_service|e }}{% endif %}</div>
+                                      {% endif %}
+                                  </td>
+                                  <td>
+                                      <div class="small text-muted">
+                                        {% if item.created_at %} {{ l("added") }} {{ time_ago(item.created_at) }} {% else %}N/A{% endif %}
+                                      </div>
+                                  </td>
+                                  <td>
+                                      <div>
+                                          {% if this_table == 'users' %}
+                                          <a href="{{ router("admin_edit_user", {"uid": item.id}) }}" class="btn btn-indigo btn-pill"><i class="fe fe-edit-2"></i> {{ l("edit") }}</a>
+                                          {% endif %}
+                                          {% if this_table == 'websites' %}
+                                          <a href="{{ router("admin_edit_website", {"uid":item.user_id, "id":item.id}) }}" class="btn btn-indigo btn-pill"><i class="fe fe-edit-2"></i> {{ l("edit") }}</a>
+                                          {% endif %}
+                                          {% if this_table == 'payments' %}
+                                          <a href="{{ router("admin_user_payments", {"uid": item.user_id}) }}" class="btn btn-indigo btn-pill"><i class="fe fe-edit-2"></i> {{ l("edit") }}</a>
+                                          {% endif %}
+                                      </div>
+                                  </td>
+                                  <td class="text-center">
+                                    <div class="item-action dropdown">
+                                      <a href="javascript:void(0)" data-toggle="dropdown" class="icon" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                                      <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                                        <a id="enable_{{ uniqueid }}" data-action="enable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-play"></i> {{ l("enable") }}</a>
+                                        <a id="disable_{{ uniqueid }}" data-action="disable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if not item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-pause"></i> {{ l("disable") }}</a>
+                                        <a id="delete_{{ uniqueid }}" data-action="delete" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item"><i class="dropdown-icon fe fe-trash"></i> {{ l("delete") }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-x"></i> {{ l("cancel") }}</a>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        {{ _get("pagination") }}
+                    </div>
+                    {% else %}
+                    <p class="p-3 text-muted" ><i class="fe fe-activity" ></i> {{ l("search_notfound") }}</p>
+                    {% endif %}
+
+
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

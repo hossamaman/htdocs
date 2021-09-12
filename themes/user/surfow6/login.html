@@ -1,0 +1,59 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-single">
+        <div class="container">
+          <div class="row">
+            <div class="col col-login mx-auto">
+              <div class="text-center mb-6">
+                <a href="{{ router("home") }}" >
+                    <img src="{{ s("generale/logo") }}" class="h-8" alt="">
+                </a>
+              </div>
+              <form class="card surfow_ajaxform"
+              data-redirect="{{ router("dashboard") }}"
+              data-method="post"
+              data-action="login"
+              data-type="guest" >
+              {{ put_session_key() }}
+                <div class="card-body p-6">
+                  <div class="surfow_alert" ></div>
+                  <div class="card-title">{{ l("login_hint") }}</div>
+                  <div class="form-group">
+                    <label class="form-label">{{ l("username_or_email") }}</label>
+                    <div class="input-icon">
+                      <span class="input-icon-addon">
+                          <i class="fe fe-user"></i>
+                      </span>
+                      <input type="text" name="username" class="form-control" placeholder="{{ l("username_or_email") }}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">{{ l("password") }}
+                        <a href="{{ router("rest") }}" class="float-right small">{{ l("restpass") }}</a>
+                    </label>
+                    <div class="input-icon">
+                      <span class="input-icon-addon">
+                          <i class="fe fe-lock"></i>
+                      </span>
+                      <input type="password" name="password" class="form-control" placeholder="{{ l("password") }}">
+                    </div>
+                  </div>
+
+                  <div class="form-footer">
+                    <button type="submit" class="surfow_submit btn btn-indigo btn-pill btn-block"><i class="fe fe-power mr-2"></i> {{ l("login") }}</button>
+                  </div>
+                  <hr>
+                  <center>{{ include("social_login.html") }}</center>
+                </div>
+              </form>
+
+              <div class="text-center text-muted">
+                {{ l("new_user_hint") }} <a href="{{ router("signup") }}">{{ l("signup") }}</a>
+                <br><br>{{ do_action("template", "language_tags") }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

@@ -1,0 +1,80 @@
+{% spaceless %}{{ include("header.html") }}
+    <div data="" class="page dashboard">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+          <div class="container">
+              <div class="page-header">
+                <h1 class="page-title">
+                   {{l("dashboard")}}
+                </h1>
+              </div>
+            <div class="row row-cards">
+
+                <div id="stats_1" style="display:none;" class="col-12 load_area">
+
+
+                </div>
+
+                <div id="stats_2" style="display:none;" class="col-12 col-lg-4 load_area">
+                    <div class="loader loader-active" ></div>
+
+                </div>
+                <div id="stats_3" style="display:none;" class="col-12 col-lg-8 load_area">
+                    <div class="loader loader-active" ></div>
+
+                </div>
+
+
+                <div id="stats_4" style="display:none;" class="col-lg-6 load_area">
+                  <div class="loader loader-active" ></div>
+
+                </div>
+
+                <div id="stats_5" style="display:none;" class="col-lg-6 load_area">
+                  <div class="loader loader-active" ></div>
+
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {{ include("footer_content.html") }}
+      <script>
+          require(["jquery"], function($){
+              function load_area(area_number=1)
+              {
+                  var current = "#stats_"+area_number;
+                  console.log(current);
+                  $(current).html('<div class="loader loader-active" ></div>').slideDown(500);
+                  $.ajax({
+                      url: "{{ router("dashboard") }}?load="+area_number,
+                      success: function(json_data){
+                          if(json_data["type"] == "success")
+                          {
+                              $(current).html(json_data["message"]);
+                          }
+                          if(area_number < 5)
+                          {
+                              load_area(Math.floor(area_number+1));
+                          }
+                      }
+                  });
+              }
+              function reload_area()
+              {
+                  $('.load_area').slideUp(500);
+                  load_area(1);
+              }
+              $(document).ready(function(){
+                  setTimeout(function(){
+                      load_area(1);
+                  }, 500);
+              });
+          });
+      </script>
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

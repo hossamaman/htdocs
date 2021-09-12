@@ -1,0 +1,388 @@
+{% spaceless %}
+{% set addresses = get("addresses") %}
+{% set country_list = get("country_list") %}
+<form class="surfow_twocheckout_checkout" >
+{{ put_session_key() }}
+<input type="hidden" name="key" value="{{ get("secret_key") }}" />
+<div class="surfow_alert"></div>
+<div class="row">
+    <div class="col-12 firstStep">
+        <div class="row show_area">
+            <div class="col-lg-7" >
+                <div class="the_new">
+                    <h3 class="page-title text-indigo m-0 pb-1">{{ l("adding_new_card_note") }}</h3>
+                    <div class="form-group">
+                        <label class="form-label">{{ l("card_number") }}</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="fe fe-credit-card"></i>
+                            </span>
+                            <input name="number" id="ccNo" class="form-control" data-mask="9999 9999 9999 9999" data-mask-clearifnotmatch="true" placeholder="0000 0000 0000 0000" autocomplete="off" maxlength="19" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6 form-group">
+                            <label class="form-label">{{ l("exp_date") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-calendar"></i>
+                                </span>
+                                <input name="exp_date" id="expDate" class="form-control" data-mask="99/9999" data-mask-clearifnotmatch="true" placeholder="MM/YYYY" autocomplete="off" maxlength="7" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6 form-group">
+                            <label class="form-label">{{ l("cvc") }}</label>
+                            <div class="row gutters-sm">
+                                <div class="col">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-lock"></i>
+                                        </span>
+                                        <input class="form-control" id="cvv" placeholder="{{ l("cvc") }}" name="cvc" value="" type="text">
+                                    </div>
+                                </div>
+                                <span class="col-auto align-self-center">
+                                  <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("cvc_note") }}</p>" data-original-title="" title="">?</span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ l("cardholder_name") }}</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="fe fe-user"></i>
+                            </span>
+                            <input name="fullname" class="form-control" placeholder="{{ l("cardholder_name") }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" checked="" name="save_card" class="custom-control-input">
+                            <span class="custom-control-label">{{ l("save_this_card") }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" >
+                <div class="text-center"><img height="50" class="mt-7 mb-7 d-none d-lg-inline" src="{{ constant('twocheckout_payment_url') }}files/secure.svg" /></div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;" class="col-12 secondStep">
+        <div class="row hide_area">
+            <div class="col-lg-6" >
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("new_address") }}</div>
+                    <div class="display-4 my-5 text-center">
+                        <button type="button" class="show_add_address btn btn-pill btn-lg btn-icon btn-gray"><i class="fe fe-plus"></i> {{ l("add") }}</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6" >
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("existing_address") }}</div>
+                    <div class="display-4 my-5 text-center">
+                        <button type="button" class="show_select_address btn btn-pill btn-lg btn-icon btn-gray"><i class="fe fe-list"></i> {{ l("select_address") }}</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div style="display:none;" class="row show_area">
+            <div class="col-lg-7" >
+                <div style="display:none;" class="row pb-3 the_saved">
+                    <div class="col-12">
+                        <h3 class="page-title text-indigo m-0 pb-3">{{ l("saved_addresses_note") }}</h3>
+                    </div>
+                    {% if addresses %}
+                    <div class="col-12">
+                        <select name="address_id" class="form-control" type="select">
+                            <option value="new" selected="">{{ l("select_address") }}</option>
+                            {% for address in addresses %}
+                            <option value="{{ address.id }}" >{{ address.street }} - {{ address.firstname }}...</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% else %}
+                    <div class="col-12">
+                        <p class="text-mutd">{{ l("no_existing_address") }}, <a href="{{ router("add_address") }}" >{{ l("save_new_address") }}</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div  style="display:none;" class="the_new">
+                    <h3 class="page-title text-indigo m-0 pb-1">{{ l("adding_new_address_note") }}</h3>
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("firstname") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-user"></i>
+                                </span>
+                                <input class="form-control" placeholder="{{ l("firstname") }}" value="" name="firstname" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("lastname") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-users"></i>
+                                </span>
+                                <input class="form-control" placeholder="{{ l("lastname") }}" value="" name="lastname" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ l("street") }}</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="fe fe-map-pin"></i>
+                            </span>
+                            <input class="form-control" placeholder="{{ l("street") }}" value="" name="street" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("country") }}</label>
+                            {% spaceless %}
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-map"></i>
+                                </span>
+                                <select class="form-control custom-select" name="country" >
+                                    {% if country_list %}
+                                    {% for key, one_country in country_list %}
+                                        {% if key != 'ALL' %}
+                                        <option value="{{ key }}" >{{ one_country }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                            {% endspaceless %}
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("city") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-minimize"></i>
+                                </span>
+                                <input class="form-control" placeholder="{{ l("city") }}" value="" name="city" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("postal_code") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-check"></i>
+                                </span>
+                                <input class="form-control" placeholder="{{ l("postal_code") }}" value="" name="zipcode" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label class="form-label">{{ l("region_or_state") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-navigation"></i>
+                                </span>
+                                <input class="form-control" placeholder="{{ l("region_or_state") }}" value="" name="state" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" checked="" name="save_address" class="custom-control-input">
+                                <span class="custom-control-label">{{ l("save_this_address") }}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" >
+                <div class="text-center"><img height="50" class="mt-7 mb-7 d-none d-lg-inline" src="{{ constant('twocheckout_payment_url') }}files/location.svg" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="mb-3 mt-1">
+<div class="btn-list">
+    <button type="button" class="prev disabled btn btn-secondary btn-lg btn-pill" > {{ l("prev_step") }}</button>
+    <button type="button" class="next btn btn-indigo btn-lg btn-pill" > {{ l("next_step") }}</button>
+    <button type="submit" style="display:none;" class="surfow_submit btn btn-success btn-lg btn-pill" ><i class="fe fe-check-circle"></i> {{ l("continue") }}</button>
+</div>
+<input name="card_id" type="hidden" value="new">
+<input id="token" name="token" type="hidden" value="">
+</form>
+<script type="text/javascript" src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
+<script>
+
+(function(){
+    function errorCallback(data)
+    {
+        var elee = $(".surfow_twocheckout_checkout");
+        var alert = elee.find(".surfow_alert");
+        var loading = elee.find(".surfow_submit");
+        loading.removeAttr("disabled").removeClass("btn-loading");
+        surfow_alert(alert, "danger", data.errorMsg);
+    }
+
+    function successCallback(data)
+    {
+        $('#token').val(data.response.token.token);
+        setTimeout(function(){
+            var elee = $(".surfow_twocheckout_checkout");
+            var data  = elee.serialize();
+            var alert = elee.find(".surfow_alert");
+            var loading = elee.find(".surfow_submit");
+            $.ajax({
+                url: '{{ get("return_url") }}',
+                data: data,
+                method: 'POST',
+                success: function(returned){
+                    if(returned["type"] == "success")
+                    {
+                        if(returned["message"].length > 7) {
+                            surfow_redirect(returned["message"]);
+                        } else {
+                            loading.removeAttr("disabled").removeClass("btn-loading");
+                        }
+                    } else {
+                        loading.removeAttr("disabled").removeClass("btn-loading");
+                        surfow_alert(alert, "danger", returned["message"]);
+                    }
+                },
+                error: function(){
+                    loading.removeAttr("disabled").removeClass("btn-loading");
+                    surfow_alert(alert, "warning", app_network_error);
+                }
+            });
+        }, 500);
+
+    }
+    function excute_method() {
+        $(document).ready(function(){
+
+            $(".surfow_twocheckout_checkout").submit(function(e){
+                e.preventDefault();
+                var expdate = $("#expDate").val().toString().split("/");
+                var args = {
+                    sellerId: "{{ s("twocheckout/id") }}",
+                    publishableKey: "{{ s("twocheckout/public") }}",
+                    ccNo: ""+$("#ccNo").val().trim(),
+                    cvv: ""+$("#cvv").val().trim(),
+                    expMonth: ""+expdate[0].trim(),
+                    expYear: ""+expdate[1].trim()
+                };
+
+                if($('.next').hasClass('disabled'))
+                {
+                    var alert   = $(this).find(".surfow_alert");
+                    var loading = $(this).find(".surfow_submit");
+                    var data  = $(this).serialize();
+                    loading.attr({"disabled":"disabled"}).addClass("btn-loading");
+                    setTimeout(function(){
+                        {% if s("twocheckout/mode") == 'live' %}
+                        TCO.loadPubKey('production', function() {
+                            TCO.requestToken(successCallback, errorCallback, args);
+                        });
+                        {% else %}
+                        TCO.loadPubKey('sandbox', function() {
+                            TCO.requestToken(successCallback, errorCallback, args);
+                        });
+                        {% endif %}
+                    }, 300);
+                } else {
+                    surfow_alert(alert, "warning", "{{ l("error_checkout_select") }}");
+                }
+            });
+
+            $('.show_add_address').click(function(){
+                var ele = $(this);
+                var main = $('.secondStep');
+                ele.addClass("btn-loading");
+                setTimeout(function(){
+                    ele.removeClass("btn-loading");
+                    main.find('.hide_area').hide();
+                    main.find('.show_area').show();
+                    main.find('.show_area .the_new').slideDown(300);
+                }, 300);
+            });
+
+            $('.show_select_address').click(function(){
+                var ele = $(this);
+                var main = $('.secondStep');
+                ele.addClass("btn-loading");
+                setTimeout(function(){
+                    ele.removeClass("btn-loading");
+                    main.find('.hide_area').hide();
+                    main.find('.show_area').show();
+                    main.find('.show_area .the_saved').slideDown(300);
+                }, 300);
+            });
+
+            $('.next').click(function(){
+                if(!$(this).hasClass('disabled'))
+                {
+                    var item = $(this);
+                    item.addClass("btn-loading");
+                    setTimeout(function(){
+                        item.removeClass("btn-loading");
+                        $('.prev, .next').toggleClass("disabled");
+                        $('.prev, .next').toggleClass("btn-indigo");
+                        $('.prev, .next').toggleClass("btn-secondary");
+                        $('.firstStep').hide();
+                        $('.secondStep').slideDown(300);
+                        item.parent().find('.surfow_submit').slideDown(500);
+                    }, 400);
+                }
+            });
+
+            $('.prev').click(function(){
+                if(!$(this).hasClass('disabled'))
+                {
+                    var item = $(this);
+                    item.addClass("btn-loading");
+                    setTimeout(function(){
+                        item.removeClass("btn-loading");
+                        $('.prev, .next').toggleClass("disabled");
+                        $('.prev, .next').toggleClass("btn-indigo");
+                        $('.prev, .next').toggleClass("btn-secondary");
+                        $('.secondStep').hide();
+                        $('.firstStep').slideDown(300);
+                        item.parent().find('.surfow_submit').hide(200);
+                    }, 400);
+                }
+            });
+
+        });
+    }
+    function load_js(link, onload)
+    {
+        var headTag = document.getElementsByTagName("head")[0];
+        var jQueryTag = document.createElement('script');
+        jQueryTag.type = 'text/javascript';
+        jQueryTag.src = link;
+        jQueryTag.onload = onload;
+        headTag.appendChild(jQueryTag);
+    }
+    if (typeof require === "function" && typeof require.specified === "function" && require.specified("jquery")) {
+        require(['jquery', 'input-mask'], function($){
+            excute_method();
+        });
+    } else {
+        if(typeof jQuery == 'undefined') {
+            load_js('{{ constant('twocheckout_payment_url') }}files/jquery-3.3.1.min.js', excute_method);
+        } else {
+             excute_method();
+        }
+    }
+})();
+</script>
+{% endspaceless %}

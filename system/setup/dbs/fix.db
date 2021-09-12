@@ -1,0 +1,17 @@
+﻿DROP TABLE `billing`;
+
+CREATE TABLE IF NOT EXISTS `billing` (
+    `id` int(20) NOT NULL AUTO_INCREMENT,
+    `user_id` varchar(200) NOT NULL,
+    `firstname` varchar(600) DEFAULT NULL,
+    `lastname` varchar(600) DEFAULT NULL,
+    `street` text,
+    `country_code` text,
+    `city` text,
+    `zipcode` text,
+    `state` varchar(650) DEFAULT NULL,
+    `status` int(20) DEFAULT NULL,
+    `created_at` varchar(200) DEFAULT NULL,
+    `updated_at` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

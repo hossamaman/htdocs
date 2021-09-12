@@ -1,0 +1,124 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("checking_list_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="card">
+
+                          <div class="card-body">
+                              <div id="surfow_alert"></div>
+                              <div class="table-responsive">
+                                  <table class="table card-table table-vcenter text-nowrap">
+                                    <thead>
+                                      <tr>
+                                        <th class="text-center"><i class="icon-settings"></i></th>
+                                        <th>{{ l("payment_id") }}</th>
+                                        <th>{{ l("amount") }}</th>
+                                        <th>{{ l("date") }}</th>
+                                        <th class="text-center"><i class="icon-settings"></i></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% set items = get("items") %}
+                                        {% if items %}
+                                            {% for item in items %}
+                                            {% set uniqueid = surfow_encrypt(item.id) %}
+                                            {% set this_table = 'payments' %}
+                                            <tr id="item_{{ uniqueid }}">
+                                                <td data-message="{{ l("transferring_funds") }}" >
+                                                    <div class="custom-switches-stacked">
+                                                        <label class="custom-switch">
+                                                          <input name="payment_confirmation[{{ item.id }}]" data-action="confirm" data-id="{{ item.id }}" value="1" class="payment_confirmation custom-switch-input"  {% if item.confirmed == '2' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("done") }}</span>
+                                                        </label>
+                                                        <label class="custom-switch">
+                                                          <input name="payment_confirmation[{{ item.id }}]" data-action="pending" data-id="{{ item.id }}" value="2" class="payment_confirmation custom-switch-input" {% if item.confirmed == '1' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("pending_status") }}</span>
+                                                        </label>
+                                                        <label class="custom-switch">
+                                                          <input name="payment_confirmation[{{ item.id }}]" data-action="cancelled" data-id="{{ item.id }}" value="3" class="payment_confirmation custom-switch-input" {% if item.confirmed == '0' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("canceled") }}</span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                              <td>
+                                                  <div class="text-gray"><i class="fe fe-info"></i> {{ item.payment_id }}</div>
+                                                  <div class="text-gray"><i class="fe fe-monitor"></i> {% if item.ip %}{{ item.ip|e }}{% endif %}</div>
+                                                  <div class="text-gray"><i class="fe fe-box"></i> {% if item.payment_service %}{{ item.payment_service|e }}{% endif %}</div>
+                                              </td>
+                                              <td>
+                                                  <div>{{ item.amount }}</div><div class="small text-muted">{{ item.currency|upper }}</div>
+                                              </td>
+                                              <td>
+                                                  <div class="text-indigo">{% if item.created_at %}{{ time_ago(item.created_at) }}{% endif %}</div>
+                                                  <div class="text-info">{% if item.updated_at %}{{ l("last_update") }} {{ time_ago(item.updated_at) }}{% endif %}</div>
+                                                  <div class="mt-1">
+                                                      {% if item.confirmed == '2' %}
+                                                      <div class="tag tag-success">
+                                                          {{ l("done") }}
+                                                          <span class="tag-addon"><i class="fe fe-check"></i></span>
+                                                      </div>
+                                                      {% endif %}
+                                                      {% if item.confirmed == '1' %}
+                                                      <div class="tag tag-orange">
+                                                          {{ l("pending_status") }}
+                                                          <span class="tag-addon"><i class="fe fe-tag"></i></span>
+                                                      </div>
+                                                      {% endif %}
+                                                      {% if item.confirmed == '0' %}
+                                                      <div class="tag tag-danger">
+                                                          {{ l("canceled") }}
+                                                          <span class="tag-addon"><i class="fe fe-x"></i></span>
+                                                      </div>
+                                                      {% endif %}
+                                                  </div>
+                                              </td>
+                                              <td class="text-center">
+                                                <div class="item-action dropdown">
+                                                  <a href="javascript:void(0)" data-toggle="dropdown" class="icon" aria-expanded="false"><i class="fe fe-edit"></i></a>
+                                                  <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                                                    <a href="{{ router("admin_user_profile", {"uid":item.user_id}) }}" class="dropdown-item" ><i class="dropdown-icon fe fe-user"></i> {{ l("user_profile_title") }}</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a id="enable_{{ uniqueid }}" data-action="enable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-play"></i> {{ l("enable") }}</a>
+                                                    <a id="disable_{{ uniqueid }}" data-action="disable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if not item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-pause"></i> {{ l("disable") }}</a>
+                                                    <a id="delete_{{ uniqueid }}" data-action="delete" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item"><i class="dropdown-icon fe fe-trash"></i> {{ l("delete") }}</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-x"></i> {{ l("cancel") }}</a>
+                                                  </div>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr><p>{{ l("error_empty_items") }}</p><tr>
+                                        {% endif %}
+                                    </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                        </div>
+                        {{ _get("pagination") }}
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

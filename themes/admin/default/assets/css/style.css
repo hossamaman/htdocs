@@ -1,0 +1,121 @@
+.page-main .header.py-4{
+    border-top-style: solid;
+    border-top-width: 5px;
+    border-top-color: #6574cd;
+}
+.surfow_hide {
+    display: none;
+}
+.force_surfow_hide {
+    display: none !important;
+}
+.country_flag{
+    display: inline-block;
+    background-size: 20px auto;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 25px;
+}
+.page-title {
+    font-weight: 300 !important;
+}
+.disabled_plan {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+.session_input{
+    color:#808080;
+    font-weight: 300;
+    border: none;
+    background: #f7f7f7;
+    box-shadow: none;
+    padding: 3px 10px;
+    border-radius:31px;
+    width: 80%;
+    font-size: 0.8em;
+}
+.nav-tabs .nav-link {
+    width: 100%;
+}
+.payment_logo {
+    height: 44px;
+    width: auto;
+}
+.settings_icon{
+    height: 25px;
+    width: auto;
+    margin: 5px;
+    margin-top: 0px;
+}
+.setting_icon {
+    height: 20px;
+    width: 20px;
+    margin-top: -5px;
+}
+.selectgroup.selectgroup-pills{
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.card-fullscreen {
+    z-index: 99999999999999;
+}
+.card-fullscreen .card-body {
+    overflow: auto;
+}
+.plugin-avatar {
+    background-size: 100% auto;
+    border-radius: 0;
+    background-color: #ffffff;
+}
+a:focus{
+    outline: 0;
+}
+.table-responsive {
+    overflow-y: hidden !important;
+}
+.user-type{
+    height: 40px;
+    width: auto;
+}
+
+.surfow-loader {
+  color: transparent !important;
+  pointer-events: none;
+  position: relative;
+}
+
+.surfow-loader:after {
+  content: '';
+  -webkit-animation: loader 500ms infinite linear;
+  animation: loader 500ms infinite linear;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  display: block;
+  height: 1em;
+  width: 1em;
+  left: calc(50% - (1em / 2));
+  top: calc(50% - (1em / 2));
+  position: absolute;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  position: absolute !important;
+  border-color: #495057;
+}
+
+.surfow-loader.light:after {
+  border-color: #ffffff;
+}
+
+.mail_shortcode {
+    border: 0;
+    background-color: #eaeaea;
+    margin: 5px 5px;
+    padding: 2px 15px;
+    font-size: 0.8em;
+    border-radius: 20px;
+    color: #484848;
+}

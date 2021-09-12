@@ -1,0 +1,117 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("add_new_address")}}
+                      </h1>
+                    </div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect="{{ router("billing") }}"
+                    data-method="post"
+                    data-action="add-address"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+
+                              <div class="row">
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("firstname") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-user"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("firstname") }}" value="" name="firstname" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("lastname") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-users"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("lastname") }}" value="" name="lastname" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("street") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-map-pin"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("street") }}" value="" name="street" type="text">
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("country") }}</label>
+                                      {% spaceless %}
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-map"></i>
+                                          </span>
+                                          <select class="form-control custom-select" name="country" >
+                                              {% if country_list %}
+                                              {% for key, one_country in country_list %}
+                                                  {% if key != 'ALL' %}
+                                                  <option value="{{ key }}" >{{ one_country }}</option>
+                                                  {% endif %}
+                                              {% endfor %}
+                                              {% endif %}
+                                          </select>
+                                      </div>
+                                      {% endspaceless %}
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("city") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-minimize"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("city") }}" value="" name="city" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("postal_code") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-check"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("postal_code") }}" value="" name="zipcode" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("region_or_state") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-navigation"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("region_or_state") }}" value="" name="state" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("add") }} <i class="fe fe-plus"></i></button>
+                                  <a href="{{ router("billing") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("go_back") }} <i class="fe fe-x"></i> </a>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

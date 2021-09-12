@@ -1,0 +1,104 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+{% set country_list = get("country_list") %}
+{% set wallet = get("wallet") %}
+{% set item = get("info") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("profile_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="card">
+
+                          <div class="card-body">
+                              {% if wallet.withdrawal > 0 %}
+                              <h1 class="page-title text-orange">
+                                  <i class="fe fe-search" ></i> {{ l("step_1") }}
+                              </h1>
+                              <p class="text-gray">{{ l("checking_activity") }}</p>
+
+                              <h1 class="page-title text-indigo">
+                                  <i class="fe fe-dollar-sign" ></i> {{ l("step_2") }}
+                              </h1>
+                              <p class="text-gray" >{{ l("manually_send_payment") }}</p>
+                              <div>
+                                  {% if item.fullname|length > 1 %}
+                                  <div class="list-group list-group-transparent mt-0 mb-0">
+                                      <span class="list-group-item text-green list-group-item-action d-flex align-items-center" >
+                                          <span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>
+                                          ${{ wallet["withdrawal"]|number_format(1, '.', ',') }}
+                                      </span>
+                                      <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                          <span class="icon mr-3"><i class="fe fe-user"></i></span>
+                                          {{ item.fullname|e }}
+                                      </span>
+                                      <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                          <span class="icon mr-3"><i class="fe fe-map-pin"></i></span>
+                                          {{ item.adresse|e }}, {{ item.city|e }}, {{ item.codepostal|e }}, {{ country_list[item.country]|e }}
+                                      </span>
+                                      {% if wallet.withdrawal_to == 'paypal' %}
+                                      <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                          <span class="icon mr-3"><i class="payment payment-paypal"></i></span>
+                                          {% if item.paypal_email %}{{ item.paypal_email|e }}{% else %}<i>{{ l("not_available") }}</i>{% endif %}
+                                      </span>
+                                      {% endif %}
+                                      {% if wallet.withdrawal_to == 'payoneer' %}
+                                      <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                          <span class="icon mr-3"><i class="payment payment-payoneer"></i></span>
+                                          {% if item.payoneer_email %}{{ item.payoneer_email|e }}{% else %}<i>{{ l("not_available") }}</i>{% endif %}
+                                      </span>
+                                      {% endif %}
+                                  </div>
+                                  {% endif %}
+                              </div>
+                              <h1 class="page-title text-green">
+                                  <i class="fe fe-message-circle"></i> {{ l("step_3") }}
+                              </h1>
+                              <p class="text-gray">{{ l("notify_user") }}</p>
+
+                              <form class="surfow_ajaxform"
+                              data-redirect=""
+                              data-method="post"
+                              data-action="manage-withdrawal"
+                              data-type="user" >
+                                  <div class="surfow_alert"></div>
+                                  <input type="hidden" name="id" value="{{ user.id }}" />
+                                  <input type="hidden" name="action" value="notify" />
+                                  <button type="submit" class="btn btn-pill btn-indigo surfow_submit"><i class="fe fe-mail"></i> {{ l("send_notification") }}</button>
+                              </form><br>
+
+                              <form class="surfow_ajaxform"
+                              data-redirect="{{ router("admin_user_withdrawals", {"uid": user.id}) }}"
+                              data-method="post"
+                              data-action="manage-withdrawal"
+                              data-type="user" >
+                                  <div class="surfow_alert"></div>
+                                  <input type="hidden" name="id" value="{{ user.id }}" />
+                                  <input type="hidden" name="action" value="delete" />
+                                  <button type="submit" class="btn btn-pill btn-danger surfow_submit"><i class="fe fe-trash"></i> {{ l("delete") }}</button>
+                              </form>
+
+                              {% else %}
+                              {{ l("empty_withdrawal") }}
+                              {% endif %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

@@ -1,0 +1,95 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+            {% set wallet = get("wallet") %}
+            {% set item = get("info") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("withdrawal")}}
+                      </h1>
+                    </div>
+                    <div id="surfow_alert" ></div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect="{{ router("wallet") }}"
+                    data-method="post"
+                    data-action="ask-withdrawal"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                    <div class="surfow_alert mb-1 mt-1" ></div>
+                    <div class="card">
+                      <div class="card-status card-status-left bg-indigo"></div>
+                      <div class="card-body">
+                          <i><i class="fe fe-info"></i> {{ l("money_will_sent_to") }}</i><br><br>
+                          <div class="row">
+                              <div class="col-lg-8" >
+                                  <div class="card card-body">
+                                      {% if item.fullname|length > 1 %}
+                                      <div class="list-group list-group-transparent mt-0 mb-0">
+                                          <span class="list-group-item text-green list-group-item-action d-flex align-items-center" >
+                                              <span class="icon mr-3"><i class="fe fe-dollar-sign"></i></span>
+                                              ${{ wallet["confirmed"]|number_format(1, '.', ',') }}
+                                          </span>
+                                          <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                              <span class="icon mr-3"><i class="fe fe-user"></i></span>
+                                              {{ item.fullname|e }}
+                                          </span>
+                                          <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                              <span class="icon mr-3"><i class="fe fe-map-pin"></i></span>
+                                              {{ item.adresse|e }}, {{ item.city|e }}, {{ item.codepostal|e }}, {{ country_list[item.country]|e }}
+                                          </span>
+                                          <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                              <span class="icon mr-3"><i class="payment payment-paypal"></i></span>
+                                              {% if item.paypal_email %}{{ item.paypal_email|e }}{% else %}<i>{{ l("not_available") }}</i>{% endif %}
+                                          </span>
+                                          <span class="list-group-item list-group-item-action d-flex align-items-center" >
+                                              <span class="icon mr-3"><i class="payment payment-payoneer"></i></span>
+                                              {% if item.payoneer_email %}{{ item.payoneer_email|e }}{% else %}<i>{{ l("not_available") }}</i>{% endif %}
+                                          </span>
+                                      </div>
+                                      {% else %}
+                                      <div class="alert alert-danger">{{ l("error_settingup_affiliate") }}</div>
+                                      <a href="{{ router("affiliate") }}" class="m-4 btn btn-lg btn-indigo btn-pill">{{ l("affiliate_settings") }} <i class="fe fe-settings"></i> </a>
+                                      {% endif %}
+                              </div>
+                              </div>
+                              <div class="col-lg-4" >
+                                  <div class="form-group">
+                                    <label class="custom-control custom-checkbox">
+                                      <input type="checkbox" name="agree" checked="" class="custom-control-input" />
+                                      <span class="custom-control-label">{{ l("i_agree") }} <a href="{{ router("page", '{"name":"tos"}') }}">{{ l("tos") }}</a></span>
+                                    </label>
+                                  </div>
+                                  <div class="custom-switches-stacked">
+                                    <label class="form-label">{{ l("default_payment_method") }}</label>
+                                    <label class="custom-switch">
+                                      <input name="method" value="paypal" class="custom-switch-input" {% if wallet.withdrawal_to == 'paypal' %}checked=""{% endif %} type="radio">
+                                      <span class="custom-switch-indicator"></span>
+                                      <span class="custom-switch-description">{{ l("affiliate_paypal") }}</span>
+                                    </label>
+                                    <label class="custom-switch">
+                                      <input name="method" value="payoneer" class="custom-switch-input" {% if wallet.withdrawal_to == 'payoneer' %}checked=""{% endif %} type="radio">
+                                      <span class="custom-switch-indicator"></span>
+                                      <span class="custom-switch-description">{{ l("affiliate_payoneer") }}</span>
+                                    </label>
+                                  </div>
+                                  <div class="btn-list mt-2">
+                                      <button type="submit" {% if not item.fullname %}disabled=""{% endif %} class="surfow_submit btn btn-lg btn-indigo btn-pill mb-2">{{ l("send") }} <i class="fe fe-send"></i></button>
+                                      <a href="{{ router("wallet") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("go_back") }} <i class="fe fe-briefcase"></i> </a>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                    </div>
+                </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

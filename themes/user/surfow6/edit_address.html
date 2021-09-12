@@ -1,0 +1,124 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+            {% set item = get("item") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("edit_address")}}
+                      </h1>
+                    </div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect="{{ router("billing") }}"
+                    data-method="post"
+                    data-action="update-address"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                    <input type="hidden" name="id" value="{{ item.id }}" />
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+
+                              <div class="row">
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("firstname") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-user"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("firstname") }}" value="{{ item.firstname|e }}" name="firstname" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("lastname") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-users"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("lastname") }}" value="{{ item.lastname|e }}" name="lastname" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("street") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-map-pin"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("street") }}" value="{{ item.street|e }}" name="street" type="text">
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("country") }}</label>
+                                      {% spaceless %}
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-map"></i>
+                                          </span>
+                                          <select class="form-control custom-select" name="country" >
+                                              {% if country_list %}
+                                              {% for key, one_country in country_list %}
+                                                  {% set country_selected = '' %}
+                                                  {% if key|lower == item.country_code|lower %}
+                                                    {% set country_selected = 'selected=""' %}
+                                                  {% endif %}
+                                                  {% if key != 'ALL' %}
+                                                  <option {{ country_selected }} value="{{ key }}" >{{ one_country }}</option>
+                                                  {% endif %}
+                                              {% endfor %}
+                                              {% endif %}
+                                          </select>
+                                      </div>
+
+                                      {% endspaceless %}
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("city") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-minimize"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("city") }}" value="{{ item.city|e }}" name="city" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("postal_code") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-check"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("postal_code") }}" value="{{ item.zipcode|e }}" name="zipcode" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label">{{ l("region_or_state") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-navigation"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("region_or_state") }}" value="{{ item.state|e }}" name="state" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("update") }} <i class="fe fe-check-circle"></i></button>
+                                  <a href="{{ router("billing") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("go_back") }} <i class="fe fe-x"></i> </a>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

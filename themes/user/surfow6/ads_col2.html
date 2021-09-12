@@ -1,0 +1,15 @@
+            {% if s("ads/show_line_ads") %}
+                {{ _s("ads/bottom") }}
+            {% endif %}
+            {% if not s("ads/show_sidebar_ads") %}
+            </div>
+            <div class="col-lg-2 col-md-12"></div>
+            {% else %}
+            </div>
+            <div class="col-lg-3 col-md-12">
+                {{ include("sidebar.html") }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("settings")}}
+                      </h1>
+                    </div>
+
+                    <div class="row">
+                      <div class="{% if s("defaults/withdrawal_status") == "yes" %}col-lg-4{% else %}col-lg-6{% endif %}">
+                        <div class="card">
+                            <div class="card-status bg-indigo"></div>
+                          <div class="card-body text-center">
+                            <div class="card-category">{{ l("affiliate_settings") }}</div>
+                            <div class="text-center mt-6">
+                              <a href="{{ router("affiliate") }}" class="btn btn-pill btn-icon text-indigo btn-secondary btn-block"><i class="fe fe-settings" ></i> {{ l("edit") }}</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="{% if s("defaults/withdrawal_status") == "yes" %}col-lg-4{% else %}col-lg-6{% endif %}">
+                        <div class="card">
+                            <div class="card-status bg-indigo"></div>
+                          <div class="card-body text-center">
+                            <div class="card-category">{{ l("billing_addresses") }}</div>
+                            <div class="text-center mt-6">
+                              <a href="{{ router("billing") }}" class="btn btn-pill btn-icon text-indigo btn-secondary btn-block"><i class="fe fe-settings" ></i> {{ l("edit") }}</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {% if s("defaults/withdrawal_status") == "yes" %}
+                      <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-status bg-indigo"></div>
+                          <div class="card-body text-center">
+                            <div class="card-category">{{ l("saved_cards") }}</div>
+                            <div class="text-center mt-6">
+                              <a href="{{ router("cards") }}" class="btn btn-pill btn-icon text-indigo btn-secondary btn-block"><i class="fe fe-settings" ></i> {{ l("edit") }}</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endif %}
+                  </div>
+
+                    {{ put_session_key() }}
+
+                    <form class="surfow_ajaxform"
+                    data-redirect=""
+                    data-method="post"
+                    data-action="update-username"
+                    data-type="user" >
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("username") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-user"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("username") }}" value="{{ u("username")|e }}" name="username" type="text">
+                                  </div>
+                              </div>
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("update") }} <i class="fe fe-check-circle"></i></button>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect=""
+                    data-method="post"
+                    data-action="update-email"
+                    data-type="user" >
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("email") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-mail"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("email") }}" value="{{ u("email")|e }}" name="email" type="text">
+                                  </div>
+                              </div>
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("update") }} <i class="fe fe-check-circle"></i></button>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect=""
+                    data-method="post"
+                    data-action="update-password"
+                    data-type="user" >
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("current_password") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-lock"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("current_password") }}" name="old_password" type="password">
+                                  </div>
+                              </div><hr>
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("new_password") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-lock"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("new_password") }}" name="password" type="password">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("repeat_new_password") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-lock"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("repeat_new_password") }}" name="password2" type="password">
+                                  </div>
+                              </div>
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("update") }} <i class="fe fe-check-circle"></i></button>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+
+
+
+
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

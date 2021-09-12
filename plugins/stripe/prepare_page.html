@@ -1,0 +1,233 @@
+{% spaceless %}
+{% set cards = get("cards") %}
+<form class="surfow_stripe_checkout" >
+{{ put_session_key() }}
+<input type="hidden" name="key" value="{{ get("secret_key") }}" />
+<div class="surfow_alert"></div>
+<div class="row">
+    <div class="col-12 firstStep">
+        <div class="row hide_area">
+            <div class="col-lg-6" >
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("new_card") }}</div>
+                    <div class="display-4 my-5 text-center">
+                        <button type="button" class="show_add_card btn btn-pill btn-lg btn-icon btn-gray"><i class="fe fe-plus"></i> {{ l("add") }}</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6" >
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("existing_card") }}</div>
+                    <div class="display-4 my-5 text-center">
+                        <button type="button" class="show_select_card btn btn-pill btn-lg btn-icon btn-gray"><i class="fe fe-credit-card"></i> {{ l("select_card") }}</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div style="display:none;" class="row show_area">
+            <div class="col-lg-7" >
+                <div style="display:none;" class="the_saved row">
+                    <div class="col-12">
+                        <h3 class="page-title text-indigo m-0 pb-0">{{ l("saved_cards_note") }}</h3>
+                    </div>
+                    {% if cards %}
+                    <div class="col-12 p-3">
+                        <select name="card_id" class="form-control" type="select">
+                            <option value="new" selected="">{{ l("select_card") }}</option>
+                            {% for card in cards %}
+                            <option value="{{ card.id }}" >{{ card.number[0:1] }}XXX XXXX XXXX {{ card.number[12:4] }} - {{ card.fullname[0:4] }}...</option>
+                            {% endfor %}
+                        </select>
+                        <div style="display:none;" class="show_cvc form-group mt-2">
+                            <div class="row gutters-sm">
+                                <div class="col">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-lock"></i>
+                                        </span>
+                                        <input class="form-control" placeholder="{{ l("cvc") }}" name="card_cvc" value="" type="text">
+                                    </div>
+                                </div>
+                                <span class="col-auto align-self-center">
+                                  <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("cvc_note") }}</p>" data-original-title="" title="">?</span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-12">
+                        <p class="text-mutd">{{ l("no_existing_card") }}, <a href="{{ router("add_card") }}" >{{ l("save_new_card") }}</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div style="display:none;" class="the_new">
+                    <h3 class="page-title text-indigo m-0 pb-1">{{ l("adding_new_card_note") }}</h3>
+                    <div class="form-group">
+                        <label class="form-label">{{ l("card_number") }}</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="fe fe-credit-card"></i>
+                            </span>
+                            <input name="number" class="form-control" data-mask="9999 9999 9999 9999" data-mask-clearifnotmatch="true" placeholder="0000 0000 0000 0000" autocomplete="off" maxlength="19" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6 form-group">
+                            <label class="form-label">{{ l("exp_date") }}</label>
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-calendar"></i>
+                                </span>
+                                <input name="exp_date" class="form-control" data-mask="99/9999" data-mask-clearifnotmatch="true" placeholder="MM/YYYY" autocomplete="off" maxlength="7" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6 form-group">
+                            <label class="form-label">{{ l("cvc") }}</label>
+                            <div class="row gutters-sm">
+                                <div class="col">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-lock"></i>
+                                        </span>
+                                        <input class="form-control" placeholder="{{ l("cvc") }}" name="cvc" value="" type="text">
+                                    </div>
+                                </div>
+                                <span class="col-auto align-self-center">
+                                  <span class="form-help" data-toggle="popover" data-placement="top" data-content="<p>{{ l("cvc_note") }}</p>" data-original-title="" title="">?</span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{{ l("cardholder_name") }}</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="fe fe-user"></i>
+                            </span>
+                            <input name="fullname" class="form-control" placeholder="{{ l("cardholder_name") }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" checked="" name="save_card" class="custom-control-input">
+                            <span class="custom-control-label">{{ l("save_this_card") }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" >
+                <div class="text-center"><img height="50" class="mt-7 mb-7 d-none d-lg-inline" src="{{ constant('stripe_payment_url') }}files/secure.svg" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="mb-3 mt-1">
+<div class="btn-list">
+    <button type="submit" class="surfow_submit btn btn-success btn-lg btn-pill" ><i class="fe fe-check-circle"></i> {{ l("continue") }}</button>
+</div>
+</form>
+<script>
+(function(){
+    function excute_method() {
+        $(document).ready(function(){
+
+            $('.show_add_card').click(function(){
+                var ele = $(this);
+                var main = $('.firstStep');
+                ele.addClass("btn-loading");
+                setTimeout(function(){
+                    ele.removeClass("btn-loading");
+                    main.find('.hide_area').hide();
+                    main.find('.show_area').show();
+                    main.find('.show_area .the_new').slideDown(300);
+                }, 300);
+            });
+
+            $('.show_select_card').click(function(){
+                var ele = $(this);
+                var main = $('.firstStep');
+                ele.addClass("btn-loading");
+                setTimeout(function(){
+                    ele.removeClass("btn-loading");
+                    main.find('.hide_area').hide();
+                    main.find('.show_area').show();
+                    main.find('.show_area .the_saved').slideDown(300);
+                }, 300);
+            });
+
+            $('[name="card_id"]').change(function(){
+                var el = $(this);
+                if($(this).val() != "new")
+                {
+                    el.parent().find('.show_cvc').slideDown(300);
+                } else {
+                    el.parent().find('.show_cvc').slideUp(300);
+                }
+            });
+
+            $(".surfow_stripe_checkout").submit(function(e){
+                e.preventDefault();
+                var alert   = $(this).find(".surfow_alert");
+                if(!$('.hide_area').is(':visible'))
+                {
+                    var loading = $(this).find(".surfow_submit");
+                    var data  = $(this).serialize();
+                    loading.attr({"disabled":"disabled"}).addClass("btn-loading");
+                    $.ajax({
+                        url: '{{ get("return_url") }}',
+                        data: data,
+                        method: 'POST',
+                        success: function(returned){
+                            if(returned["type"] == "success")
+                            {
+                                if(returned["message"].length > 7) {
+                                    surfow_redirect(returned["message"]);
+                                } else {
+                                    loading.removeAttr("disabled").removeClass("btn-loading");
+                                }
+                            } else {
+                                loading.removeAttr("disabled").removeClass("btn-loading");
+                                surfow_alert(alert, "danger", returned["message"]);
+                            }
+                        },
+                        error: function(){
+                            loading.removeAttr("disabled").removeClass("btn-loading");
+                            surfow_alert(alert, "warning", app_network_error);
+                        }
+                    });
+                } else {
+                    surfow_alert(alert, "warning", "{{ l("error_checkout_select") }}");
+                }
+            });
+        });
+    }
+    function load_js(link, onload)
+    {
+        var headTag = document.getElementsByTagName("head")[0];
+        var jQueryTag = document.createElement('script');
+        jQueryTag.type = 'text/javascript';
+        jQueryTag.src = link;
+        jQueryTag.onload = onload;
+        headTag.appendChild(jQueryTag);
+    }
+    if (typeof require === "function" && typeof require.specified === "function" && require.specified("jquery")) {
+        require(['jquery', 'input-mask'], function($){
+            excute_method();
+        });
+    } else {
+        if(typeof jQuery == 'undefined') {
+            load_js('{{ constant('stripe_payment_url') }}files/jquery-3.3.1.min.js', excute_method);
+        } else {
+             excute_method();
+        }
+    }
+})();
+</script>
+{% endspaceless %}

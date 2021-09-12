@@ -1,0 +1,26 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{ get("title2")}}
+                      </h1>
+                    </div>
+                    <div id="surfow_alert" ></div>
+
+                    <div class="card">
+                      <div class="card-body">
+
+                          {{ _get("content") }}
+
+                      </div>
+                    </div>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

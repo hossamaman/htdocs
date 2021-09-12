@@ -1,0 +1,96 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+{% set items = get("items") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("profile_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="card">
+
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                  <table class="table card-table table-vcenter text-nowrap">
+                                    <thead>
+                                      <tr>
+                                        <th class="text-center"><i class="icon-settings"></i></th>
+                                        <th>{{ l("username") }}</th>
+                                        <th>{{ l("status") }}</th>
+                                        <th>{{ l("date") }}</th>
+                                        <th class="text-center"><i class="icon-settings"></i></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if items %}
+                                            {% for item in items %}
+                                            {% set uniqueid = surfow_encrypt(item.id) %}
+                                            {% set this_table = 'referrals' %}
+                                            <tr id="item_{{ uniqueid }}">
+                                                <td data-message="{{ l("transferring_funds") }}" >
+                                                    <div class="custom-switches-stacked">
+                                                        <label class="custom-switch">
+                                                          <input name="referral_confirmation[{{ item.id }}]" data-action="confirm" data-id="{{ item.id }}" value="1" class="referral_confirmation custom-switch-input"  {% if item.confirmed == '1' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("done") }}</span>
+                                                        </label>
+                                                        <label class="custom-switch">
+                                                          <input name="referral_confirmation[{{ item.id }}]" data-action="pending" data-id="{{ item.id }}" value="0" class="referral_confirmation custom-switch-input" {% if item.confirmed == '0' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("pending_status") }}</span>
+                                                        </label>
+                                                        <label class="custom-switch">
+                                                          <input name="referral_confirmation[{{ item.id }}]" data-action="decline" data-id="{{ item.id }}" value="-1" class="referral_confirmation custom-switch-input" {% if item.confirmed == '-1' %}checked=""{% endif %} type="radio">
+                                                          <span class="custom-switch-indicator"></span>
+                                                          <span class="custom-switch-description">{{ l("declined") }}</span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                              <td><a href="{{ router("admin_user_profile", {"uid":item.new_id}) }}" ><span class="text-muted">@{{ get_username_by_id(item.new_id) }}</span></a></td>
+                                              <td>
+                                                  {% if item.confirmed == '1' %}<span class="status-icon bg-success"></span> {{ l("done") }}{% endif %}
+                                                  {% if item.confirmed == '0' %}<span class="status-icon bg-warning"></span> {{ l("pending_status") }}{% endif %}
+                                                  {% if item.confirmed == '-1' %}<span class="status-icon bg-danger"></span> {{ l("declined") }}{% endif %}
+                                              </td>
+                                              <td>{{ time_ago(item.created_at) }}</td>
+                                              <td class="text-center">
+                                                <div class="item-action dropdown">
+                                                  <a href="javascript:void(0)" data-toggle="dropdown" class="icon" aria-expanded="false"><i class="fe fe-edit"></i></a>
+                                                  <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                                                    <a id="enable_{{ uniqueid }}" data-action="enable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-play"></i> {{ l("enable") }}</a>
+                                                    <a id="disable_{{ uniqueid }}" data-action="disable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if not item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-pause"></i> {{ l("disable") }}</a>
+                                                    <a id="delete_{{ uniqueid }}" data-action="delete" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item"><i class="dropdown-icon fe fe-trash"></i> {{ l("delete") }}</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-x"></i> {{ l("cancel") }}</a>
+                                                  </div>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>{{ l("error_empty_items") }}</p>
+                                        {% endif %}
+                                    </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                        </div>
+                        {{ _get("pagination") }}
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

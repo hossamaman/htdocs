@@ -1,0 +1,36 @@
+{% spaceless %}
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-3 ml-auto">
+                {{ include("search_form.html") }}
+              </div>
+              <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  <li class="nav-item">
+                    <a href="{{ router("admin_home") }}" class="nav-link"><i class="text-indigo fe fe-activity"></i> {{ l("admin_overview") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_checking_list") }}" class="nav-link"><i class="text-indigo fe fe-check-circle"></i> {{ l("checking_list") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_settings") }}" class="nav-link"><i class="text-indigo fe fe-settings"></i> {{ l("settings") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_users") }}" class="nav-link"><i class="text-indigo fe fe-users"></i> {{ l("profiles") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_plans") }}" class="nav-link"><i class="text-indigo fe fe-package"></i> {{ l("plans") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_newsletteres") }}" class="nav-link"><i class="text-indigo fe fe-mail"></i> {{ l("newsletteres") }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ router("admin_admins") }}" class="nav-link"><i class="text-indigo fe fe-user-check"></i> {{ l("admins") }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endspaceless %}

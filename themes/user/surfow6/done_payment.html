@@ -1,0 +1,25 @@
+{% spaceless %}{{ include("header.html") }}
+        <div class="page">
+          <div class="page-content">
+              <div class="m-8">
+                <div class="container text-center">
+                  <div class="display-1 text-indigo mb-5">
+                      {% if get("status") == 'confirmed' %}
+                      <i class="fe fe-check-circle" ></i>
+                      {% endif %}
+                      {% if get("status") == 'pending' %}
+                      <i class="fe fe-clock" ></i>
+                      {% endif %}
+                      {% if get("status") == 'cancelled' %}
+                      <i class="fe fe-alert-octagon" ></i>
+                      {% endif %}
+                  </div>
+                  <h1 style="font-weight: 300;" class="h4 mb-3">{{ _get("content") }}</h1>
+                  <a class="mt-4 btn btn-indigo btn-pill btn-lg" href="{{ router("wallet") }}">
+                    <i class="fe fe-activity mr-2"></i> {{ l("continue")}}
+                  </a>
+                </div>
+              </div>
+          </div>
+        </div>
+{{ include("footer.html") }}{% endspaceless %}

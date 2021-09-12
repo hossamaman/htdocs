@@ -1,0 +1,131 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set info = get("info") %}
+            {% set payments = get("payments") %}
+
+            <div class="page-header">
+              <h1 class="page-title">
+                 {{l("wallet")}}
+              </h1>
+            </div>
+
+            <div class="row">
+              <div class="{% if s("defaults/withdrawal_status") == "yes" %}col-lg-4{% else %}col-lg-6{% endif %}">
+                <div class="card">
+                  <div class="card-status bg-red"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("pending") }}</div>
+                    <div class="display-4 my-4">${{ info["pending"]|number_format(1, '.', ',') }}</div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("contact") }}" class="btn btn-pill btn-icon btn-red btn-block"><i class="fe fe-help-circle" ></i> {{ l("have_question") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="{% if s("defaults/withdrawal_status") == "yes" %}col-lg-4{% else %}col-lg-6{% endif %}">
+                <div class="card">
+                  <div class="card-status bg-green"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("confirmed") }}</div>
+                    <div class="display-4 my-4">${{ info["confirmed"]|number_format(1, '.', ',') }}</div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("deposit") }}" class="btn btn-pill btn-icon btn-green btn-block"><i class="fe fe-plus" ></i> {{ l("add_credit") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {% if s("defaults/withdrawal_status") == "yes" %}
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-status bg-purple"></div>
+                  <div class="card-body text-center">
+                    <div class="card-category">{{ l("withdrawal") }}</div>
+                    <div class="display-4 my-4">${{ info["withdrawal"]|number_format(0, '.', ',') }}</div>
+                    <div class="text-center mt-6">
+                      <a href="{{ router("withdrawal") }}" class="btn btn-pill btn-icon btn-purple btn-block"><i class="fe fe-save" ></i> {{ l("ask_for_withdrawal") }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="col-lg-12">
+                  <form class="surfow_ajaxform"
+                  data-redirect="{{ router("wallet") }}"
+                  data-method="post"
+                  data-action="convert-points"
+                  data-type="user" >
+                      {{ put_session_key() }}
+                      <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body text-center">
+                            <div class="card-category">{{ l("convert_earnings") }}</div>
+                            <div class="display-4 my-4 row">
+                                <div class="col-lg-5 text-indigo">{{do_action("template", "user_points")}} <i class="fe fe-database"></i></div>
+                                <div class="col-lg-2 text-center mb-2">
+                                    <button type="submit" class="{% if u("points")/100*s("exchange/pointcost") < 1 %}disabled{% endif %} btn btn-pill btn-icon btn-dark surfow_submit"><i class="fe fe-activity"></i> {{ l("convert") }}</button>
+                                </div>
+                                <div class="col-lg-5 text-success">{{do_action("template", "user_points_money")}} <i class="fe fe-briefcase"></i></div>
+                            </div>
+                          </div>
+                        </div>
+                  </form>
+              </div>
+
+            </div>
+
+            <h1 class="page-title mb-2">
+               {{l("payments_history")}}
+            </h1>
+
+            <div class="card">
+              <div class="card-status card-status-left bg-indigo"></div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table card-table table-vcenter text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>{{ l("payment_id") }}</th>
+                            <th>{{ l("status") }}</th>
+                            <th>{{ l("amount") }}</th>
+                            <th>{{ l("date") }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% if payments %}
+                                {% for item in payments %}
+                                <tr>
+                                  <td><span class="text-muted">{{ item.payment_id }}</span></td>
+                                  <td>
+                                      {% if item.confirmed == '2' %}<span class="status-icon bg-success"></span> {{ l("done") }}{% endif %}
+                                      {% if item.confirmed == '1' %}<span class="status-icon bg-warning"></span> {{ l("pending_status") }}{% endif %}
+                                      {% if item.confirmed == '0' %}<span class="status-icon bg-danger"></span> {{ l("canceled") }}{% endif %}
+                                  </td>
+                                  <td>
+                                      <div>{{ item.amount }}</div><div class="small text-muted">{{ item.currency|upper }}</div>
+                                  </td>
+                                  <td>{{ time_ago(item.created_at) }}</td>
+                                </tr>
+                                {% endfor %}
+                                {{ _get("pagination") }}
+                            {% else %}
+                                <p>{{ l("error_empty_items") }}</p>
+                            {% endif %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>
+
+            {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

@@ -1,0 +1,69 @@
+<div class="row" >
+    <div  class="col-sm-6 col-lg-3">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <span class="stamp stamp-md bg-cyan mr-3">
+              <i class="fe fe-shield"></i>
+            </span>
+            <div >
+              <h4 class="m-0"><a class="text-uppercase" href="{{ router("order_type", '{"type":"upgrade"}') }}">{{ do_action("template", "account_type")|title }}</a></h4>
+              <small class="text-muted">{{l("account_type")}}</small>
+            </div>
+          </div>
+          <a href="{{ router("settings") }}" class="ml-7 btn btn-pill btn-secondary btn-sm">{{ l("edit_settings") }}</a>
+        </div>
+    </div>
+
+    {% set slots = get("slots") %}
+    <div class="col-sm-6 col-lg-3">
+    <div class="card p-3">
+      <div class="d-flex align-items-center">
+        <span class="stamp stamp-md bg-indigo mr-3">
+          <i class="fe fe-globe"></i>
+        </span>
+        <div>
+          <h4 class="m-0"><a class="text-uppercase" href="{{ router("websites") }}">{{ slots["used_websites"] }}/{{ slots["allowed_websites"] }} <small>{{l("website_slots")}}</small></a></h4>
+          <small class="text-muted">{{ l("slots_left")|format(slots["websites_left"]) }}</small>
+        </div>
+    </div>
+    <div class="progress progress-xs mt-4 mb-1">
+      <div class="progress-bar bg-indigo" role="progressbar" style="width: {{ ((100 * slots["used_websites"]) / slots["allowed_websites"]) }}%" aria-valuenow="{{slots["used_websites"]}}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+    <div class="card p-3">
+      <div class="d-flex align-items-center">
+        <span class="stamp stamp-md bg-orange mr-3">
+          <i class="fe fe-server"></i>
+        </span>
+        <div>
+            <h4 class="m-0"><a class="text-uppercase" href="{{ router("browsing") }}">{{ slots["used_sessions"] }}/{{ slots["allowed_sessions"] }} <small>{{l("session_slots")}}</small></a></h4>
+            <small class="text-muted">{{ l("slots_left")|format(slots["sessions_left"]) }}</small>
+        </div>
+    </div>
+    <div class="progress progress-xs mt-4 mb-1">
+      <div class="progress-bar bg-orange" role="progressbar" style="width: {{ ((100 * slots["used_sessions"]) / slots["allowed_sessions"]) }}%" aria-valuenow="{{slots["used_sessions"]}}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+    <div class="card p-3">
+      <div class="d-flex align-items-center">
+        <span class="stamp stamp-md bg-azure mr-3">
+          <i class="fe fe-percent"></i>
+        </span>
+        <div>
+          <h4 class="m-0"><a class="text-uppercase" href="{{ router("order_type", '{"type":"upgrade"}') }}">{{u("traffic_ratio")}}% <small>{{l("traffic_ratio")}}</small></a></h4>
+          <small class="text-muted">{{ l("ratio_explained")|format(u("traffic_ratio"), "%") }}</small>
+        </div>
+      </div>
+      <div class="progress progress-xs mt-4 mb-1">
+        <div class="progress-bar bg-azure" role="progressbar" style="width: {{u("traffic_ratio")}}%" aria-valuenow="{{u("traffic_ratio")}}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+    </div>
+
+</div>

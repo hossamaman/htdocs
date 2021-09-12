@@ -1,0 +1,133 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set item = get("info") %}
+            {% set wallet = get("wallet") %}
+            {% set country_list = get("country_list") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("affiliate_settings")}}
+                      </h1>
+                    </div>
+
+                    <form class="surfow_ajaxform"
+                    data-redirect=""
+                    data-method="post"
+                    data-action="update-affiliate"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                        <div class="surfow_alert mb-1 mt-1" ></div>
+                        <div class="card">
+                          <div class="card-status card-status-left bg-indigo"></div>
+                          <div class="card-body">
+
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("affiliate_fullname") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-user"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("affiliate_fullname") }}" value="{{ item.fullname|e }}" name="fullname" type="text">
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <label class="form-label">{{ l("affiliate_address") }}</label>
+                                  <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-map-pin"></i>
+                                      </span>
+                                      <input class="form-control" placeholder="{{ l("affiliate_address") }}" value="{{ item.adresse|e }}" name="address" type="text">
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-lg-4 form-group">
+                                      <label class="form-label">{{ l("affiliate_country") }}</label>
+                                      {% spaceless %}
+                                          <select class="form-control custom-select" name="country" >
+                                              {% if country_list %}
+                                              {% for key, one_country in country_list %}
+                                                  {% set country_selected = '' %}
+                                                  {% if key|lower == item.country|lower %}
+                                                    {% set country_selected = 'selected=""' %}
+                                                  {% endif %}
+                                                  {% if key != 'ALL' %}
+                                                  <option {{ country_selected }} value="{{ key }}" >{{ one_country }}</option>
+                                                  {% endif %}
+                                              {% endfor %}
+                                              {% endif %}
+                                          </select>
+                                      {% endspaceless %}
+                                  </div>
+                                  <div class="col-lg-4 form-group">
+                                      <label class="form-label">{{ l("affiliate_city") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-map"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("affiliate_city") }}" value="{{ item.city|e }}" name="city" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-4 form-group">
+                                      <label class="form-label">{{ l("affiliate_codepostal") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-info"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("affiliate_codepostal") }}" value="{{ item.codepostal|e }}" name="codepostal" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label"><i class="payment payment-paypal"></i> {{ l("affiliate_paypal_email") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-mail"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("affiliate_paypal_email") }}" value="{{ item.paypal_email|e }}" name="paypal_email" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 form-group">
+                                      <label class="form-label"><i class="payment payment-payoneer"></i> {{ l("affiliate_payoneer_email") }}</label>
+                                      <div class="input-icon">
+                                          <span class="input-icon-addon">
+                                              <i class="fe fe-mail"></i>
+                                          </span>
+                                          <input class="form-control" placeholder="{{ l("affiliate_payoneer_email") }}" value="{{ item.payoneer_email|e }}" name="payoneer_email" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="custom-switches-stacked">
+                                <label class="form-label">{{ l("default_payment_method") }}</label>
+                                <label class="custom-switch">
+                                  <input name="method" value="paypal" class="custom-switch-input" {% if wallet.withdrawal_to == 'paypal' %}checked=""{% endif %} type="radio">
+                                  <span class="custom-switch-indicator"></span>
+                                  <span class="custom-switch-description">{{ l("affiliate_paypal") }}</span>
+                                </label>
+                                <label class="custom-switch">
+                                  <input name="method" value="payoneer" class="custom-switch-input" {% if wallet.withdrawal_to == 'payoneer' %}checked=""{% endif %} type="radio">
+                                  <span class="custom-switch-indicator"></span>
+                                  <span class="custom-switch-description">{{ l("affiliate_payoneer") }}</span>
+                                </label>
+                              </div>
+
+                              <div class="mt-2 mb-2 btn-list">
+                                  <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-1">{{ l("update") }} <i class="fe fe-check-circle"></i></button>
+                                  <a href="{{ router("settings") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("go_back") }} <i class="fe fe-x"></i> </a>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

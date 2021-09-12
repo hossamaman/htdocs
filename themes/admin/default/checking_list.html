@@ -1,0 +1,86 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("checking_list_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div>
+
+                          <div>
+                              <div class="row">
+
+                                  <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-status bg-green"></div>
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-green">
+                                          <i class="fe fe-activity"></i>
+                                        </div>
+                                        <div class="display-2 m-0">{{ get("live_sessions") }}</div>
+                                        <div class="text-muted mb-4">{{l("live_sessions")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-status bg-red"></div>
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-red">
+                                          <i class="fe fe-alert-triangle"></i>
+                                        </div>
+                                        <div class="display-2 m-0">{{ get("reported_websites") }}</div>
+                                        <div class="text-muted mb-4">{{l("reported_websites")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-status bg-cyan"></div>
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-cyan">
+                                          <i class="fe fe-briefcase"></i>
+                                        </div>
+                                        <div class="display-2 m-0">{{ get("withdrawals") }}</div>
+                                        <div class="text-muted mb-4">{{l("withdrawals")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-status bg-orange"></div>
+                                      <div class="card-body p-3 text-center">
+                                        <div class="text-right text-orange">
+                                          <i class="fe fe-globe"></i>
+                                        </div>
+                                        <div class="display-2 m-0">{{ get("inactive_websites") }}</div>
+                                        <div class="text-muted mb-4">{{l("last_websites")}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

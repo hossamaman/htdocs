@@ -1,0 +1,291 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+{% set wallet = get("wallet") %}
+{% set item = get("info") %}
+{% set country_list = get("country_list") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("profile_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        {{ put_session_key() }}
+                        <div class="card">
+                          <div class="card-body p-6">
+
+                                <h1 class="page-title">
+                                  <i class="fe fe-user"></i> {{ l("user_informations") }}
+                                </h1><br>
+                                <div class="row">
+                                <div class="col-lg-6 col-12">
+
+                                    <form class="surfow_ajaxform"
+                                    data-redirect=""
+                                    data-method="post"
+                                    data-action="update-username"
+                                    data-type="user" >
+                                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                                    <div class="surfow_alert" ></div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("username") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-user"></i>
+                                        </span>
+                                        <input type="text" value="{{ user.username|e }}" name="username" class="form-control" placeholder="{{ l("username") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-footer mt-0">
+                                      <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-save mr-2"></i> {{ l("save") }}</button>
+                                    </div>
+                                    </form><br>
+
+                                    <form class="surfow_ajaxform"
+                                    data-redirect=""
+                                    data-method="post"
+                                    data-action="update-email"
+                                    data-type="user" >
+                                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                                    <div class="surfow_alert" ></div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("email") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-mail"></i>
+                                        </span>
+                                        <input type="email" value="{{ user.email|e }}" name="email" class="form-control" placeholder="{{ l("email") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-footer mt-0">
+                                      <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-save mr-2"></i> {{ l("save") }}</button>
+                                    </div>
+                                    </form><br>
+
+                                    <form class="surfow_ajaxform"
+                                    data-redirect=""
+                                    data-method="post"
+                                    data-action="update-password"
+                                    data-type="user" >
+                                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                                    <div class="surfow_alert" ></div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("password") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-lock"></i>
+                                        </span>
+                                        <input type="password" name="password" class="form-control" placeholder="{{ l("password") }}">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("password2") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-lock"></i>
+                                        </span>
+                                        <input type="password" name="password2" class="form-control" placeholder="{{ l("password") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-footer mt-0">
+                                      <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-save mr-2"></i> {{ l("save") }}</button>
+                                    </div>
+                                    </form><br>
+
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <form class="surfow_ajaxform"
+                                    data-redirect=""
+                                    data-method="post"
+                                    data-action="update-package"
+                                    data-type="user" >
+                                    <input type="hidden" name="user_id" value="{{ user.id }}" />
+                                    <div class="surfow_alert" ></div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("points") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-database"></i>
+                                        </span>
+                                        <input type="text" value="{{ user.points|e }}" name="points" class="form-control" placeholder="{{ l("points") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("traffic_ratio") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-percent"></i>
+                                        </span>
+                                        <input type="text" value="{{ user.traffic_ratio|e }}" name="traffic_ratio" class="form-control" placeholder="{{ l("traffic_ratio") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("session_slots") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-server"></i>
+                                        </span>
+                                        <input type="text" value="{{ user.session_slots|e }}" name="sessions" class="form-control" placeholder="{{ l("session_slots") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("website_slots") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-globe"></i>
+                                        </span>
+                                        <input type="text" value="{{ user.website_slots|e }}" name="websites" class="form-control" placeholder="{{ l("website_slots") }}">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-footer mt-0">
+                                      <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-save mr-2"></i> {{ l("save") }}</button>
+                                    </div>
+                                    </form><br>
+                                </div>
+                                </div>
+
+                                <h1 class="page-title">
+                                  <i class="fe fe-users"></i> {{ l("referrals_settings") }}
+                                </h1><br>
+
+                                <form class="surfow_ajaxform"
+                                data-redirect=""
+                                data-method="post"
+                                data-action="update-affiliate"
+                                data-type="user" >
+                                {{ put_session_key() }}
+                                <input type="hidden" name="user_id" value="{{ user.id }}" />
+                                    <div class="surfow_alert mb-1 mt-1" ></div>
+                                    <div>
+                                      <div>
+                                          <div class="form-group">
+                                              <label class="form-label">{{ l("affiliate_fullname") }}</label>
+                                              <div class="input-icon">
+                                                  <span class="input-icon-addon">
+                                                      <i class="fe fe-user"></i>
+                                                  </span>
+                                                  <input class="form-control" placeholder="{{ l("affiliate_fullname") }}" value="{{ item.fullname|e }}" name="fullname" type="text">
+                                              </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                              <label class="form-label">{{ l("affiliate_address") }}</label>
+                                              <div class="input-icon">
+                                                  <span class="input-icon-addon">
+                                                      <i class="fe fe-map-pin"></i>
+                                                  </span>
+                                                  <input class="form-control" placeholder="{{ l("affiliate_address") }}" value="{{ item.adresse|e }}" name="address" type="text">
+                                              </div>
+                                          </div>
+
+                                          <div class="row">
+                                              <div class="col-lg-4 form-group">
+                                                  <label class="form-label">{{ l("affiliate_country") }}</label>
+                                                  {% spaceless %}
+                                                      <select class="form-control custom-select" name="country" >
+                                                          {% if country_list %}
+                                                          {% for key, one_country in country_list %}
+                                                              {% set country_selected = '' %}
+                                                              {% if key|lower == item.country|lower %}
+                                                                {% set country_selected = 'selected=""' %}
+                                                              {% endif %}
+                                                              {% if key != 'ALL' %}
+                                                              <option {{ country_selected }} value="{{ key }}" >{{ one_country }}</option>
+                                                              {% endif %}
+                                                          {% endfor %}
+                                                          {% endif %}
+                                                      </select>
+                                                  {% endspaceless %}
+                                              </div>
+                                              <div class="col-lg-4 form-group">
+                                                  <label class="form-label">{{ l("affiliate_city") }}</label>
+                                                  <div class="input-icon">
+                                                      <span class="input-icon-addon">
+                                                          <i class="fe fe-map"></i>
+                                                      </span>
+                                                      <input class="form-control" placeholder="{{ l("affiliate_city") }}" value="{{ item.city|e }}" name="city" type="text">
+                                                  </div>
+                                              </div>
+                                              <div class="col-lg-4 form-group">
+                                                  <label class="form-label">{{ l("affiliate_codepostal") }}</label>
+                                                  <div class="input-icon">
+                                                      <span class="input-icon-addon">
+                                                          <i class="fe fe-info"></i>
+                                                      </span>
+                                                      <input class="form-control" placeholder="{{ l("affiliate_codepostal") }}" value="{{ item.codepostal|e }}" name="codepostal" type="text">
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="row">
+                                              <div class="col-lg-6 form-group">
+                                                  <label class="form-label"><i class="payment payment-paypal"></i> {{ l("affiliate_paypal_email") }}</label>
+                                                  <div class="input-icon">
+                                                      <span class="input-icon-addon">
+                                                          <i class="fe fe-mail"></i>
+                                                      </span>
+                                                      <input class="form-control" placeholder="{{ l("affiliate_paypal_email") }}" value="{{ item.paypal_email|e }}" name="paypal_email" type="text">
+                                                  </div>
+                                              </div>
+                                              <div class="col-lg-6 form-group">
+                                                  <label class="form-label"><i class="payment payment-payoneer"></i> {{ l("affiliate_payoneer_email") }}</label>
+                                                  <div class="input-icon">
+                                                      <span class="input-icon-addon">
+                                                          <i class="fe fe-mail"></i>
+                                                      </span>
+                                                      <input class="form-control" placeholder="{{ l("affiliate_payoneer_email") }}" value="{{ item.payoneer_email|e }}" name="payoneer_email" type="text">
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="custom-switches-stacked">
+                                            <label class="form-label">{{ l("default_payment_method") }}</label>
+                                            <label class="custom-switch">
+                                              <input name="method" value="paypal" class="custom-switch-input" {% if wallet.withdrawal_to == 'paypal' %}checked=""{% endif %} type="radio">
+                                              <span class="custom-switch-indicator"></span>
+                                              <span class="custom-switch-description">{{ l("affiliate_paypal") }}</span>
+                                            </label>
+                                            <label class="custom-switch">
+                                              <input name="method" value="payoneer" class="custom-switch-input" {% if wallet.withdrawal_to == 'payoneer' %}checked=""{% endif %} type="radio">
+                                              <span class="custom-switch-indicator"></span>
+                                              <span class="custom-switch-description">{{ l("affiliate_payoneer") }}</span>
+                                            </label>
+                                          </div>
+
+                                          <div class="mt-2 mb-2 btn-list">
+                                              <button type="submit" class="surfow_submit btn btn-indigo btn-pill mb-1">{{ l("save") }} <i class="fe fe-save"></i></button>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </form>
+
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

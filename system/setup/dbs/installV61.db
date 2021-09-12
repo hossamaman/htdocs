@@ -1,0 +1,349 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE TABLE `admins` (
+  `id` int(20) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `email` varchar(120) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `provider_id` varchar(400) DEFAULT NULL,
+  `provider_name` varchar(400) DEFAULT NULL,
+  `language` varchar(40) DEFAULT NULL,
+  `activation_key` text,
+  `rest_key` text,
+  `rest_date` varchar(200) DEFAULT NULL,
+  `logkey` text,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `affiliate` (
+  `id` int(20) NOT NULL,
+  `user_id` varchar(200) DEFAULT NULL,
+  `fullname` varchar(600) DEFAULT NULL,
+  `adresse` text,
+  `country` text,
+  `city` text,
+  `codepostal` text,
+  `paypal_email` text,
+  `payoneer_email` text,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `billing` (
+  `id` int(20) NOT NULL,
+  `user_id` varchar(200) DEFAULT NULL,
+  `firstname` varchar(600) DEFAULT NULL,
+  `lastname` varchar(600) DEFAULT NULL,
+  `street` text,
+  `country_code` text,
+  `city` text,
+  `zipcode` text,
+  `state` varchar(650) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cards` (
+  `id` int(11) NOT NULL,
+  `user_id` int(30) DEFAULT NULL,
+  `fullname` varchar(650) DEFAULT NULL,
+  `number` varchar(650) DEFAULT NULL,
+  `month` varchar(650) DEFAULT NULL,
+  `year` varchar(650) DEFAULT NULL,
+  `cvc` varchar(650) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(250) DEFAULT NULL,
+  `updated_at` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `exchange` (
+  `id` int(20) NOT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `lasturl_id` text,
+  `session_key` varchar(500) DEFAULT NULL,
+  `accepted_time` text,
+  `last_run` varchar(200) DEFAULT NULL,
+  `ip` varchar(200) DEFAULT NULL,
+  `closed` int(20) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `hits` (
+  `id` int(20) NOT NULL,
+  `website_id` int(20) DEFAULT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `point` varchar(200) DEFAULT NULL,
+  `ip` varchar(200) DEFAULT NULL,
+  `country` varchar(60) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `live` (
+  `id` int(20) NOT NULL,
+  `website_id` int(20) DEFAULT NULL,
+  `ip` varchar(600) DEFAULT NULL,
+  `country` varchar(250) DEFAULT NULL,
+  `city` varchar(500) DEFAULT NULL,
+  `latitude` varchar(250) DEFAULT NULL,
+  `longitude` varchar(250) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(250) DEFAULT NULL,
+  `updated_at` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `newsletteres` (
+  `id` int(20) NOT NULL,
+  `status` int(20) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `to_group` varchar(200) DEFAULT NULL,
+  `subject` text,
+  `content` longtext,
+  `starton` varchar(200) DEFAULT NULL,
+  `progress` varchar(200) DEFAULT NULL,
+  `offset` varchar(200) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `payments` (
+  `id` int(20) NOT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `payment_id` varchar(500) DEFAULT NULL,
+  `amount` varchar(200) DEFAULT NULL,
+  `currency` varchar(200) DEFAULT NULL,
+  `ip` varchar(200) DEFAULT NULL,
+  `confirmed` int(20) DEFAULT NULL,
+  `payment_service` text,
+  `payment_info` longtext,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `payment_cache` (
+  `id` int(11) NOT NULL,
+  `pid` varchar(550) DEFAULT NULL,
+  `data` longtext,
+  `expire_at` varchar(550) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(250) DEFAULT NULL,
+  `updated_at` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `plans` (
+  `id` int(20) NOT NULL,
+  `name` varchar(900) DEFAULT NULL,
+  `type` text,
+  `website_slots` varchar(900) DEFAULT NULL,
+  `session_slots` varchar(900) DEFAULT NULL,
+  `traffic_ratio` varchar(900) DEFAULT NULL,
+  `price` varchar(900) DEFAULT NULL,
+  `duration` varchar(200) DEFAULT NULL,
+  `points` varchar(900) DEFAULT NULL,
+  `featured` int(20) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `purchases` (
+  `id` int(11) NOT NULL,
+  `plan_id` int(20) DEFAULT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `amount` varchar(250) DEFAULT NULL,
+  `sessions` varchar(250) DEFAULT NULL,
+  `websites` varchar(250) DEFAULT NULL,
+  `traffic` varchar(250) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `updated_at` varchar(250) DEFAULT NULL,
+  `created_at` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `referrals` (
+  `id` int(20) NOT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `new_id` int(20) DEFAULT NULL,
+  `ip` varchar(200) DEFAULT NULL,
+  `confirmed` int(20) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `system_points` (
+  `id` int(11) NOT NULL,
+  `value` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `system_points` (`id`, `value`) VALUES
+(1, '0');
+
+CREATE TABLE `users` (
+  `id` int(20) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `email` varchar(120) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `provider_id` varchar(400) DEFAULT NULL,
+  `provider_name` varchar(400) DEFAULT NULL,
+  `language` varchar(40) DEFAULT NULL,
+  `website_slots` varchar(200) DEFAULT NULL,
+  `session_slots` varchar(200) DEFAULT NULL,
+  `traffic_ratio` varchar(200) DEFAULT NULL,
+  `points` text,
+  `currency` varchar(200) DEFAULT NULL,
+  `activation_key` text,
+  `type` text,
+  `last_run` varchar(250) DEFAULT NULL,
+  `pro_exp` varchar(200) DEFAULT NULL,
+  `rest_key` text,
+  `rest_date` varchar(200) DEFAULT NULL,
+  `logkey` longtext,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `wallet` (
+  `id` int(20) NOT NULL,
+  `user_id` varchar(200) DEFAULT NULL,
+  `confirmed` varchar(600) DEFAULT NULL,
+  `pending` varchar(600) DEFAULT NULL,
+  `withdrawal` varchar(600) DEFAULT NULL,
+  `withdrawal_to` varchar(200) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `websites` (
+  `id` int(20) NOT NULL,
+  `user_id` int(20) DEFAULT NULL,
+  `url` text,
+  `hits` varchar(900) DEFAULT NULL,
+  `max_hits` varchar(900) DEFAULT NULL,
+  `max_hour_hits` varchar(900) DEFAULT NULL,
+  `last_run` varchar(900) DEFAULT NULL,
+  `duration` varchar(900) DEFAULT NULL,
+  `geolocation` varchar(500) DEFAULT NULL,
+  `source` varchar(900) DEFAULT NULL,
+  `useragent` varchar(500) DEFAULT NULL,
+  `enabled` int(20) DEFAULT NULL,
+  `activated` int(20) DEFAULT NULL,
+  `reported` int(20) DEFAULT NULL,
+  `status` int(20) DEFAULT NULL,
+  `created_at` varchar(200) DEFAULT NULL,
+  `updated_at` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `affiliate`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `billing`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `cards`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `exchange`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `hits`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `live`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `newsletteres`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `payment_cache`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `purchases`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `referrals`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `system_points`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `wallet`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `websites`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `admins`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `affiliate`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `billing`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `exchange`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `hits`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `live`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `newsletteres`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `payments`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `payment_cache`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `plans`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `purchases`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `referrals`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `system_points`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `users`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `wallet`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `websites`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+COMMIT;

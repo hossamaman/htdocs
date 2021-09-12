@@ -1,0 +1,70 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set wallet = get("wallet") %}
+            {% set items = get("items") %}
+            {% set ref_url = router("redir_ref", '{"username":"'~u("username")~'"}') %}
+            <div class="page-header">
+              <h1 class="page-title">
+                 {{l("referrals")}}
+              </h1>
+            </div>
+
+            <div class="card">
+              <div class="card-status card-status-left bg-indigo"></div>
+              <div class="card-body text-center">
+                <div class="card-category">{{ l("referral_motivation_note")|format(s("defaults/referrals_points")~"$") }}</div>
+                <div class="display-3 my-7 row">
+                    <div class="col-lg-3 col-sm-5 text-indigo">20 <i class="fe fe-user-plus"></i> </div>
+                    <div class="col-lg-1 col-sm-1 text-red">=</div>
+                    <div class="col-lg-3 col-sm-6 text-success">{{ 20*s("defaults/referrals_points")|number_format(2, '.', ',') }} <i class="fe fe-dollar-sign"></i></div>
+                    <div class="col-lg-5 mt-4 mb-2">
+                        <input class="form-control" readonly="" placeholder="{{ l("your_referral_link") }}" onclick="this.select();" value="{{ ref_url }}" type="text">
+                    </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-status card-status-left bg-indigo"></div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table card-table table-vcenter text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>{{ l("username") }}</th>
+                            <th>{{ l("status") }}</th>
+                            <th>{{ l("date") }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% if items %}
+                                {% for item in items %}
+                                <tr>
+                                  <td><span class="text-muted">@{{ get_username_by_id(item.new_id) }}</span></td>
+                                  <td>
+                                      {% if item.confirmed == '1' %}<span class="status-icon bg-success"></span> {{ l("done") }}{% endif %}
+                                      {% if item.confirmed == '0' %}<span class="status-icon bg-warning"></span> {{ l("pending_status") }}{% endif %}
+                                      {% if item.confirmed == '-1' %}<span class="status-icon bg-danger"></span> {{ l("declined") }}{% endif %}
+                                  </td>
+                                  <td>{{ time_ago(item.created_at) }}</td>
+                                </tr>
+                                {% endfor %}
+                                {{ _get("pagination") }}
+                            {% else %}
+                                <p>{{ l("error_empty_items") }}</p>
+                            {% endif %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>
+
+            {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

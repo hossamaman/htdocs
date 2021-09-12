@@ -1,0 +1,20 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+
+          <div class="m-8">
+            <div class="container text-center">
+              <div class="display-1 text-indigo mb-5"><i class="fe fe-check-circle" ></i></div>
+              <h1 style="font-weight: 300;" class="h4 mb-3">{{ l("thank_you_note") }}</h1>
+              <a class="mt-4 btn btn-indigo btn-pill btn-lg" href="{{ router("dashboard") }}">
+                <i class="fe fe-activity mr-2"></i> {{ l("continue") }}
+              </a>
+            </div>
+          </div>
+
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

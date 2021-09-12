@@ -1,0 +1,26 @@
+{% if s("defaults/show_refund_policy") == 'yes' %}
+<h1 class="page-title mb-2">
+   {{l("refund_policy")}}
+</h1>
+
+<div class="card">
+  <div class="card-status card-status-left bg-green"></div>
+  <div class="card-body">
+      <div class="list-group list-group-transparent mt-0 mb-0">
+          <span class="list-group-item list-group-item-action d-flex align-items-center text-green" >
+              <span class="icon mr-3"><i class="fe fe-shield text-green"></i></span>
+              {{ l("secure_payment_note") }}
+          </span>
+          <span class="list-group-item list-group-item-action d-flex align-items-center text-green" >
+              <span class="icon mr-3"><i class="fe fe-thumbs-up text-green"></i></span>
+              {{ l("refund_hint")|format(s("defaults/refund")) }}
+          </span>
+          <span class="list-group-item list-group-item-action d-flex align-items-center text-green" >
+              <span class="icon mr-3"><i class="fe fe-cpu text-green"></i></span>
+              {{ l("instant_activation") }}
+          </span>
+      </div>
+      <a href="{{ router("contact") }}" class="ml-3 mt-3 btn btn-pill btn-icon btn-green"><i class="fe fe-help-circle" ></i> {{ l("have_question") }}</a>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,136 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+            {% set wallet = get("wallet") %}
+            {% set item = get("info") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("add_credit")}}
+                      </h1>
+                    </div>
+                    <div id="surfow_alert" ></div>
+
+                    <form class="surfow_getredirect"
+                    data-method="post"
+                    data-action="make-deposit"
+                    data-type="user" >
+                    {{ put_session_key() }}
+                    <input type="hidden" name="credit" id="credit" value="{{ get("added_credit") }}" />
+                    <div class="surfow_alert mb-1 mt-1" ></div>
+                    <div class="card">
+                      <div class="card-status card-status-left bg-indigo"></div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-lg-8 deposit-area" >
+                                  <div id="ready" class="p-3 form-group {% if get("added_credit") %}disabled_plan{% endif %}">
+                                      <label class="form-label">{{ l("amount") }}</label>
+                                    <label class="form-label"></label>
+                                    <div class="selectgroup selectgroup-pills">
+                                        {% set credits = get("credits") %}
+                                        {% if credits %}
+                                        {% for credit in credits %}
+                                          <label class="selectgroup-item">
+                                            <input name="amount" {% if credit == '20' and not get("added_credit") %}checked=""{% endif %} value="{{ credit }}" class="selectgroup-input" type="radio">
+                                            <span class="selectgroup-button">+ ${{ credit }}</span>
+                                          </label>
+                                          {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                  </div>
+                                  <div class="form-group pl-3 pr-3">
+                                    <div class="custom-controls-stacked">
+                                      <label class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" {% if get("added_credit") %}checked=""{% endif %} id="specific_amount" value="option1"  type="checkbox">
+                                        <span class="custom-control-label">{{ l("specific_amount") }}</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div id="specific" class="pl-3 pr-3 form-group {% if not get("added_credit") %}disabled_plan{% endif %}">
+                                    <div class="input-group">
+                                      <input class="form-control" name="amount" placeholder="123.5" value="{{ get("added_credit") }}" type="number">
+                                      <span class="input-group-append">
+                                        <span class="input-group-text"><i class="text-indigo fe fe-dollar-sign"></i></span>
+                                      </span>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4" >
+                                  <div id="amount" style="font-weight:300;text-align:center;" class="display-3 my-4 text-green">{% if get("added_credit") %}${{ get("added_credit") }}{% else %}$0.00{% endif %}</div>
+                                  <hr>
+                                  <div class="form-group">
+                                    <label class="custom-control custom-checkbox">
+                                      <input type="checkbox" name="agree" checked="" class="custom-control-input" />
+                                      <span class="custom-control-label">{{ l("i_agree") }} <a href="{{ router("page", '{"name":"tos"}') }}">{{ l("tos") }}</a></span>
+                                    </label>
+                                  </div>
+                                  <div class="btn-list mt-2">
+                                      <button type="submit" class="surfow_submit btn btn-lg btn-indigo btn-pill mb-2">{{ l("add_credit") }} <i class="fe fe-plus"></i></button>
+                                      <a href="{{ router("wallet") }}" class="btn btn-lg btn-azure btn-pill mb-1">{{ l("cancel") }} <i class="fe fe-x"></i> </a>
+                                  </div>
+                              </div>
+                              <script>
+                              require(["jquery"], function($){
+                                  function set_amount(amount)
+                                  {
+                                      if(amount < {{ get("min_credit") }})
+                                      {
+                                          amount = "...";
+                                      }
+                                      if(amount > {{ get("max_credit") }})
+                                      {
+                                          amount = {{ get("max_credit") }};
+                                      }
+                                      $('#amount').html("$"+amount);
+                                      $('#credit').val(amount);
+                                  }
+
+                                  $(document).ready(function(){
+                                      $('#specific_amount').change(function(){
+                                          if ($(this).is(':checked')) {
+                                              $("#ready").addClass("disabled_plan");
+                                              $("#specific").removeClass("disabled_plan");
+                                              $("#specific").find("input").focus().click();
+                                          } else {
+                                              $("#specific").addClass("disabled_plan");
+                                              $("#ready").removeClass("disabled_plan");
+                                              $("#ready").find("input:checked").click();
+                                          }
+                                      });
+                                      $('input[name="amount"]').change(function(){
+                                          if ($(this).is(':checked')) {
+                                              set_amount($(this).val());
+                                          }
+                                      });
+                                      $('input[name="amount"]').keyup(function(){
+                                          if($(this).val() > {{ get("max_credit") }})
+                                          {
+                                              $(this).val({{ get("max_credit") }});
+                                          }
+                                          if($(this).val().length > 0 && $(this).val() < 1)
+                                          {
+                                             $(this).val({{ get("min_credit") }});
+                                          }
+                                          set_amount($(this).val());
+                                      });
+                                      $('input[name="amount"]').click(function(){
+                                          set_amount($(this).val());
+                                      });
+                                      set_amount($('input[name="amount"]:checked').val());
+                                  });
+                              });
+                              </script>
+                          </div>
+
+                      </div>
+                    </div>
+                </form>
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

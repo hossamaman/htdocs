@@ -1,0 +1,71 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("checking_list_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        {% set items = get("items") %}
+                        {% if items %}
+                            {% for item in items %}
+                            {% set uniqueid = surfow_encrypt(item.id) %}
+                            {% set this_table = 'websites' %}
+                            {% set current_color = 'gray' %}
+                            <div id="item_{{ uniqueid }}" class="card">
+                              <div class="card-status card-status-left bg-{{ current_color }}"></div>
+                              <div class="card-header">
+                                <h3 class="card-title text-{{ current_color }}">
+                                    <span class="avatar avatar-sm" style="background-color:#ffffff;background-image: url('{{ fv(item.url) }}');background-size: 16px 16px;"></span>
+                                    {{item.url|lower|replace({'http://': "", 'https://': "", 'ftp://': ""})[:14]}}
+                                </h3>
+                                <div class="card-options" style="display: table-cell;" >
+                                    {% set live_now = website_live(item.id) %}
+                                    {% if live_now > 0 %}
+                                        <span class="status-icon bg-success"></span> {{ live_now }} <small>{{ l("visiting_now") }}</small>
+                                    {% else %}
+                                        <span class="status-icon bg-warning"></span> {{ live_now }} <small>{{ l("visiting_now") }}</small>
+                                    {% endif %}
+                                </div>
+                              </div>
+                              <div class="card-footer btn-list">
+                                  <a href="#" data-id="{{ item.id }}" title="{% if item.enabled == "1" %}{{ l("pause_website") }}{% else %}{{ l("activate_website") }}{% endif %}" class="website_status_toggle btn btn-icon btn-primary btn-{{ current_color }}">
+                                      <i class="fe fe-{% if item.enabled == "1" %}pause{% else %}play{% endif %}"></i>
+                                  </a>
+                                  <a href="{{ item.url }}" title="{{ l("view") }}" target="_blank" class="btn btn-icon btn-secondary text-{{ current_color }}"><i class="fe fe-external-link" ></i></a>
+                                  <a href="javascript:void(0)" data-toggle="dropdown" class="btn btn-icon btn-secondary text-{{ current_color }}" aria-expanded="false"><i class="fe fe-more-vertical"></i> </a>
+                                  <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
+                                    <a href="{{ router("admin_edit_website", {"uid":item.user_id, "id":item.id}) }}" class="dropdown-item" ><i class="dropdown-icon fe fe-edit-2"></i> {{ l("edit") }}</a>
+                                    <a id="enable_{{ uniqueid }}" data-action="enable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-play"></i> {{ l("enable") }}</a>
+                                    <a id="disable_{{ uniqueid }}" data-action="disable" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item" {% if not item.status %}style="display:none;"{% endif %} ><i class="dropdown-icon fe fe-pause"></i> {{ l("disable") }}</a>
+                                    <a id="delete_{{ uniqueid }}" data-action="delete" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" href="javascript:void(0)" class="item_action dropdown-item"><i class="dropdown-icon fe fe-trash"></i> {{ l("delete") }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-x"></i> {{ l("cancel") }}</a>
+                                  </div>
+                                  <a href="javascript:void(0)" {% if item.reported %}style="display:none;"{% endif %} id="report_{{ uniqueid }}" data-val="1" data-action="report" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" class="item_report btn btn-icon btn-danger" ><i class="fe fe-flag"></i> {{ l("report") }}</a>
+                                  <a href="javascript:void(0)" {% if not item.reported %}style="display:none;"{% endif %} id="remove_report_{{ uniqueid }}" data-val="0" data-action="remove_report" data-table="{{ this_table }}" data-id="{{ item.id }}" data-target="{{ uniqueid }}" class="item_report btn btn-icon btn-success" ><i class="fe fe-check-circle"></i> {{ l("safe_website") }}</a>
+                              </div>
+                            </div>
+                            {% endfor %}
+                            {{ _get("pagination") }}
+                        {% else %}
+                            <p>{{ l("error_empty_items") }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

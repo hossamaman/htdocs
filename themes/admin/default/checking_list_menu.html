@@ -1,0 +1,54 @@
+<div>
+  <div class="list-group list-group-transparent mb-0">
+
+      <a href="{{ router("admin_checking_list") }}" class="{% if is_routed("admin_checking_list") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/overview.svg") }}"></img></i>
+        </span>
+        {{ l("overview") }}
+      </a>
+      <a href="{{ router("admin_live_sessions") }}" class="{% if is_routed("admin_live_sessions") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/live_sessions.svg") }}"></img></i>
+        </span>
+        {{ l("live_sessions") }}
+      </a>
+      <a href="{{ router("admin_latest_payments") }}" class="{% if is_routed("admin_latest_payments") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/latest_payments.svg") }}"></img></i>
+        </span>
+        {{ l("latest_payments") }}
+      </a>
+      <a href="{{ router("admin_latest_purchases") }}" class="{% if is_routed("admin_latest_purchases") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/latest_purchases.svg") }}"></img></i>
+        </span>
+        {{ l("latest_purchases") }}
+      </a>
+      <a href="{{ router("admin_latest_referrals") }}" class="{% if is_routed("admin_latest_referrals") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/latest_referrals.svg") }}"></img></i>
+        </span>
+        {{ l("latest_referrals") }}
+      </a>
+      <a href="{{ router("admin_reported_websites") }}" class="{% if is_routed("admin_reported_websites") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/reported_websites.svg") }}"></img></i>
+        </span>
+        {{ l("reported_websites") }}
+      </a>
+      <a href="{{ router("admin_withdrawals") }}" class="{% if is_routed("admin_withdrawals") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/withdrawals.svg") }}"></img></i>
+        </span>
+        {{ l("withdrawals") }}
+      </a>
+      <a href="{{ router("admin_last_websites") }}" class="{% if is_routed("admin_last_websites") %}active {% endif %}list-group-item list-group-item-action d-flex align-items-center">
+        <span class="icon mr-3">
+            <i><img class="setting_icon" src="{{ storage("data/checking-list/inactive_websites.svg") }}"></img></i>
+        </span>
+        {{ l("last_websites") }}
+      </a>
+
+  </div><br>
+</div>

@@ -1,0 +1,54 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("checking_list_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        {% set items = get("items") %}
+                        {% if items %}
+                            {% for item in items %}
+                            {% set uniqueid = surfow_encrypt(item.id) %}
+                            {% set this_table = 'wallet' %}
+                            {% set current_color = 'cyan' %}
+                            <div id="item_{{ uniqueid }}" class="card p-3 dimmer">
+                                <div class="loader"></div>
+                                <div class="dimmer-content">
+                                    <div class="card-status card-status-left bg-{{ current_color }}"></div>
+                                      <div class="d-flex align-items-center px-2">
+                                        <div class="avatar avatar-md avatar-{{ current_color }} mr-3">{{ item.id|e }}</div>
+                                        <div>
+                                          <div>@{{ get_username_by_id(item.user_id)|upper|e }}</div>
+                                          <small class="d-block text-muted">{{ time_ago(item.created_at) }}</small>
+                                        </div>
+                                        <div class="ml-auto">
+                                          <a href="javascript:void(0)" class="icon ml-3 text-green mr-4"><i class="fe fe-dollar-sign mr-1 text-green"></i> {{ item.withdrawal|e }}</a>
+                                          <a href="{{ router("admin_user_withdrawals", {"uid": item.user_id}) }}" class="icon text-muted"><i class="fe fe-eye mr-1"></i> {{ l("view") }}</a>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {{ _get("pagination") }}
+                        {% else %}
+                            <p>{{ l("error_empty_items") }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

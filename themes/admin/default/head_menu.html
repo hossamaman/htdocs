@@ -1,0 +1,56 @@
+    <div class="page-main">
+          <div class="header py-4">
+            <div class="container">
+              <div class="d-flex">
+                <a class="header-brand" href="{{ router("admin") }}">
+                  <img src="{{ storage("data/surfow.png") }}" class="header-brand-img" alt="{{ s('generale/name') }}">
+                </a>
+                <div class="d-flex order-lg-2 ml-auto">
+                  <div class="nav-item d-none d-md-flex">
+                      <a target="_blank" href="https://support.surfow.info/open" class="nav-link pr-0 leading-none" >
+                        <span class="avatar avatar-gray"><i class="fe fe-life-buoy"></i></span>
+                        <span class="ml-2 d-none d-lg-block">
+                          <span class="text-default">{{ l("need_help")|upper }}</span>
+                          <small class="text-muted d-block mt-1">{{ l("open_ticket") }}</small>
+                        </span>
+                      </a>
+                      <a href="{{ router("admin_builder") }}" class="nav-link pr-0 leading-none" >
+                        <span class="avatar avatar-gray"><i class="fe fe-layout"></i></span>
+                        <span class="ml-2 d-none d-lg-block">
+                          <span class="text-default">{{ l("homepage_builder")|upper }}</span>
+                          <small class="text-muted d-block mt-1">{{ l("click_here_to_edit") }}</small>
+                        </span>
+                      </a>
+                  </div>
+                  <div class="dropdown">
+                    <a href="{{ router("admin_account") }}" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                      <span class="avatar avatar-indigo">{{ u("username")|upper[:2] }}
+                          <span class="avatar-status bg-green"></span>
+                      </span>
+                      <span class="ml-2 d-none d-lg-block">
+                        <span class="text-default">{{ u("username")|upper[:25] }}</span>
+                        <small class="text-muted d-block mt-1">{{ u("email")[:25] }}</small>
+                      </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{ router("admin_account") }}">
+                        <i class="dropdown-icon text-indigo fe fe-settings"></i> {{ l("admin_account") }}
+                      </a>
+                      <a class="dropdown-item" target="_blank" href="https://support.surfow.info">
+                        <i class="dropdown-icon text-indigo fe fe-mail"></i> {{ l("need_help") }}
+                      </a>
+                      <a class="dropdown-item" target="_blank" href="https://support.surfow.info/open">
+                        <i class="dropdown-icon text-indigo fe fe-life-buoy"></i> {{ l("open_ticket") }}
+                      </a>
+                      <a class="dropdown-item" href="{{ router("admin_logout") }}">
+                        <i class="dropdown-icon text-indigo fe fe-log-out"></i> {{ l("logout") }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                  <span class="header-toggler-icon"></span>
+                </a>
+              </div>
+            </div>
+          </div>

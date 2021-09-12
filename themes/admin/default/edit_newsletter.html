@@ -1,0 +1,141 @@
+{% spaceless %}{{ include("header.html") }}
+{% set item = get("item") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {{ include("newsletters_menu.html") }}
+
+                        <form class="card surfow_ajaxform"
+                        data-redirect=""
+                        data-method="post"
+                        data-action="manage-newsletters"
+                        data-type="user" >
+                        <input type="hidden" name="id" value="{{ item.id }}" />
+                        <input type="hidden" name="action" value="edit" />
+                        {{ put_session_key() }}
+                          <div class="card-body p-6">
+                            <div class="surfow_alert" ></div>
+
+                            <div class="row">
+                            <div class="col-lg-9 col-12">
+
+                            <div class="form-group">
+                              <label class="form-label">{{ l("campaign_name") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-tag"></i>
+                                </span>
+                                <input type="text" name="name" value="{{ item.name|e }}" class="form-control" placeholder="{{ l("campaign_name") }}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">{{ l("subject") }}</label>
+                              <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="fe fe-type"></i>
+                                </span>
+                                <input type="text" name="subject" value="{{ item.subject|e }}" class="form-control" placeholder="{{ l("subject") }}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">{{ l("mail_content") }}</label>
+                                <fieldset class="form-fieldset p-1 mb-0">
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[USERNAME]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[EMAIL]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[ACCOUNT_TYPE]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[POINTS]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[WEBSITE_SLOTS]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[SESSION_SLOTS]" type="text" />
+                                    <input readonly="" onclick="this.select();" class="mail_shortcode" value="[TRAFFIC_RATIO]" type="text" />
+                                </fieldset>
+                                <textarea rows="7" name="content" class="html_editor form-control" placeholder="{{ l("mail_content") }}" >{{ item.content|e }}</textarea>
+                            </div>
+                            </div>
+                            <div class="col-lg-3 col-12">
+                                <label>{{ l("targeted_audience") }}</label>
+                                <fieldset class="form-fieldset">
+                                    <div class="custom-switches-stacked">
+                                      <label class="custom-switch">
+                                        <input type="radio" name="audience" value="all" class="custom-switch-input" {% if item.to_group == 'all' %}checked=""{% endif %}>
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">{{ l("all_accounts") }}</span>
+                                      </label>
+                                      <label class="custom-switch">
+                                        <input type="radio" name="audience" value="pro" class="custom-switch-input" {% if item.to_group == 'pro' %}checked=""{% endif %}>
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">{{ l("all_paid_accounts") }}</span>
+                                      </label>
+                                      <label class="custom-switch">
+                                        <input type="radio" name="audience" value="free" class="custom-switch-input" {% if item.to_group == 'free' %}checked=""{% endif %}>
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">{{ l("all_free_accounts") }}</span>
+                                      </label>
+                                    </div>
+                                </fieldset>
+                                <label>{{ l("schedule_start_time") }}</label>
+                                <fieldset class="form-fieldset">
+                                    <div class="input-icon">
+                                      <span class="input-icon-addon">
+                                          <i class="fe fe-calendar"></i>
+                                      </span>
+                                      <input type="text" name="starton" class="form-control" data-mask="00/00/0000 00:00" data-mask-clearifnotmatch="true" placeholder="00/00/0000 00:00" value="{{ item.starton|date("m/d/Y h:i") }}" autocomplete="off" maxlength="16">
+                                    </div>
+                                </fieldset>
+                                <label>{{ l("progress") }}</label>
+                                <fieldset class="form-fieldset">
+                                    <div class="mx-auto chart-circle chart-circle-xs" data-value="{% if item.progress > '0' %}{{ item.progress/100|round }}{% else %}0.00{% endif %}" data-thickness="3" data-color="indigo"><canvas width="40" height="40"></canvas>
+                                        <div class="chart-circle-value">{{ item.progress|e }}%</div>
+                                    </div>
+                                </fieldset>
+                                <label class="custom-switch">
+                                  <input type="checkbox" name="start_over" value="on" class="custom-switch-input">
+                                  <span class="custom-switch-indicator"></span>
+                                  <span class="custom-switch-description">{{ l("cancel_progress") }}</span>
+                                </label>
+
+
+                            </div>
+                            </div>
+
+                            <div class="form-footer mt-0">
+                              <button type="submit" class="surfow_submit btn btn-indigo btn-pill"><i class="fe fe-save mr-2"></i> {{ l("save") }}</button>
+                            </div>
+                          </div>
+                        </form>
+                        <script>
+                        require(['input-mask']);
+                        require(['jquery', 'editor'], function(jQuery) {
+                            jQuery.getScript( "{{ turl() }}/assets/js/vendors/langs/{{ current_language() }}.min.js", function( data, textStatus, jqxhr ) {
+                                jQuery.trumbowyg.svgPath = '{{ turl() }}/assets/images/icons.svg';
+                                jQuery(document).ready(function(){
+                                    jQuery(".html_editor").trumbowyg({
+                                        lang: '{{ current_language() }}'
+                                    });
+                                });
+                            }).fail(function(){
+                                jQuery.trumbowyg.svgPath = '{{ turl() }}/assets/images/icons.svg';
+                                jQuery(document).ready(function(){
+                                    jQuery(".html_editor").trumbowyg();
+                                });
+                            });
+                        });
+                        </script>
+
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

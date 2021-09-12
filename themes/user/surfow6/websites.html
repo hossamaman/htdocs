@@ -1,0 +1,74 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{l("websites")}}
+                      </h1>
+                    </div>
+                    <div id="surfow_alert" ></div>
+
+                    <div class="card">
+                      <div class="card-status card-status-left bg-indigo"></div>
+                      <div class="card-body btn-list">
+                          <a href="{{ router("add_website") }}" class="btn btn-lg btn-indigo btn-pill mb-1"><i class="fe fe-plus"></i> {{ l("add_website") }}</a>
+                      </div>
+                    </div>
+
+                    {% set items = get("items") %}
+                    {% if items %}
+                        {% for item in items %}
+                        {% set current_color = random(['blue', 'azure', 'indigo', 'purple', 'pink', 'orange', 'lime', 'teal', 'cyan', 'gray', 'gray-dark']) %}
+                        <div id="item-{{ item.id }}" class="card">
+                          <div class="card-status card-status-left bg-{{ current_color }}"></div>
+                          <div class="card-header">
+                            <h3 class="card-title text-{{ current_color }}">
+                                <span class="avatar avatar-sm" style="background-color:#ffffff;background-image: url('{{ fv(item.url) }}');background-size: 16px 16px;"></span>
+                                {{item.url|lower|replace({'http://': "", 'https://': "", 'ftp://': ""})[:14]}}...
+                            </h3>
+                            <div class="card-options" style="display: table-cell;" >
+                                {% set live_now = website_live(item.id) %}
+                                {% if live_now > 0 %}
+                                    <span class="status-icon bg-success"></span> {{ live_now }} <small>{{ l("visiting_now") }}</small>
+                                {% else %}
+                                    <span class="status-icon bg-warning"></span> {{ live_now }} <small>{{ l("visiting_now") }}</small>
+                                {% endif %}
+                            </div>
+                          </div>
+                          <div class="card-body">
+                                <div title="{% if item.activated == "1" %} {{ l("confirmed_website") }} {% else %} {{ l("pending_website") }} {% endif %}" class="card-value float-right text-{{ current_color }}">
+                                    <i class="fe fe-{% if item.activated == "1" %}activity{% else %}clock{% endif %}"></i>
+                                </div>
+                                <h3 class="mb-1">{{ website_weekly_hits(item.id) }}</h3>
+                                <div class="text-muted">{{ l("weekly_hits") }}</div>
+                          </div>
+                          <div class="card-chart-bg">
+                                <div id="website-{{ item.id }}" style="height: 100%"></div>
+                          </div>
+                          <div class="card-footer btn-list">
+                              <a href="#" data-id="{{ item.id }}" title="{% if item.enabled == "1" %}{{ l("pause_website") }}{% else %}{{ l("activate_website") }}{% endif %}" class="website_status_toggle btn btn-icon btn-primary btn-{{ current_color }}">
+                                  <i class="fe fe-{% if item.enabled == "1" %}pause{% else %}play{% endif %}"></i>
+                              </a>
+                              <a href="{{ item.url }}" title="{{ l("view") }}" target="_blank" class="btn btn-icon btn-secondary text-{{ current_color }}"><i class="fe fe-external-link" ></i></a>
+                              <a href="{{ router("copy_website", '{"id":"'~item.id~'"}') }}" title="{{ l("duplicate") }}" class="btn btn-icon btn-secondary text-{{ current_color }}"><i class="fe fe-copy" ></i></a>
+                              <a href="{{ router("edit_website", '{"id":"'~item.id~'"}') }}" title="{{ l("edit") }}" class="btn btn-icon btn-secondary text-{{ current_color }}"><i class="fe fe-edit-2" ></i></a>
+                              <a href="#" data-ele="#item-{{ item.id }}" data-id="{{ item.id }}" title="{{ l("delete") }}" class="website_delete btn btn-icon btn-secondary text-{{ current_color }}"><i class="fe fe-trash" ></i> <span class="surfow_hide">{{ l("popup_check_message")}}</span></a>
+                          </div>
+                          {{ website_weekly_stats(item.id, current_color) }}
+                        </div>
+                        {% endfor %}
+                        {{ _get("pagination") }}
+                    {% else %}
+                        <p>{{ l("error_empty_items") }}</p>
+                    {% endif %}
+
+
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

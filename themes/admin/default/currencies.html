@@ -1,0 +1,178 @@
+{% spaceless %}{{ include("header.html") }}
+{% set info = get("info") %}
+{% set convert = get("convert") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row row-cards">
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        {{ include("settings_menu.html") }}
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-lg-4">
+                        <div class="card">
+                            <form class="surfow_ajaxform"
+                            data-redirect="{{ router("admin_currencies") }}"
+                            data-method="post"
+                            data-action="manage-currencies"
+                            data-type="user" >
+                            <input type="hidden" name="action" value="add" />
+                            {{ put_session_key() }}
+                            <div class="card-body">
+                                <h3>{{ l('add_currency') }}</h3>
+                                <div class="surfow_alert" ></div>
+                                <div id="setup_currency" >
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("currency_code") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-filter"></i>
+                                        </span>
+                                        <input type="text" name="code" maxlength="4" class="form-control" placeholder="{{ l("currency_code") }}">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">{{ l("currency_name") }}</label>
+                                      <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fe fe-feather"></i>
+                                        </span>
+                                        <input type="text" name="name" maxlength="30"  class="form-control" placeholder="{{ l("currency_name") }}">
+                                      </div>
+                                    </div>
+                                    <a id="next" class="btn btn-gray btn-pill text-white">{{ l("next") }}</a>
+                                </div>
+                                <div id="complete_currency" style="display:none;" >
+                                    <div class="border-1 display-4 my-2 row">
+                                        <div class="col-lg-5 col-sm-5 col-5 text-left"><a class="btn btn-pill btn-lg btn-indigo text-white" >1 USD</a></div>
+                                        <div class="col-lg-2 col-sm-2 col-2 text-indigo text-center">=</div>
+                                        <div class="col-lg-5 col-sm-5 col-5 text-right"><a class="btn btn-pill btn-lg btn-success text-white" >(...)  <b id="new_currency_code">...</b></a></div>
+                                        <div class="col-lg-12 mb-2">
+                                            <hr>
+                                            <div class="form-group">
+                                              <label class="form-label">{{ l("one_dollar_value") }}</label>
+                                              <input type="text" name="value" class="is-valid form-control" placeholder="{{ l("one_dollar_value") }}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a id="back" class="save_currency btn btn-gray btn-pill text-white ml-2 mr-2">{{ l("back") }}</a>
+                                    <button type="submit" class="surfow_submit btn btn-indigo btn-pill text-white ml-2 mr-2">{{ l("save_currency") }} <i class="fe fe-save"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                        require(["jquery"], function($){
+                            $(document).ready(function(){
+                                var setup = $('#setup_currency');
+                                var complete = $('#complete_currency');
+                                $('#next').click(function(){
+                                    setup.find("input").removeClass("is-invalid");
+                                    var that = $(this);
+                                    that.addClass("btn-loading");
+                                    setTimeout(function(){
+                                        var show_code = setup.find("input:first").val();
+                                        var check_name = setup.find("input:last").val();
+                                        if(show_code.length >= 1)
+                                        {
+                                            if(check_name.length >= 1)
+                                            {
+                                                $('#new_currency_code').html(show_code.toUpperCase());
+                                                setup.hide();
+                                                complete.slideDown(300);
+                                                that.removeClass("btn-loading");
+                                            } else {
+                                                setup.find("input:last").addClass("is-invalid");
+                                                that.removeClass("btn-loading");
+                                            }
+                                        } else {
+                                            setup.find("input:first").addClass("is-invalid");
+                                            that.removeClass("btn-loading");
+                                        }
+                                    }, 400);
+                                });
+
+                                $('#back').click(function(){
+                                    setup.find("input").removeClass("is-invalid");
+                                    var that = $(this);
+                                    that.addClass("btn-loading");
+                                    setTimeout(function(){
+                                        complete.hide();
+                                        setup.slideDown(300);
+                                        that.removeClass("btn-loading");
+                                    }, 400);
+                                });
+
+                            });
+                        });
+                        </script>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="surfow_alert" ></div>
+                                {% if info %}
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-vcenter mb-0">
+                                      <thead>
+                                        <tr>
+                                          <th class="pl-0">{{ l("currency_code") }}</th>
+                                          <th>{{ l("currency_name") }}</th>
+                                          <th>{{ l("value") }}</th>
+                                          <th class="pr-0">{{ l("edit") }}</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                          {% for key,item in info %}
+                                          {% if key != 'updated_at' %}
+                                          <tr id="currency_{{ key }}">
+                                                <input type="hidden" name="code" value="{{ key }}" />
+                                                <td>
+                                                    <input class="form-control" readonly="" value="{{ key }}" type="text">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" name="name" value="{{ item }}" type="text">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" name="value" value="{{ convert[key] }}" type="text">
+                                                </td>
+                                                <td class="btn-list pb-0" >
+                                                    <a data-action="edit" class="manage_currency btn-sm btn-icon btn-indigo btn btn-pill text-white" >
+                                                      <i class="fe fe-save"></i> {{ l("save") }}
+                                                    </a>
+                                                    <a data-action="delete" class="manage_currency btn-icon btn-sm btn btn-gray btn-pill text-white" href="javascript:void(0)">
+                                                      <i class="fe fe-trash"></i>  {{ l("delete") }}
+                                                    </a>
+                                                </td>
+                                          </tr>
+                                          {% endif %}
+                                          {% endfor %}
+                                    </tbody>
+                                    </table>
+                                  </div>
+                                {% else %}
+                                    {{ l("nothing_found") }}
+                                {% endif %}
+                            </div>
+                            <div class="card-footer pb-0">
+                                <p class="text-muted">{{ l("last_update") }} {% if info.updated_at %}{{ time_ago(convert.updated_at) }}{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

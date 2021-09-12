@@ -1,0 +1,146 @@
+{% spaceless %}{{ include("header.html") }}
+{% set user = get("user") %}
+{% set info = get("wallet") %}
+    <div class="page">
+        <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+          <div class="my-3 my-md-5">
+              <div class="container">
+                <div class="page-header">
+                  <h1 class="page-title">
+                    {{ _get("title2") }}
+                  </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        {{ include("profile_menu.html") }}
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="card">
+
+                          <div class="card-body">
+
+                              <form class="row surfow_ajaxform"
+                              data-redirect=""
+                              data-method="post"
+                              data-action="manage-wallet"
+                              data-type="user" >
+                              <input type="hidden" name="id" value="{{ info.id }}" />
+                              <input type="hidden" name="section" value="pending" />
+                              {{ put_session_key() }}
+                                    <div class="col-lg-12"><div class="surfow_alert" ></div></div>
+                                    <div class="col-lg-5">
+                                      <div class="card">
+                                        <div class="card-status card-status-left bg-red"></div>
+                                        <div class="card-body text-center">
+                                          <div class="card-category">{{ l("pending") }}</div>
+                                          <div class="display-4 my-4">${{ info["pending"]|number_format(2, '.', ',') }}</div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-lg-7">
+                                      <div class="card border-0">
+                                        <div class="card-body">
+                                          <div class="card-category text-left">{{ l("edit") }}</div>
+                                          <div class="display-4 my-4">
+                                              <div class="form-group">
+                                                  <div class="input-group">
+                                                    <input type="text" name="value" value="{{ info["pending"]|e }}" class="form-control" placeholder="0.00 USD">
+                                                    <span class="input-group-append">
+                                                      <button class="surfow_submit btn btn-danger" type="submit"><i class="fe fe-save"></i> {{ l("save") }}</button>
+                                                    </span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </form>
+
+                                <form class="row surfow_ajaxform"
+                                data-redirect=""
+                                data-method="post"
+                                data-action="manage-wallet"
+                                data-type="user" >
+                                <input type="hidden" name="id" value="{{ info.id }}" />
+                                <input type="hidden" name="section" value="confirmed" />
+                                {{ put_session_key() }}
+                                      <div class="col-lg-12"><div class="surfow_alert" ></div></div>
+                                      <div class="col-lg-5">
+                                        <div class="card">
+                                          <div class="card-status card-status-left bg-green"></div>
+                                          <div class="card-body text-center">
+                                            <div class="card-category">{{ l("confirmed") }}</div>
+                                            <div class="display-4 my-4">${{ info["confirmed"]|number_format(2, '.', ',') }}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-lg-7">
+                                        <div class="card border-0">
+                                          <div class="card-body">
+                                            <div class="card-category text-left">{{ l("edit") }}</div>
+                                            <div class="display-4 my-4">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                      <input type="text" name="value" value="{{ info["confirmed"]|e }}" class="form-control" placeholder="0.00 USD">
+                                                      <span class="input-group-append">
+                                                        <button class="surfow_submit btn btn-success" type="submit"><i class="fe fe-save"></i> {{ l("save") }}</button>
+                                                      </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </form>
+
+                                  <form class="row surfow_ajaxform"
+                                  data-redirect=""
+                                  data-method="post"
+                                  data-action="manage-wallet"
+                                  data-type="user" >
+                                  <input type="hidden" name="id" value="{{ info.id }}" />
+                                  <input type="hidden" name="section" value="withdrawal" />
+                                  {{ put_session_key() }}
+                                        <div class="col-lg-12"><div class="surfow_alert" ></div></div>
+                                        <div class="col-lg-5">
+                                          <div class="card">
+                                            <div class="card-status card-status-left bg-indigo"></div>
+                                            <div class="card-body text-center">
+                                              <div class="card-category">{{ l("withdrawal") }}</div>
+                                              <div class="display-4 my-4">${{ info["withdrawal"]|number_format(2, '.') }}</div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-7">
+                                          <div class="card border-0">
+                                            <div class="card-body">
+                                              <div class="card-category text-left">{{ l("edit") }}</div>
+                                              <div class="display-4 my-4">
+                                                  <div class="form-group">
+                                                      <div class="input-group">
+                                                        <input type="text" name="value" value="{{ info["withdrawal"]|e }}" class="form-control" placeholder="0.00 USD">
+                                                        <span class="input-group-append">
+                                                          <button class="surfow_submit btn btn-indigo" type="submit"><i class="fe fe-save"></i> {{ l("save") }}</button>
+                                                        </span>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </form>
+
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

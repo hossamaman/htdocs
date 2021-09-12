@@ -1,0 +1,55 @@
+{% spaceless %}{{ include("header.html") }}
+    <div class="page">
+      <div class="page-main">
+          {{ include("head_menu.html") }}
+          {{ include("main_menu.html") }}
+            {{ include("ads_col1.html") }}
+            {% set country_list = get("country_list") %}
+            {% set wallet = get("wallet") %}
+            {% set item = get("info") %}
+                    <div class="page-header">
+                      <h1 class="page-title">
+                         {{ l("choose_payment_method") }}
+                      </h1>
+                    </div>
+                    <div id="surfow_alert" ></div>
+
+
+                    <div class="card">
+                      <div class="card-status card-status-left bg-indigo"></div>
+                      <div class="card-body">
+                          <div id="amount" style="font-size:1.6em;font-weight:300;" class="text-indigo">+ <b>{{ get("credit") }}</b>$ {{ l("credit") }}</div>
+                          <div class="table-responsive">
+                              <table class="table card-table table-vcenter text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th></th>
+                                      <th></th>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                <tbody>
+                                    {% set items = get("items") %}
+                                    {% if items %}
+                                        {% for item in items %}
+                                        <tr>
+                                          <td class="text-left" title="{{ item.name|e }}" ><img alt="{{ item.name|e }}" class="payment_logo" src="{{ item.logo }}" ></a></td>
+                                          <td class="text-center" title="{{ item.name|e }}" >{{ item.name|e }}</td>
+                                          <td class="text-right" ><a style="cursor:pointer;" class="btn btn-lg btn-indigo btn-pill text-white loading-onclick" onclick="window.location = '{{ router("prepare_payment", {"key" : item.key, "credit" : surfow_encrypt(get("credit"))}) }}';" ><i class="fe fe-check" ></i> {{ l("pay") }} </a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>{{ l("error_empty_payments") }}</p>
+                                    {% endif %}
+                                </tbody>
+                              </table>
+                          </div>
+                      </div>
+                    </div>
+
+                    {{ include("refund_policy.html") }}
+        {{ include("ads_col2.html") }}
+      </div>
+      {{ include("footer_content.html") }}
+    </div>
+{{ include("footer.html") }}{% endspaceless %}

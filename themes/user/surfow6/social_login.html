@@ -1,0 +1,17 @@
+<div class="btn-list">
+    {% if s("socialauth/facebook/id")|length > 5 and s("socialauth/facebook/secret")|length > 5 %}
+    <a style="cursor:pointer;" class="btn btn-facebook btn-icon btn-pill text-white loading-onclick" onclick="window.location = '{{ router("social_connect", {"provider": "facebook"}) }}';" >
+        <i class="fa fa-facebook"></i>
+    </a>
+    {% endif %}
+    {% if s("socialauth/twitter/key")|length > 5 and s("socialauth/twitter/secret")|length > 5 %}
+    <a style="cursor:pointer;" class="btn btn-twitter btn-icon btn-pill text-white loading-onclick" onclick="window.location = '{{ router("social_connect", {"provider": "twitter"}) }}';" >
+        <i class="fa fa-twitter"></i>
+    </a>
+    {% endif %}
+    {% if s("socialauth/google/id")|length > 5 and s("socialauth/google/secret")|length > 5 %}
+    <a style="cursor:pointer;" class="btn btn-google btn-icon btn-pill text-white loading-onclick" onclick="window.location = '{{ router("social_connect", {"provider": "google"}) }}';" >
+        <i class="fa fa-google-plus"></i>
+    </a>
+    {% endif %}
+</div>

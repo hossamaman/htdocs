@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>{{ l('redirecting') }}</title>
+    </head>
+    <body>
+        <p><i>{{ l('redirecting') }}</i></p>
+        <a rel="noreferrer" style="display:none" id="noreflink"></a>
+        <script type="text/javascript">
+        var redirect = document.getElementById("noreflink");
+        redirect.href = "{{ get('redirect_url') }}";
+        redirect.click();
+        </script>
+    </body>
+</html>
